@@ -1,0 +1,56 @@
+{extend name="public/base" /}
+
+
+{block name='content'}
+
+<div class="layui-col-md12">
+    <div class="layui-card">
+
+        <div class="layui-card-body">
+
+            <div class="yys-fluid yys-wrapper">
+                <div class="layui-row lay-col-space20">
+                    <div class="layui-cos-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+
+                        <table class="layui-table" lay-even="" lay-skin="row">
+
+                            <thead>
+                            <tr>
+                                <th>字段名</th>
+                                <th>类型</th>
+                                <th>排序规则</th>
+                                <th>是否为空</th>
+                                <th>默认值</th>
+                                <th>字段注释</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {volist name='list' id='table'}
+                            <tr>
+
+                                <td>{$table.field}</td>
+                                <td>{$table.type}</td>
+                                <td>{$table.collation}</td>
+                                <td>{$table.null}</td>
+                                <td>{$table.default}</td>
+                                <td>{$table.comment}</td>
+                            </tr>
+                            {/volist}
+                            </tbody>
+
+
+                        </table>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+{/block}

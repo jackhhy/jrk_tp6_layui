@@ -1,0 +1,117 @@
+
+{extend name='public/window' /}
+
+{block name="content"}
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <!-- <div class="layui-card-header"></div>-->
+
+        <div class="layui-card-body" style="padding: 15px;">
+            <form class="layui-form" action="" lay-filter="form">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所属菜单：</label>
+                    <div class="layui-input-block">
+                        <input type="text"  value="{$info.title}" autocomplete="off" class="layui-input " readonly>
+                        <p class="help-block">添加的节点所属菜单！</p>
+                    </div>
+                </div>
+                <input type="hidden" name="pid" value="{$pid}">
+                <input type="hidden" name="__token__" id="token" value="{:token()}"/>
+
+                <div class="layui-form-item add_node">
+                    <div class="leng layui-row">
+                        <label class="layui-form-label label-required-next">名称地址：</label>
+                        <div class="layui-input-inline input-custom-width">
+                            <input type="text" name="title[]" lay-verify="required" lay-vertype="tips" lay-reqtext="请输入节点名称" value="" autocomplete="off" class="layui-input " placeholder="节点名称">
+                        </div>
+                        <div class="layui-input-inline input-custom-width">
+                            <input type="text" name="name[]"  lay-verify="required" lay-vertype="tips" lay-reqtext="请输入节点地址" value="" autocomplete="off" class="layui-input " placeholder="节点地址">
+                        </div>
+                        <span style="float: right;cursor: pointer;">
+                            <i class="layui-icon layui-btn  layui-btn-xs layui-icon-add-circle add"  data-title="添加节点"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">权限验证：</label>
+                    <div class="layui-input-inline input-custom-width">
+                        <input type="radio" name="auth_open" value="1" title="是" lay-filter=""  checked>
+                        <input type="radio" name="auth_open" value="2" title="否" lay-filter="" >
+                        <p class="help-block">是否将该菜单加入权限验证！</p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否禁止：</label>
+                    <div class="layui-input-inline input-custom-width">
+                        <input type="radio" name="status" value="1" title="正常" lay-filter=""  checked>
+                        <input type="radio" name="status" value="0" title="禁止" lay-filter="" >
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-layout-admin " style="width: 100%">
+                    <div class="layui-input-block">
+                        <div class="layui-footer" style="left: 0px;text-align: center;">
+                            <button class="layui-btn" lay-submit="" lay-filter="add">提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    /**
+     * 删除
+     * @param obj
+     */
+    function del(obj){
+        $(obj).parent().parent().remove();
+    }
+    layui.use(['element', 'form', 'jquery','iconHhysFa','lucky'], function () {
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var iconHhysFa = layui.iconHhysFa;
+        var lucky=layui.lucky;
+
+
+        $(".add").click(function () {
+            var l=$(".leng").length;
+           // alert(l);
+            if( l > 5){
+                layer.msg("最多只能添加6个节点",{icon:15,time:1000,shade:0.3});
+                return false;
+            }
+            var str='<div class="leng layui-row">\n' +
+                '                        <label class="layui-form-label label-required-next">&nbsp;</label>\n' +
+                '                        <div class="layui-input-inline input-custom-width">\n' +
+                '                            <input type="text" name="title[]"  lay-verify="required" lay-vertype="tips" lay-reqtext="请输入节点名称" value="" autocomplete="off" class="layui-input " placeholder="节点名称">\n' +
+                '                        </div>\n' +
+                '                        <div class="layui-input-inline input-custom-width">\n' +
+                '                            <input type="text" name="name[]" lay-verify="required" lay-vertype="tips" lay-reqtext="请输入节点地址" value="" autocomplete="off" class="layui-input " placeholder="节点地址">\n' +
+                '                        </div>\n' +
+                '                        <span style="float: right;cursor: pointer;">\n' +
+                '                            <i style="color: red;" class="layui-icon layui-icon-delete  delete" onclick="del(this)"  title="删除"></i>\n' +
+                '                        </span>\n' +
+                '                    </div>';
+             $(".add_node").append(str);
+        });
+
+        form.on('submit(add)', function (data) {
+            lucky.FormSubmit("{:url('addNode')}",data.field,"table_id",1);
+            return false;
+        });
+    })
+</script>
+
+{/block}
+

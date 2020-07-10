@@ -1,0 +1,32 @@
+
+{include file="public/head" /}
+
+{block name="css"}{/block}
+
+<!--js逻辑-->
+<script src="__PLUG__/layui/layui.js?v=2.5.6"></script>
+
+<script src="__BJS__/comm.js?v={:time()}"></script>
+
+<!-- 主体部分开始 -->
+<div class="layui-fluid">
+
+    <div class="layui-row layui-col-space10" style="margin-top: 8px;">
+
+        {block name="content"} {/block}
+
+    </div>
+</div>
+
+
+<!-- 主体部分结束 -->
+<script type="text/javascript" src="__JS__/clipboard.min.js?v=1"></script>
+
+
+{block name="js"} <!--js处理区-->{/block}
+
+<script>
+    okLoading.close();
+</script>
+</body>
+</html>

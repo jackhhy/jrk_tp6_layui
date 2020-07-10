@@ -1,0 +1,77 @@
+{extend name='public/base' /}
+
+
+{block name="content"}
+
+<div class="layui-col-md12">
+
+    <div class="layui-card">
+
+        <div class="layui-card-body">
+
+            <!--表格区-->
+
+            <div class="yys-fluid yys-wrapper">
+                <div class="layui-row lay-col-space20">
+                    <div class="layui-cos-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+                        <section class="yys-body">
+                            <div class="yys-body-content clearfix changepwd">
+                                <div class="layui-col-lg12 layui-col-md10 layui-col-sm12 layui-col-xs12" style="width:100%">
+                                    <div class="user-tables">
+                                        <table id="tableFilter" lay-filter="tableFilter"> </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+{/block}
+
+
+{block name="js"} <!--js处理区-->
+
+
+<!--模板-->
+<script type="text/html" id="operationTpl">
+
+</script>
+
+<script type="text/html" id="toolbarDemo">
+    <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon"></i>新增菜单</button>
+    <button class="layui-btn layui-btn-sm layui-btn-primary" lay-event="reload"><i class="fa fa-refresh"></i> 刷新</button>
+</script>
+
+<script type="text/html" id="status">
+    <input type="checkbox" name="status"  lay-data="{{d.status}}" value="{{d.id}}"  lay-filter="sexDemo" lay-skin="switch"  lay-text="是|否"  {{ d.status == 1 ? 'checked' : '' }}>
+</script>
+
+
+<script>
+
+    layui.use(['element', 'table', 'form', 'jquery'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var table = layui.table;
+        var $ = layui.jquery;
+
+
+
+        form.render();
+
+
+
+    });
+
+</script >
+
+
+{/block}

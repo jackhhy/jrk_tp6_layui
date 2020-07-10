@@ -1,0 +1,196 @@
+
+{extend name='public/base' /}
+
+{block name="content"}
+
+<div class="layui-col-md12">
+    <div class="layui-card">
+
+        <div class="layui-card-body">
+            <!--表格区-->
+            <div class="yys-fluid yys-wrapper">
+                <div class="layui-row lay-col-space20">
+                    <div class="layui-cos-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+                        <section class="yys-body">
+                            <div class="yys-body-content clearfix changepwd">
+                                <div class="layui-col-lg12 layui-col-md10 layui-col-sm12 layui-col-xs12" style="width:100%">
+                                    <div class="user-tables">
+                                        <table id="tableFilter" lay-filter="tableFilter"> </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{/block}
+
+{block name="js"} <!--js处理区-->
+
+<!--模板-->
+<script type="text/html" id="operationTpl">
+    {{# if(d.type==1){ }}
+    <a href="javascript:;" class="layui-btn layui-btn-xs {:node('AuthRule/addSon')}" onmouseover="tool.tis(this)" data-title="新增子菜单" lay-event="add"><i class="layui-icon layui-icon-add-circle-fine"></i></a>
+    {{# } }}
+    <a href="javascript:;" class="layui-btn layui-btn-normal layui-btn-xs {:node('AuthRule/addAuth')}" onmouseover="tool.tis(this)" data-title="编辑菜单" lay-event="edit"><i class="layui-icon"></i></a>
+    <a href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs {:node('AuthRule/del')}" onmouseover="tool.tis(this)" data-title="删除菜单" lay-event="del"><i class="layui-icon "></i></a>
+</script>
+
+<script type="text/html" id="toolbarDemo">
+    <button class="layui-btn layui-btn-sm {:node('AuthRule/addAuth')}" lay-event="add"><i class="layui-icon"></i>新增菜单</button>
+    <button class="layui-btn layui-btn-sm layui-btn-primary" lay-event="reload"><i class="fa fa-refresh"></i> 刷新</button>
+</script>
+
+
+<script type="text/html" id="type">
+    {{# if(d.type==1){ }}
+    <span class="layui-badge layui-bg-green">菜单</span>
+    {{# }else{ }}
+    <span class="layui-badge layui-bg-orange">按钮</span>
+    {{# } }}
+</script>
+
+<script type="text/html" id="auth_open">
+    {{# if(d.auth_open==1){ }}
+    <span class="layui-badge layui-bg-blue">验证</span>
+    {{# }else{ }}
+    <span class="layui-badge layui-bg-gray">不验证</span>
+    {{# } }}
+</script>
+
+<script>
+    layui.use(['element', 'table', 'form', 'jquery', 'lucky'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var table = layui.table;
+        var $ = layui.jquery;
+        var lucky=layui.lucky;
+        form.render();
+        String.prototype.format = function () {
+            //字符串占位符
+            //eg: var str1 = "hello {0}".format("world");
+            if (arguments.length == 0) return this;
+            var param = arguments[0];
+            var s = this;
+            if (typeof (param) == 'object') {
+                for (var key in param) {
+                    s = s.replace(new RegExp("\\{" + key + "\\}", "g"), param[key]);
+                }
+                return s;
+            } else {
+                for (var i = 0; i < arguments.length; i++) {
+                    s = s.replace(new RegExp("\\{" + i + "\\}", "g"), arguments[i]);
+                }
+                return s;
+            }
+        };
+
+        table.render({
+            elem: '#tableFilter',
+            url:"{:url('index')}",
+            toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
+            defaultToolbar: ['filter', 'exports', 'print'],
+            even: true, //开启隔行背景
+            id:'table_id',
+            height: 'full-100',
+            text: {
+                none: '暂无相关数据'
+            },
+            cols: [[
+                {field: 'id',  title: 'ID',width:60},
+                {field: 'html', minWidth: 100, title: '菜单名称'},
+                {
+                    field: 'icon', width: 70, align: 'center', templet: function (d) {
+                        if (d.icon == "") {
+                            return '';
+                        } else {
+                            var a= ('<i class="{0} {1} " ></i>').format(d.font_family,d.icon);
+                            return a;
+                        }
+                    }, title: '图标'
+                },
+                {field:'type',title:'类型',align: 'center',templet: '#type',width:100 ,unresize: true},
+                {field:'auth_open',title:'权限',align: 'center',templet: '#auth_open',width:100 ,unresize: true},
+                {field: 'name',style:'cursor: pointer;',align: 'center',title: '菜单url',width:150},
+                {field: 'sort',style:'cursor: pointer;',align: 'center',title: '排序',width:100, edit:'number',sort:true},
+                {field: 'status', title: '状态',width: 100,align: 'center',templet:function (rd) {
+                        var s="";
+                        if (rd.status==1){
+                            s='<span class="layui-badge layui-bg-green">正常</span>';
+                        } else {
+                            s='<span class="layui-badge layui-bg-black">禁止</span>';
+                        }
+                        return s;
+                    }},
+                {field: 'create_time', title: '添加时间',align: 'center',width:180,sort:true},
+                {fixed: 'right',templet: '#operationTpl', width: 160, align: 'center', title: '操作'}
+            ]],
+            done: function (res) {
+                layer.closeAll('loading');
+            }
+        });
+
+
+        table.on('edit(tableFilter)',function (obj) {
+            var val=obj.value,_id=obj.data.id,field=obj.field;
+            if (field=="sort"){
+                var reg=/^[0-9]*$/;
+                if (!reg.test(val)) {
+                    layer.msg("排序必须是数字",{time:1000});
+                    lucky.CreateReload("table_id");
+                    return false;
+                }else {
+                    lucky.Change_status("{:url('common/changeStatus')}","table_id","auth_rule",_id,field,val);
+                    obj.update({
+                        field: val
+                    });
+                    return false;
+                }
+            }
+
+        });
+
+        /**
+         * 监听单行工具操作
+         */
+        table.on('tool(tableFilter)', function (obj) {
+            var data = obj.data;
+            // console.log(JSON.stringify(data));
+            var _id=parseInt(data.id);
+            var layEvent = obj.event;
+            if (layEvent==="add"){
+                var url="{:url('addSon')}?id="+_id;
+                lucky.CreateOpenForm("添加子菜单",'55%','73%',url,"table_id");
+
+            }else if(layEvent==="edit"){
+                var urls="{:url('addAuth')}?id="+_id;
+                lucky.CreateOpenForm("编辑菜单",'55%','73%',urls,"table_id");
+
+            }else if(layEvent==="del"){
+                lucky.FormatData(_id,"{:url('del')}","table_id","确认删除吗？");
+            }
+        });
+
+        table.on('toolbar(tableFilter)', function(obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data = checkStatus.data;
+            if(obj.event==="add"){
+                lucky.CreateOpenForm("添加菜单",'55%','73%',"{:url('addAuth')}",obj.config.id);
+                return false;
+            }else if(obj.event==="reload"){
+                lucky.CreateReload(obj.config.id);
+            }
+
+        });
+
+    });
+
+</script >
+
+
+{/block}

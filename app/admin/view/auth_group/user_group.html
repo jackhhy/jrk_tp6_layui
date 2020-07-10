@@ -1,0 +1,61 @@
+
+{extend name='public/window' /}
+
+{block name="content"}
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <!-- <div class="layui-card-header"></div>-->
+
+        <div class="layui-card-body" style="padding: 15px;">
+            <blockquote class="layui-elem-quote layui-text">
+                权限组授权给后台管理员，如果去除全部则是删除当前权限组的所有授权人员.
+            </blockquote>
+
+            <form class="layui-form" action="" lay-filter="form">
+
+                <input type="hidden" name="group_id" value="{$id}">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">授权人员：</label>
+                    <div class="layui-input-block input-custom-width" style="">
+
+                        {volist name="user" id="v"}
+                        <input type="checkbox" name="uid[]" value="{$v.id}" title="{$v.username}"  {if isset($v.checked)} checked="checked" {/if}>
+                        {/volist}
+
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-layout-admin " style="width: 100%">
+                    <div class="layui-input-block">
+                        <div class="layui-footer" style="left: 0px;text-align: center;">
+                            <button class="layui-btn" lay-submit="" lay-filter="add">提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['element', 'form', 'jquery','lucky'], function () {
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var lucky=layui.lucky;
+
+        form.on('submit(add)', function (data) {
+            lucky.FormSubmit("{:url('userGroup')}",data.field,"table_id",1);
+            return false;
+        });
+    })
+</script>
+
+{/block}
+

@@ -1,0 +1,189 @@
+
+{extend name='public/base' /}
+
+{block name="content"}
+
+<div class="layui-col-md12">
+    <div class="layui-card">
+        <div class="layui-card-body layui-row ">
+
+            <form action="" class="layui-form" method="get">
+                <div class="layui-form-item layui-form-pane">
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">选择时间：</label>
+                        <div class="layui-input-inline">
+                            <input name="time" class="layui-input" id="time" value="" type="text" placeholder="请选择日期范围">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">附件类型：</label>
+                        <div class="layui-input-inline">
+                            <select name="type" lay-search="">
+                                {volist name="type" id="t"}
+                                <option value="{$t.type}" >{$t.type}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-inline" style="padding-left: 20px;">
+                        <button class="layui-btn icon-btn layui-btn-sm" data-id="table_id" lay-filter="search" lay-submit="">
+                            <i class="layui-icon"></i>搜索
+                        </button>
+                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm">重置</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <!--表格区-->
+            <table class="layui-hide" id="tableFilter" lay-filter="tableFilter"></table>
+        </div>
+    </div>
+
+</div>
+
+{/block}
+
+{block name="js"} <!--js处理区-->
+
+<!--模板-->
+<script type="text/html" id="operationTpl">
+    <a href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs {:node('AttachMents/del')}"  data-title="删除" lay-event="del"><i class="layui-icon "></i></a>
+</script>
+
+<script type="text/html" id="toolbarDemo">
+    <button class="layui-btn layui-btn-sm {:node('AttachMents/uploadAttachment')}" lay-event="add"><i class="layui-icon"></i>上传附件</button>
+    <button class="layui-btn layui-btn-sm layui-btn-primary" lay-event="reload"><i class="fa fa-refresh"></i> 刷新</button>
+    <button class="layui-btn layui-btn-sm {:node('AttachMents/del')} layui-btn-danger" lay-event="del"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
+    <button class="layui-btn layui-btn-sm {:node('AttachMents/download')} " lay-event="download">打包下载</button>
+</script>
+<!-- 链接 -->
+<script type="text/html" id="urlTpl">
+    <a href="{{d.att_dir}}" target="_blank">{{d.att_dir}}</a>
+</script>
+<script>
+    layui.use(['element', 'table', 'form', 'jquery', 'lucky','laydate','okTab'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var table = layui.table;
+        var $ = layui.jquery;
+        var lucky=layui.lucky;
+        var laydate = layui.laydate;
+        var okTab=layui.okTab();
+        form.render();
+
+        //日期范围
+        laydate.render({
+            elem: '#time'
+            ,range: '~'
+        });
+
+
+        table.render({
+            elem: '#tableFilter',
+            url:"{:url('index')}",
+            toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
+            defaultToolbar: ['filter', 'exports', 'print'],
+            even: true, //开启隔行背景
+            page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip','last'] //自定义分页布局
+                ,groups: 5 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+                ,limit:20
+                ,limits:[20,30,50]
+            },
+            id:'table_id',
+            height: 'full-100',
+            text: {
+                none: '暂无相关数据'
+            },
+            cols: [[
+                {type:'checkbox'},
+                {field: 'id',  title: 'ID',width:60},
+                {field: 'name', minWidth: 200, title: '名称'},
+                {field: 'att_dir', width: 200, title: '路径',templet: '#urlTpl'},
+                {field: 'size', width: 100, title: '大小'},
+                {field: 'type', width: 100, title: '类型'},
+                {field: 'image_type', width: 100, title: '上传类型'},
+                {field: 'module_type',style:'cursor: pointer;',title: '上传模块',width:100},
+                {field: 'create_time', title: '添加时间',align: 'center',width:180,sort:true},
+                {templet: '#operationTpl', width: 60, align: 'center', title: '操作'}
+            ]],
+            done: function (res) {
+                layer.closeAll('loading');
+            }
+        });
+
+        /**
+         * 关键词搜索树
+         */
+        form.on('submit(search)', function (obj) {
+            lucky.CreateSearch("table_id",obj.field);
+            return false;
+        });
+
+
+        /**
+         * 监听单行工具操作
+         */
+        table.on('tool(tableFilter)', function (obj) {
+            var data = obj.data;
+            var _id=parseInt(data.id);
+            var layEvent = obj.event;
+            if(layEvent==="del"){
+                lucky.FormatData(_id,"{:url('del')}","table_id","确认删除吗？");
+            }
+        });
+
+        table.on('toolbar(tableFilter)', function(obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data = checkStatus.data;
+
+            if(obj.event==="add"){
+                lucky.CreateOpenForm("上传附件",'55%','73%',"{:url('AttachMents/uploadAttachment')}",obj.config.id);
+                return false;
+            }else if(obj.event==="reload"){
+                lucky.CreateReload(obj.config.id);
+            }else if(obj.event==="del"){
+                var num=0;
+                var id=[];
+                for (var i in data) {
+                    num++;
+                    id.push(data[i].id);
+                }
+                if (id.length <1){
+                    layer.msg("请至少选择一个附件",{icon:15,time:1000,shade:0.3});
+                    return  false;
+                }
+                lucky.FormatData(id,"{:url('del')}",obj.config.id,"确认删除选择的附件吗？");
+            }else if(obj.event==='download'){
+                var _id=[];
+                for (var i in data) {
+                    _id.push(data[i].id);
+                }
+                if (_id.length <1){
+                    layer.msg("请至少选择一个附件",{icon:15,time:1000,shade:0.3});
+                    return  false;
+                }
+                var urls="{:url('AttachMents/download')}?id="+_id;
+                var page = '<div lay-id="111-777" data-url="' + urls+ '"><cite>打包下载</cite></div>';
+                okTab.tabAdd(page);
+               // window.location.href=urls;
+            }
+        });
+
+    });
+
+</script >
+
+
+{/block}

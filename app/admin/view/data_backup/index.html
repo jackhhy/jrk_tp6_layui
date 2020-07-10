@@ -1,0 +1,195 @@
+
+{extend name='public/base' /}
+
+{block name="content"}
+
+<div class="layui-col-md12">
+    <div class="layui-card">
+
+        <div class="layui-card-body">
+
+            <div class="layui-form">
+                <a id="export" class="layui-btn layui-btn-sm" href="javascript:;" autocomplete="off">立即备份</a>
+                <a id="optimize " href="javascript:" class="layui-btn layui-btn-sm">优化表</a>
+                <a id="repair" href="javascript:" class="layui-btn layui-btn-sm">修复表</a>
+                <a  id="huanyuan" href="javascript:" class="layui-btn layui-btn-sm">还原数据库</a>
+                <form id="export-form" method="post" action="{:url('DataBackup/export')}">
+                    <table class="layui-table" lay-size="sm">
+                        <thead>
+                        <tr>
+                            <th width="48"><input lay-skin="primary" class="check-all" checked="chedked" type="checkbox" value=""></th>
+                            <th>表名</th>
+                            <th>数据量</th>
+                            <th>数据大小</th>
+                            <th>数据引擎</th>
+                            <th>排序规则</th>
+                            <th>表注释</th>
+                            <th>创建时间</th>
+                            <th>备份状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach name='list' item='table'}
+                        <tr>
+                            <td>
+                                <input class="ids" checked="chedked" lay-skin="primary" type="checkbox" name="tables[]" value="{$table.name}">
+                            </td>
+                            <td>{$table.name}</td>
+                            <td>{$table.rows}</td>
+                            <td>{$table.data_length|format_bytes}</td>
+                            <td>{$table.engine}</td>
+                            <td>{$table.collation}</td>
+                            <td>{$table.comment}</td>
+                            <td>{$table.create_time}</td>
+                            <td class="info">备份未开始</td>
+                            <td>
+                                <a  class="optimize layui-btn layui-btn-xs " data-dz="{:url('DataBackup/optimize',['tables'=>$table['name']])}" href="javascript:">优化表</a>&nbsp;
+                                <a  class="repair layui-btn layui-btn-xs layui-btn-warm" data-dz="{:url('DataBackup/repair',['tables'=>$table['name']])}" href="javascript:">修复表</a>
+                                <a  href="javascript:;" class="layui-btn layui-btn-xs layui-btn-normal show" data-table="{$table.name}">查看表</a>
+                            </td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+
+
+                    </table>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{/block}
+
+{block name="js"} <!--js处理区-->
+
+<script>
+    layui.use(['element', 'table', 'form', 'jquery', 'okTab','lucky'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var table = layui.table;
+        var $ = layui.jquery;
+        var lucky=layui.lucky;
+        var okTab=layui.okTab();
+        form.render();
+
+        /**
+         * 查看表详细
+         */
+        $(".show").click(function () {
+            var table=$(this).attr("data-table");
+            lucky.CreateOpenForm("查看表详情","70%","75%","/admin/DataBackup/showtable/table/"+table);
+            return false;
+        });
+
+
+        /**
+         * 还原数据库
+         */
+        $("#huanyuan").click(function () {
+            var url = "{:url('DataBackup/importlist')}";
+            var page = '<div lay-id="add-1" data-url="' + url + '"><cite>还原数据库</cite></div>';
+            okTab.tabAdd(page);
+        });
+
+        //备份表方法
+        $("#export").click(function(){
+            $(this).html("正在发送备份请求...");
+            $.post("{:url('DataBackup/export')}",$("#export-form").serialize(),function (res) {
+                if(res.code==1){
+                    $("#export").html( "开始备份，请不要关闭本页面！");
+                    backup(res.data.tab);
+                    window.onbeforeunload = function(){ return "正在备份数据库，请不要关闭！" }
+                }else{
+                    layer.tips(res.msg, "#export", {
+                        tips: [1, '#3595CC'],
+                        time: 4000
+                    });
+                    $("#export").html("立即备份");
+                }
+            });
+            return false;
+        });
+        //递归备份表
+        function backup(tab,status){
+            status && showmsg(tab.id, "开始备份...(0%)");
+            $.get( $("#export-form").attr("action"), tab, function(data){
+                // console.log(data)
+                if(data.code==1){
+                    showmsg(tab, data.msg);
+
+                    if(!$.isPlainObject(data.data.tab)){
+                        $("#export").html("备份完成");
+                        window.onbeforeunload = function(){ return null }
+                        return;
+                    }
+
+                    backup(data.data.tab, tab.id != data.data.tab.id);
+                } else {
+                    $("#export").html("立即备份");
+                }
+            }, "json");
+
+        }
+        //修改备份状态
+        function showmsg(tab, msg){
+            $("table tbody tr").eq(tab.id).find(".info").html(msg)
+        }
+
+
+        $(".optimize").click(function () {
+            $.post($(this).attr("data-dz"), {}, function(data){
+                if (data.code==1){
+                    layer.msg(data.msg,{icon:1,time:1000,shade:0.3});
+                }else {
+                    layer.msg(data.msg,{icon:15,time:1000,shade:0.3});
+                }
+            }, "json");
+            return false;
+        });
+
+        $(".repair").click(function () {
+            $.post($(this).attr("data-dz"), {}, function(data){
+                if (data.code==1){
+                    layer.msg(data.msg,{icon:1,time:1000,shade:0.3});
+                }else {
+                    layer.msg(data.msg,{icon:15,time:1000,shade:0.3});
+                }
+            }, "json");
+            return false;
+        });
+
+
+        //优化表
+        $("#optimize").click(function(){
+            $.post("{:url('DataBackup/optimize')}", $("#export-form").serialize(), function(data){
+                if (data.code==1){
+                    layer.msg(data.msg,{icon:1,time:1000,shade:0.3});
+                }else {
+                    layer.msg(data.msg,{icon:15,time:1000,shade:0.3});
+                }
+            }, "json");
+            return false;
+        });
+
+        //修复表
+        $("#repair").on("click",function(e){
+            $.post("{:url('DataBackup/repair')}", $("#export-form").serialize(), function(data){
+                if (data.code==1){
+                    layer.msg(data.msg,{icon:1,time:1000,shade:0.3});
+                }else {
+                    layer.msg(data.msg,{icon:15,time:1000,shade:0.3});
+                }
+            }, "json");
+            return false;
+        });
+    });
+
+
+</script >
+
+
+{/block}

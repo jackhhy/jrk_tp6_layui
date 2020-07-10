@@ -1,0 +1,114 @@
+
+{extend name='public/window' /}
+
+{block name="content"}
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <!-- <div class="layui-card-header"></div>-->
+
+        <div class="layui-card-body" style="padding: 15px;">
+            <form class="layui-form" action="" lay-filter="form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">上级角色组：</label>
+                    <div class="layui-input-block">
+                        <select name="pid" lay-search="">
+                            <option value="0" {eq name="$id" value="0"} selected {/eq}>顶级角色组</option>
+                            {volist name="tree" id="t"}
+                            <option value="{$t.id}" {eq name="$id" value="$t.id"} selected {/eq}>{$t.title_show}</option>
+                            {/volist}
+                        </select>
+
+                    </div>
+                </div>
+
+
+
+
+                {if isset($info.id)}
+                <input type="hidden" name="id" value="{$info.id}">
+                {/if}
+
+                <input type="hidden" name="__token__" id="token" value="{:token()}"/>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">权限名称：</label>
+                    <div class="layui-input-block input-custom-width" style="">
+                        <input type="text" name="title" value="" placeholder="请输入权限名称" lay-verify="required" lay-vertype="tips" lay-reqtext="请输入权限名称" autocomplete="off" class="layui-input ">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否禁止：</label>
+                    <div class="layui-input-inline input-custom-width">
+                        <input type="radio" name="status" value="1" title="正常" lay-filter=""  checked>
+                        <input type="radio" name="status" value="0" title="禁止" lay-filter="" >
+                    </div>
+                    <div class="layui-form-mid layui-word-aux"></div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">选择权限：</label>
+                    <div class="layui-input-block">
+                        <div id="LAY-auth-tree-index"></div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-layout-admin " style="width: 100%">
+                    <div class="layui-input-block">
+                        <div class="layui-footer" style="left: 0px;text-align: center;">
+                            <button class="layui-btn" lay-submit="" lay-filter="add">提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['element', 'form', 'jquery','authtree','lucky'], function () {
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var authtree = layui.authtree;
+        var lucky=layui.lucky;
+        var id='{$id}';
+
+        //表单赋值
+        var info = {:json_encode($info)};
+        form.val("form",info);
+
+        // 初始化
+        $.ajax({
+            url: "{:url('getRoles')}",
+            dataType: 'json',
+            type:'post',
+            data:{id:id},
+            success: function(data){
+                // 渲染时传入渲染目标ID，树形结构数据（具体结构看样例，checked表示默认选中），以及input表单的名字
+                authtree.render('#LAY-auth-tree-index', data.data, {
+                    inputname: 'rule[]'
+                    ,layfilter: 'lay-check-auth'
+                    ,autowidth: true
+                });
+            },
+            error: function(xml, errstr, err) {
+                layer.alert(errstr+'，获取数据失败！');
+            }
+        });
+
+        form.on('submit(add)', function (data) {
+            lucky.FormSubmit("{:url('addGroups')}",data.field,"table_id",1);
+            return false;
+        });
+    })
+</script>
+
+{/block}
+

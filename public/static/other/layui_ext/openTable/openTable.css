@@ -1,0 +1,93 @@
+/**
+ @ Name：表格可展开显示更多列
+ @ Author：hbm
+ @ License：MIT
+ @ gitee：https://gitee.com/hbm_461/layui_extend_openTable
+ */
+
+/* 样式加载完毕的标识 */
+html #layuicss-openTable {
+    display: none;
+    position: absolute;
+    width: 1989px;
+}
+
+.layui-openTable {
+
+}
+
+/* 组件样式 */
+.openTable-i-table-open {
+    display: block;
+    width: 10px;
+    height: 10px;
+    user-select: none;
+    background: url(./icon/right.svg) 0 0 no-repeat;
+    background-size: 10px 10px;
+    cursor: pointer;
+}
+
+
+/*表格展开三角动画*/
+.openTable-open-dow {
+    transform: rotate(90deg)
+}
+
+.openTable-i-table-open {
+    position: relative;
+    display: inline-block;
+    transition: transform .2s ease-in-out;
+}
+
+.openTable-open-td {
+    padding-bottom: 20px !important;
+    background-color: #fdfdfd !important;
+}
+
+.openTable-open-td:hover {
+    background-color: white;
+}
+
+
+/*展开列 容器*/
+.openTable-open-item-div {
+    display: inline-block;
+    margin-top: 20px;
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+/*展开列 title*/
+.openTable-item-title {
+    color: #99a9bf;
+}
+
+
+/*展开列 可修改 */
+.openTable-exp-value-edit {
+    background-color: #F6F6F6;
+}
+
+/*展开列 仅展示 */
+.openTable-exp-value {
+    padding: 0 20px 0 20px;
+    min-width: 80px;
+    display: inline-block;
+    border: none;
+    border-bottom: #dedede solid 1px;
+    padding-bottom: 2px;
+    padding-top: 4px !important
+}
+
+
+.openTable-open-item-div input {
+    height: 29px !important;
+}
+
+/*网络版加载中*/
+.openTable-network-message {
+    width: 80%;
+    text-align: center;
+    height: 80px;
+    padding-top: 16px;
+}

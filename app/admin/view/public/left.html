@@ -1,0 +1,104 @@
+<!--左侧导航菜单-->
+<ul id="navBar" class="layui-nav okadmin-nav okadmin-bg-20222A layui-nav-tree" style="height: 577px;" >
+    <li class="layui-nav-item layui-this show_tips" >
+        <a lay-id="1" data-url="" is-close="true" >
+            <i class="fa fa-home" ></i ><cite >控制台</cite >
+        </a >
+    </li >
+
+    {volist name="menulist" id="v" key="k"}
+
+    {if isset($v['children'])}
+    <li class="layui-nav-item show_tips" >
+        <a ><i class="{$v.font_family} {$v.icon}"></i><cite >{$v.title}</cite ><span class="layui-nav-more" ></span ></a >
+        <dl class="layui-nav-child" >
+            {volist name="$v['children']" id="s" key="k2"}
+
+            <dd >
+                {if isset($s['children'])}
+                <a ><i class="{$s.font_family} {$s.icon}"></i><cite >{$s.title}</cite ><span class="layui-nav-more" ></span ></a >
+
+                <dl class="layui-nav-child" >
+
+                    {volist name="$s['children']" id="t"  key="k3"}
+                    <dd >
+
+                        {if isset($t['children'])}
+
+                        <a ><i class="{$t.font_family} {$t.icon}"></i><cite >{$t.title}</cite ><span class="layui-nav-more" ></span ></a >
+                        <dl class="layui-nav-child" >
+
+                            {volist name="$t['children']" id="f" key="k4"}
+
+                            <dd >
+                                {if isset($f['children'])}
+
+                                <a ><i class="{$f.font_family} {$f.icon}"></i><cite >{$f.title}</cite ><span class="layui-nav-more" ></span ></a >
+                                <dl class="layui-nav-child" >
+
+                                    {volist name="$f['children']" id="fv" key="k5"}
+                                    <dd >
+                                        {if isset($fv['children'])}
+
+                                        <a ><i class="{$fv.font_family} {$fv.icon}"></i><cite >{$fv.title}</cite ><span class="layui-nav-more" ></span ></a >
+                                        <dl class="layui-nav-child" >
+                                            {volist name="$fv['children']" id="sx" key="k6"}
+                                            <dd >
+                                                <a lay-id="{$sx.id}-{$k6}" data-url="{if(isset($sx['url']))} {$sx['url']} {else} {$sx['name']} {/if}" is-close="true" ><i class="{$sx.font_family} {$sx.icon}"></i><cite >{$sx.title}</cite ></a >
+                                            </dd >
+
+                                            {/volist}
+                                        </dl>
+
+                                        {else}
+
+                                        <a lay-id="{$fv.id}-{$k5}" data-url="{if(isset($fv['url']))} {$fv['url']} {else} {$fv['name']} {/if}" is-close="true" ><i class="{$fv.font_family} {$fv.icon}"></i><cite >{$fv.title}</cite ></a >
+
+                                        {/if}
+
+                                    </dd >
+                                    {/volist}
+
+                                </dl>
+
+                                {else}
+                                <a lay-id="{$f.id}-{$k4}" data-url="{if(isset($f['url']))} {$f['url']} {else} {$f['name']} {/if}" is-close="true" ><i class="{$f.font_family} {$f.icon}"></i><cite >{$f.title}</cite ></a >
+                                {/if}
+                            </dd >
+
+                            {/volist}
+
+                        </dl>
+
+                        {else}
+
+                        <a lay-id="{$t.id}-{$k3}" data-url="{if(isset($t['url']))} {$t['url']} {else} {$t['name']} {/if}" is-close="true" ><i class="{$t.font_family} {$t.icon}"></i><cite >{$t.title}</cite ></a >
+
+                        {/if}
+                    </dd >
+
+                    {/volist}
+                </dl>
+                {else}
+                <a lay-id="{$s.id}-{$k2}" data-url="{if(isset($s['url']))} {$s['url']} {else} {$s['name']} {/if}" is-close="true" ><i class="{$s.font_family} {$s.icon}"></i><cite >{$s.title}</cite ></a >
+                {/if}
+            </dd >
+
+            {/volist}
+
+        </dl >
+    </li >
+
+    {else}
+
+    <li class="layui-nav-item  show_tips" >
+        <a lay-id="{$v.id}-{$k}" data-url="{if(isset($v['url']))} {$v['url']} {else} {$v['name']} {/if}"  >
+            <i class="{$v.font_family} {$v.icon}"></i><cite >{$v.title}</cite >
+        </a >
+    </li >
+
+    {/if}
+
+    {/volist}
+
+</ul >
