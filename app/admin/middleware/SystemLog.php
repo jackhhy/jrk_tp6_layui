@@ -32,6 +32,14 @@ class SystemLog
                 if (isset($params['s'])) {
                     unset($params['s']);
                 }
+                if(!empty($params)){
+                    //去除密码
+                    foreach($params as $k=>$v){
+                        if(stripos($k,"password")!==false){
+                            unset($params[$k]);
+                        }
+                    }
+                }
                 $info=\session(ADMIN_LOGIN_INFO);
                 $data = [
                     'admin_id'    => session(ADMIN_LOGIN_INFO)['id'],

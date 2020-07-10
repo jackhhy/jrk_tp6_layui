@@ -79,7 +79,7 @@ $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
 <body class="error-page-wrapper">
 <div class="content-container">
     <div class="head-line">
-        <img src="/static/common/images/error.svg" alt="" width="150" />
+        <img src="/static/images/error.svg" alt="" width="150" />
     </div>
     <div class="subheader">
         <?=$debug?$message:$lang['The page you are looking for is temporarily unavailable']?>
@@ -93,8 +93,8 @@ $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
 
     </div>
     <div class="buttons-container">
-        <a href="/"><?=$lang['Home']?></a>
-        <a href="/"><?=$lang['Feedback']?></a>
+        <a href="#" onClick="javascript :history.back(-1);"><?=$lang['Home']?></a>
+        <a href="#" onClick="javascript :history.back(-1);"><?=$lang['Feedback']?></a>
     </div>
 </div>
 </body>

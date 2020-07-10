@@ -78,41 +78,11 @@ class AttachMents extends AdminBaseController
         if (empty($data)) {
             $this->error("暂无数据");
         }
-        //dd($data);
 
-        //实例化下载类
-        $down=new Zipdown();
-        //产生一个临时文件
-        $dfile = tempnam(sys_get_temp_dir(), 'tmp');
-        // 最终生成的文件名（含路径）
-        $filename =date ( 'YmdHis' ) . ".zip";
-        foreach($data as $k=>$val){
-            if(file_exists(app()->getRootPath().'public'.$val['att_dir'])){
-                $down->add_file(file_get_contents(app()->getRootPath().'public'.$val['att_dir']), iconv('UTF-8','gbk',$val['img_dir'].'/'.$val['name']));
-            }
-        }
-        $down->output($dfile);
-        ob_clean();
-        header('Pragma: public');
-        header('Last-Modified:'.gmdate('D, d M Y H:i:s') . 'GMT');
-        header('Cache-Control:no-store, no-cache, must-revalidate');
-        header('Cache-Control:pre-check=0, post-check=0, max-age=0');
-        header('Content-Transfer-Encoding:binary');
-        header('Content-Encoding:none');
-        header('Content-type:multipart/form-data');
-        header('Content-Disposition:attachment; filename="'.$filename.'"'); //设置下载的默认文件名
-        header('Content-length:'. filesize($dfile));
-        $fp = fopen($dfile, 'r');
-        while(connection_status() == 0 && $buf = @fread($fp, 8192)){
-            echo $buf;
-        }
-        fclose($fp);
-        @unlink($dfile);
-        @flush();
-        @ob_flush();
-        ob_end_clean();
-        exit();
-        //打包下载结束
+        $zip=new Zipdown();
+
+        //打包下载  
+        return $zip->zip_file($data);
     }
 
 
