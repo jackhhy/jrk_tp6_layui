@@ -25,16 +25,19 @@
         * @Author Hhy <jackhhy520@qq.com>
         * @DateTime 2020-07-10 13:20:06
         * @param array $files
-        * @param string $zipName
-        * @param boolean $wen
+        * @param string $zipName 压缩包名称
+        * @param boolean $wen 
         * @param boolean $isDown
         * @return void
         */ 
        public function zip_file($files = [], $zipName = '', $wen = true,$isDown = true){
 
+        $zip_file_path='zip/';
         // 文件名为空则生成文件名
         if (empty($zipName)) {
-            $zipName = date('YmdHis') . '.zip';
+            $zipName = $zip_file_path.date('YmdHis') . '.zip';
+        }else{
+            $zipName=$zip_file_path.$zipName.'.zip';
         }
 
         // 实例化类,使用本类，linux需开启zlib，windows需取消php_zip.dll前的注释

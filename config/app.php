@@ -21,7 +21,9 @@ return [
 
     // 应用映射（自动多应用模式有效）
     'app_map'          => [
+        '*'=>'',
         Env::get('jrk.admin', 'admin') => 'admin',
+        Env::get('jrk.api', 'api') => 'api',
     ],
     // 域名绑定（自动多应用模式有效）
     'domain_bind'      => [],

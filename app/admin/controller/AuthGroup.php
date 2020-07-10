@@ -152,7 +152,6 @@ class AuthGroup extends AdminBaseController
 
         //查询当前已经授权的人员
 
-
         if (!empty($user) && !empty($group_access)) {
             foreach ($user as $k => $v) {
                 foreach ($group_access as $t => $g) {
