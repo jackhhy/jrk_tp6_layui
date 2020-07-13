@@ -2,6 +2,31 @@
 use think\facade\Route;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //miss 路由
 Route::miss(function() {
     if(app()->request->isOptions())

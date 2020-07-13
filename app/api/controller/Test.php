@@ -7,7 +7,7 @@ class Test{
 
     public function index(){
 
-        app("json")->success("tes");
+       return json(['code'=>0,'msg'=>"tes"]);
     }
 
 

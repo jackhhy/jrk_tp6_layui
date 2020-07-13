@@ -97,6 +97,7 @@ class AttachMent extends AdminBaseModel implements Comm
                       }
                   }
                 self::where('id', 'in',$ids)->delete();
+
                 return self::JsonReturn("删除成功");
             } else {
                 return self::JsonReturn("暂无数据",0);

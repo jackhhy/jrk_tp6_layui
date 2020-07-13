@@ -4,7 +4,7 @@
 namespace app\api;
 
 
-use think\exception\DbException;
+use think\db\exception\DbException;
 use think\exception\Handle;
 use think\Response;
 use Throwable;
@@ -37,20 +37,20 @@ class ApiExceptionHandle extends Handle
     {
         // 添加自定义异常处理机制
         if ($e instanceof DbException) {
-            return app('json')->fail('数据获取失败', [
+            return json([
                 'file' => $e->getFile(),
-                'message' => $e->getMessage(),
+                'msg' => $e->getMessage(),
                 'line' => $e->getLine(),
-            ]);
+            ],400);
         } else {
-            return app('json')->fail('系统出现异常', [
-                'message' => $e->getMessage(),
+            return json([
+                'msg' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'code' => $e->getCode(),
                 'line' => $e->getLine(),
                 'trace' => $e->getTrace(),
                 'previous' => $e->getPrevious(),
-            ]);
+            ],200);
         }
     }
 
