@@ -32,8 +32,30 @@ class CheckAdminUser extends Validate
     /**
      * 验证场景
      */
-    protected $scene = [
+  /*  protected $scene = [
         'edit'  =>  ['username','nickname'],
-    ];
+    ];*/
+
+
+    /**
+     * @return $this
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:edit 验证场景定义
+     */
+    public function sceneEdit(){
+
+        return $this->only(['username','nickname']);
+
+    }
+
+
+    /**
+     * @return $this
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:修改密码时候
+     */
+    public function scenePass(){
+        return $this->only(['password','repassword'])->append("oldpassword","require|max:16|alphaDash");
+    }
 
 }

@@ -99,12 +99,15 @@ class Admin extends AdminBaseController
                 unset($data['oldpassword']);
 
                 $checkUser = new CheckAdminUser();
-                $check = $checkUser->check($data);
+                $check = $checkUser->scene("Pass")->check($data);
                 if (!$check) {
                     return parent::JsonReturn($checkUser->getError(), 0);
                 }
                 $data['id']=(int)self::$admin_info['id'];
+
                 unset($data['repassword']);
+                //密码加密
+                $data['password']=password($data['password']);
 
                 return $this->model->doAll($data);
 
