@@ -13,5 +13,6 @@ return [
     ],
 
     'subscribe' => [
+        \app\common\subscribes\AdminSubscribe::class//后台用户事件类
     ],
 ];
