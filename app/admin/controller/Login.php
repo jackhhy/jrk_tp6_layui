@@ -134,7 +134,7 @@ class Login extends BaseController
                 //更新用户信息
                 $up = ['login_time' => time(), 'login_ip' => request()->ip(), 'logins' => $result['logins'] + 1,'id'=>$result['id']];
 
-                event("LoginRecord",$up);
+                event("AdminLoginAfter",[$up]);
 
                 //保存登录信息
                 Session::set(ADMIN_LOGIN_INFO, $result);
