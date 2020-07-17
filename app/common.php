@@ -210,3 +210,26 @@ if (!function_exists('get_this_class_methods')) {
 }
 
 
+if (!function_exists('add_log')){
+    /**
+     * @param $data
+     * @param string $file
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:
+     */
+     function add_log($data,$file=''){
+         if (empty($file)) $file="jrk";
+        $name = date("Y_m_d", time());
+        $jia=date("Ym");
+        $file_path = app()->getRootPath()."Logs/".$file."/".$jia;
+        if (!is_dir($file_path)) {
+            mkdir($file_path, 0777, true);
+        }
+        @file_put_contents(
+            $file_path.'/'.$name.'.log',
+            date('Y-m-d H:i:s', time()).' '.var_export(json_encode($data)."\r\n", true)."\r\n",
+            FILE_APPEND
+        );
+    }
+
+}
