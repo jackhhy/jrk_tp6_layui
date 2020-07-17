@@ -5,7 +5,7 @@ return [
     ],
 
     'listen' => [
-        'LoginRecord'    =>    ['app\admin\listener\LoginRecord'],
+        
     ],
 
     'subscribe' => [
