@@ -1,50 +1,49 @@
-
-layui.define(['jquery','layer'], function(exports) {
+layui.define(['jquery', 'layer'], function(exports) {
     "use strict";
     // 声明变量
     var $ = layui.$;
-    var layer=layui.layer;
+    var layer = layui.layer;
 
     //声明类
-    var lucky={
+    var lucky = {
         /**
          * 表格搜索
          * @param tableid
          * @param data
          * @constructor
          */
-        CreateSearch:function (tableid,data) {
-            if (data==""||data==undefined){
-                data=[];
+        CreateSearch: function(tableid, data) {
+            if (data == "" || data == undefined) {
+                data = [];
             }
-            var index=layer.msg("查询中，请稍后...",{icon:16,time:false,shade: 0.3,anim:4});
-            setTimeout(function () {
+            var index = layer.msg("查询中，请稍后...", { icon: 16, time: false, shade: 0.3, anim: 4 });
+            setTimeout(function() {
                 //执行重载
                 layui.table.reload(tableid, {
                     page: {
                         curr: 1 //重新从第 1 页开始
-                    }
-                    ,where:data
+                    },
+                    where: data
                 }, 'data');
                 layer.close(index);
-            },500);
+            }, 500);
         },
 
         /**
          * 先关闭然后刷新父页面
          * @param tableid
          */
-        CloseLayerReload:function (tableid) {
+        CloseLayerReload: function(tableid) {
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
-            parent.layui.table.reload(tableid,'data');
+            parent.layui.table.reload(tableid, 'data');
         },
 
 
         /**
          * 关闭父级页面不刷新
          */
-        CloseLayer:function () {
+        CloseLayer: function() {
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
         },
@@ -52,7 +51,7 @@ layui.define(['jquery','layer'], function(exports) {
         /**
          * //先刷新父页面后关闭
          */
-        CloseFa:function () {
+        CloseFa: function() {
             parent.location.reload();
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
@@ -63,10 +62,9 @@ layui.define(['jquery','layer'], function(exports) {
          * @param tableid
          * @constructor
          */
-        CreateReload:function (tableid) {
-            layui.table.reload(tableid,{where:{}},'data');
+        CreateReload: function(tableid) {
+            layui.table.reload(tableid, { where: {} }, 'data');
         },
-
 
         /**
          * 表单数据提交
@@ -77,60 +75,58 @@ layui.define(['jquery','layer'], function(exports) {
          * @param r
          * @constructor
          */
-        FormSubmit:function (url,data,table_id=0,is_close=0,r=0) {
+        FormSubmit: function(url, data, table_id = 0, is_close = 0, r = 0) {
             $.ajax({
-                url:url,
-                type:'post',
-                data:data,
+                url: url,
+                type: 'post',
+                data: data,
                 error: function(error) {
-                    var json=JSON.parse(error.responseText);
+                    var json = JSON.parse(error.responseText);
                     $.each(json.errors, function(idx, obj) {
-                        layer.msg(obj[0],{icon:15,time:1500,shade:0.3,anim:4});
+                        layer.msg(obj[0], { icon: 15, time: 1500, shade: 0.3, anim: 4 });
                         return false;
                     });
                 },
-                beforeSend:function(){
+                beforeSend: function() {
                     layer.load(2);
                 },
-                success:function(data)
-                {
-                    if (data.code==1) {
+                success: function(data) {
+                    if (data.code == 1) {
                         //表格id 为空则刷新本页面
-                        var ie=lucky.isEmpty(table_id);
-                        if (table_id==0 || ie){
-                            layer.msg(data.msg,{icon: 1, time: 1500,shade:0.3, anim: 4},function () {
+                        var ie = lucky.isEmpty(table_id);
+                        if (table_id == 0 || ie) {
+                            layer.msg(data.msg, { icon: 1, time: 1500, shade: 0.3, anim: 4 }, function() {
                                 window.location.reload();
                             });
-                        }else {
-                            if(is_close!=0){ //只要不是0其它任何数字都可以
-                                layer.msg(data.msg,{icon: 1, time: 1500,shade:0.3, anim: 4});
-                                setTimeout(function(){
+                        } else {
+                            if (is_close != 0) { //只要不是0其它任何数字都可以
+                                layer.msg(data.msg, { icon: 1, time: 1500, shade: 0.3, anim: 4 });
+                                setTimeout(function() {
                                     lucky.CloseLayerReload(table_id); //重载父页面表格
-                                },500);
+                                }, 500);
 
-                            }else if(r!=0){
-                                layer.msg(data.msg,{icon: 1, time: 1500,shade:0.3, anim: 4});
-                                setTimeout(function(){
+                            } else if (r != 0) {
+                                layer.msg(data.msg, { icon: 1, time: 1500, shade: 0.3, anim: 4 });
+                                setTimeout(function() {
                                     lucky.CloseFa(table_id); //重载父页面表格
-                                },500);
-                            }else {
-                                layer.msg(data.msg,{icon: 1, time: 1500,shade:0.3, anim: 4});
-                                setTimeout(function(){
+                                }, 500);
+                            } else {
+                                layer.msg(data.msg, { icon: 1, time: 1500, shade: 0.3, anim: 4 });
+                                setTimeout(function() {
                                     lucky.CloseLayer(table_id); //关闭弹窗
-                                },500);
+                                }, 500);
                             }
                         }
 
-                    }else if(data.code==4){
-                        layer.msg(data.msg,{icon:15,time:1500,shade:0.3,anim:4},function () {
-                             $("#token").val(data.data._token);
+                    } else if (data.code == 4) {
+                        layer.msg(data.msg, { icon: 15, time: 1500, shade: 0.3, anim: 4 }, function() {
+                            $("#token").val(data.data._token);
                         });
-                    }
-                    else{
-                        layer.msg(data.msg,{icon:15,time:1500,shade:0.3,anim:4});
+                    } else {
+                        layer.msg(data.msg, { icon: 15, time: 1500, shade: 0.3, anim: 4 });
                     }
                 },
-                complete:function(){
+                complete: function() {
                     layer.closeAll('loading');
                 }
             });
@@ -146,29 +142,29 @@ layui.define(['jquery','layer'], function(exports) {
          * @param is_full
          * @constructor
          */
-        CreateOpenForm:function (title,w,h,url,table_id,is_full="") {
-            title?title:'管理界面';
-            w?w:'40%';
-            h?h:'60%';
-            var full= layer.open({
-                title:title,
+        CreateOpenForm: function(title, w, h, url, table_id, is_full = "") {
+            title ? title : '管理界面';
+            w ? w : '40%';
+            h ? h : '60%';
+            var full = layer.open({
+                title: title,
                 type: 2,
                 area: [w, h],
-                offset:'auto',
-                maxmin : true,
+                offset: 'auto',
+                maxmin: true,
                 zIndex: layer.zIndex,
-                skin:'layui-layer-molv',
+                skin: 'layui-layer-molv',
                 shade: 0.5,
                 content: url,
-                end: function () {
-                   /* if (table_id){
-                        setTimeout(function(){
-                            lucky.CreateReload(table_id);//重载表格
-                        },500);
-                    }*/
+                end: function() {
+                    /* if (table_id){
+                         setTimeout(function(){
+                             lucky.CreateReload(table_id);//重载表格
+                         },500);
+                     }*/
                 }
             });
-            if (lucky.isEmpty(is_full)==false){
+            if (lucky.isEmpty(is_full) == false) {
                 layer.full(full); //最大化
             }
         },
@@ -183,18 +179,19 @@ layui.define(['jquery','layer'], function(exports) {
          * @param load
          * @returns {boolean}
          */
-        FormatData:function (ids,URL,table_id,msg='确定删除吗？',load=false) {
-            if($.isArray(ids)) {
+        FormatData: function(ids, URL, table_id, msg = '确定删除吗？', load = false) {
+            if ($.isArray(ids)) {
                 ids = ids.join(',');
             }
             if (lucky.isEmpty(ids)) {
-                layer.msg("没选择任何数据",{time:1500});return false;
+                layer.msg("没选择任何数据", { time: 1500 });
+                return false;
             }
-            layer.confirm(msg,{skin: lucky.randomSkin(), icon: 3, title: "提示", anim: lucky.randomAnim()}, function(index){
+            layer.confirm(msg, { skin: lucky.randomSkin(), icon: 3, title: "提示", anim: lucky.randomAnim() }, function(index) {
                 layer.close(index);
                 $.ajax({
-                    beforeSend:function(){
-                        if (load){
+                    beforeSend: function() {
+                        if (load) {
                             layer.load(2);
                         }
                     },
@@ -202,7 +199,7 @@ layui.define(['jquery','layer'], function(exports) {
                     type: "POST",
                     async: true,
                     dataType: "json",
-                    data:{
+                    data: {
                         ids: ids,
                     },
                     error: function(error) {
@@ -210,20 +207,20 @@ layui.define(['jquery','layer'], function(exports) {
                         return false;
                     },
                     success: function(data) {
-                        if (data.code==1) {
-                            lucky.layerMsg(data.msg,1,function () {
-                                setTimeout(function(){
+                        if (data.code == 1) {
+                            lucky.layerMsg(data.msg, 1, function() {
+                                setTimeout(function() {
                                     lucky.CreateReload(table_id); //重载表格数据
-                                },500);
+                                }, 500);
                             });
-                        }else{
-                            lucky.layerMsg(data.msg,15,function () {
+                        } else {
+                            lucky.layerMsg(data.msg, 15, function() {
                                 lucky.CreateReload(table_id);
                             });
                         }
                     },
-                    complete:function(){
-                        if (load){
+                    complete: function() {
+                        if (load) {
                             layer.closeAll('loading');
                         }
                     }
@@ -238,38 +235,36 @@ layui.define(['jquery','layer'], function(exports) {
          * @param message
          * @param table_id
          */
-        formConfirm:function(url,data,message,table_id){
-            layer.confirm(message, {skin: lucky.randomSkin(), icon: 3, title: "提示", anim: lucky.randomAnim()},function(index){
+        formConfirm: function(url, data, message, table_id) {
+            layer.confirm(message, { skin: lucky.randomSkin(), icon: 3, title: "提示", anim: lucky.randomAnim() }, function(index) {
                 layer.close(index);
                 $.ajax({
-                    beforeSend:function(){
-                    },
+                    beforeSend: function() {},
                     url: url,
                     type: type,
                     async: true,
                     dataType: "json",
-                    data:data,
+                    data: data,
                     error: function(error) {
                         layer.msg("服务器错误或超时");
                         return false;
                     },
                     success: function(data) {
-                        if (data.code==1) {
-                            lucky.layerMsg(data.msg,1);
-                            if (lucky.isEmpty(table_id)){
+                        if (data.code == 1) {
+                            lucky.layerMsg(data.msg, 1);
+                            if (lucky.isEmpty(table_id)) {
                                 window.location.reload();
                             } else {
-                                setTimeout(function(){
-                                    lucky.CreateReload(table_id);//重载表格
-                                },500);
+                                setTimeout(function() {
+                                    lucky.CreateReload(table_id); //重载表格
+                                }, 500);
                             }
 
-                        }else{
-                            lucky.layerMsg(data.msg,15);
+                        } else {
+                            lucky.layerMsg(data.msg, 15);
                         }
                     },
-                    complete:function(){
-                    }
+                    complete: function() {}
                 });
             });
         },
@@ -282,68 +277,67 @@ layui.define(['jquery','layer'], function(exports) {
          * @param reload
          * @constructor
          */
-        Ajax:function(url,data,table_id=null,reload=0){
+        Ajax: function(url, data, table_id = null, reload = 0) {
             $.ajax({
-                beforeSend:function(){
+                beforeSend: function() {
                     layer.load(2);
                 },
                 url: url,
                 type: "POST",
                 async: true,
                 dataType: "json",
-                data:data,
+                data: data,
                 error: function(error) {
                     layer.msg("服务器错误或超时");
                     return false;
                 },
                 success: function(data) {
-                    if (data.code==1) {
-                        lucky.layerMsg(data.msg,1,function () {
-                            if (reload==1){
+                    if (data.code == 1) {
+                        lucky.layerMsg(data.msg, 1, function() {
+                            if (reload == 1) {
                                 window.location.reload();
-                            } else if (lucky.isEmpty(table_id)==false) {
-                                setTimeout(function(){
-                                    lucky.CreateReload(table_id);//重载表格
-                                },500);
+                            } else if (lucky.isEmpty(table_id) == false) {
+                                setTimeout(function() {
+                                    lucky.CreateReload(table_id); //重载表格
+                                }, 500);
                             }
                         });
-                    }else{
-                        layer.msg(data.msg,{icon:15,time:1000,shade:0.3});
+                    } else {
+                        layer.msg(data.msg, { icon: 15, time: 1000, shade: 0.3 });
                     }
                 },
-                complete:function(){
+                complete: function() {
                     layer.closeAll('loading');
                 }
             });
         },
-        Change_status:function (Change_status_url,table_id,tablename,id,field,status) {
+        Change_status: function(Change_status_url, table_id, tablename, id, field, status) {
             $.ajax({
-                url:Change_status_url,
-                type:'post',
+                url: Change_status_url,
+                type: 'post',
                 async: true,
                 dataType: "json",
-                data:{
-                    id:id,
-                    table:tablename,
-                    field:field,
-                    status:status
+                data: {
+                    id: id,
+                    table: tablename,
+                    field: field,
+                    status: status
                 },
                 error: function(error) {
                     layer.msg("服务器错误或超时");
                     return false;
                 },
-                beforeSend:function(){
+                beforeSend: function() {
                     layer.load(2);
                 },
-                success:function(res)
-                {
-                    layer.msg(res.msg,{icon:1,time:1000,shade:0.3}, {
+                success: function(res) {
+                    layer.msg(res.msg, { icon: 1, time: 1000, shade: 0.3 }, {
                         time: 1000
-                    },function () {
+                    }, function() {
                         lucky.CreateReload(table_id);
                     });
                 },
-                complete:function(){
+                complete: function() {
                     layer.closeAll('loading');
                 }
             });
@@ -353,7 +347,7 @@ layui.define(['jquery','layer'], function(exports) {
          * @returns {Array}
          * @constructor
          */
-        CreateTree:function (rows) {
+        CreateTree: function(rows) {
             var nodes = [];
             for (var i = 0; i < rows.length; i++) {
                 var row = rows[i];
@@ -361,8 +355,8 @@ layui.define(['jquery','layer'], function(exports) {
                     nodes.push({
                         id: row.id,
                         name: row.name,
-                        value:row.value,
-                        children:row.children
+                        value: row.value,
+                        children: row.children
                     });
                 }
             }
@@ -376,12 +370,12 @@ layui.define(['jquery','layer'], function(exports) {
                 toDo.push(nodes[i]);
             }
             while (toDo.length) {
-                var node = toDo.shift();   // the parent node
+                var node = toDo.shift(); // the parent node
                 // get the children nodes
                 for (var i = 0; i < rows.length; i++) {
                     var row = rows[i];
                     if (row.pId == node.id) {
-                        var child = {id: row.id, name: row.name, pId: node.id,value:row.value,children:row.children};
+                        var child = { id: row.id, name: row.name, pId: node.id, value: row.value, children: row.children };
                         if (node.children) {
                             node.children.push(child);
                         } else {
@@ -401,7 +395,7 @@ layui.define(['jquery','layer'], function(exports) {
          * @returns {boolean}
          * @constructor
          */
-        Exists:function (rows, pId) {
+        Exists: function(rows, pId) {
             for (var i = 0; i < rows.length; i++) {
                 if (rows[i].id == pId) return true;
             }
@@ -411,8 +405,8 @@ layui.define(['jquery','layer'], function(exports) {
         /**
          * 判断字符串是否为空
          */
-        isEmpty: function(str){
-            if(str == null ||  typeof str == "undefined" || str == ""){
+        isEmpty: function(str) {
+            if (str == null || typeof str == "undefined" || str == "") {
                 return true;
             }
             return false;
@@ -424,8 +418,8 @@ layui.define(['jquery','layer'], function(exports) {
          * @returns {string}
          * @constructor
          */
-        timeToTime:function(inputTime,t=1){
-            var date = new Date(inputTime* 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        timeToTime: function(inputTime, t = 1) {
+            var date = new Date(inputTime * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
             var y = date.getFullYear();
             var m = date.getMonth() + 1;
             m = m < 10 ? ('0' + m) : m;
@@ -438,10 +432,10 @@ layui.define(['jquery','layer'], function(exports) {
             minute = minute < 10 ? ('0' + minute) : minute;
             second = second < 10 ? ('0' + second) : second;
             let k;
-            if (t==1){
-                k= y + '-' + m + '-' + d;
-            } else{
-                k= y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+            if (t == 1) {
+                k = y + '-' + m + '-' + d;
+            } else {
+                k = y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
             }
             return k;
         },
@@ -452,9 +446,9 @@ layui.define(['jquery','layer'], function(exports) {
          * @param icon
          * @param callbackFunction
          */
-        layerMsg:function(msg,icon,callbackFunction){
+        layerMsg: function(msg, icon, callbackFunction) {
             //1-绿色勾,2-红色叉,3-黄色问号,4-灰色锁,5-红色哭脸,6-绿色笑脸,7-黄色感叹号,15-返回失败
-            let options = {icon: icon||lucky.randomIcon(), time: 1500, shade:0.4, anim: lucky.randomAnim()};
+            let options = { icon: icon || lucky.randomIcon(), time: 1500, shade: 0.4, anim: lucky.randomAnim() };
             layer.msg(msg, options, callbackFunction);
         },
 
@@ -462,11 +456,11 @@ layui.define(['jquery','layer'], function(exports) {
          * 随机layui 弹窗皮肤颜色
          * @returns {string}
          */
-        randomSkin:function (yan="jrk") {
+        randomSkin: function(yan = "jrk") {
             var skinArray = ["", "layui-layer-molv", "layui-layer-lan"];
-            if (lucky.inArray(yan,skinArray)){
+            if (lucky.inArray(yan, skinArray)) {
                 return yan;
-            }else {
+            } else {
                 return skinArray[Math.floor(Math.random() * skinArray.length)];
             }
         },
@@ -476,11 +470,11 @@ layui.define(['jquery','layer'], function(exports) {
          * @param Anim
          * @returns {string|number}
          */
-        randomAnim:function(Anim="7"){
+        randomAnim: function(Anim = "7") {
             var animArray = ["0", "1", "2", "3", "4", "5", "6"];
-            if (lucky.inArray(Anim,animArray)){
+            if (lucky.inArray(Anim, animArray)) {
                 return Anim;
-            }else {
+            } else {
                 return Math.floor(Math.random() * animArray.length);
             }
         },
@@ -488,9 +482,9 @@ layui.define(['jquery','layer'], function(exports) {
          * 随机图标
          * @returns {number}
          */
-        randomIcon:function(){
+        randomIcon: function() {
             // 绿色勾,红色叉,黄色问号,灰色锁,红色哭脸,绿色笑脸,黄色感叹号
-            var iconArray = [1,2,3,4,5,6,7];
+            var iconArray = [1, 2, 3, 4, 5, 6, 7];
             return Math.floor(Math.random() * iconArray.length);
         },
 
@@ -500,7 +494,7 @@ layui.define(['jquery','layer'], function(exports) {
          * @param arrayToSearch 数组
          * @returns {boolean}
          */
-        inArray:function (stringToSearch, arrayToSearch) {
+        inArray: function(stringToSearch, arrayToSearch) {
             for (var s = 0; s < arrayToSearch.length; s++) {
                 var thisEntry = arrayToSearch[s].toString();
                 if (thisEntry == stringToSearch) {
@@ -514,11 +508,11 @@ layui.define(['jquery','layer'], function(exports) {
          * @param str
          * @returns {boolean}
          */
-        isEmail: function(str){
+        isEmail: function(str) {
             var reg = /^[a-z0-9]([a-z0-9\\.]*[-_]{0,4}?[a-z0-9-_\\.]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+([\.][\w_-]+){1,5}$/i;
-            if(reg.test(str)){
+            if (reg.test(str)) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         },
@@ -527,11 +521,11 @@ layui.define(['jquery','layer'], function(exports) {
          * @param tel
          * @returns {boolean}
          */
-        isMobile: function(tel){
+        isMobile: function(tel) {
             var reg = /(^1[3|4|5|7|8][0-9]{9}$)/;
             if (reg.test(tel)) {
                 return true;
-            }else{
+            } else {
                 return false;
             };
         },
@@ -541,18 +535,18 @@ layui.define(['jquery','layer'], function(exports) {
          * @param str
          * @returns {string}
          */
-        upCase: function(str){
+        upCase: function(str) {
             if (lucky.isEmpty(str)) {
-                return ;
+                return;
             }
-            return str.substring(0,1).toUpperCase() + str.substring(1);
+            return str.substring(0, 1).toUpperCase() + str.substring(1);
         },
         /**
          * 金额数字转大写
          * @param num
          * @returns {string}
          */
-        upDigit: function(num){
+        upDigit: function(num) {
             var fraction = ['角', '分', '厘'];
             var digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
             var unit = [
@@ -584,9 +578,9 @@ layui.define(['jquery','layer'], function(exports) {
          * @param value
          * @param iDay
          */
-        setCookie :function(name, value, iDay){
+        setCookie: function(name, value, iDay) {
             var oDate = new Date();
-            oDate.setDate(oDate.getDate() + (iDay*60*1000));
+            oDate.setDate(oDate.getDate() + (iDay * 60 * 1000));
             document.cookie = name + '=' + value + ';expires=' + oDate;
         },
 
@@ -595,7 +589,7 @@ layui.define(['jquery','layer'], function(exports) {
          * @param name
          * @returns {string|null}
          */
-        getCookie: function(name){
+        getCookie: function(name) {
             var arr = document.cookie.split('; ');
             for (var i = 0; i < arr.length; i++) {
                 var arr2 = arr[i].split('=');
@@ -609,7 +603,7 @@ layui.define(['jquery','layer'], function(exports) {
          * 删除Cookie
          * @param name
          */
-        removeCookie: function(name){
+        removeCookie: function(name) {
             this.setCookie(name, 1, -1);
         },
 
@@ -617,7 +611,7 @@ layui.define(['jquery','layer'], function(exports) {
          * 元素显示
          * @param obj
          */
-        objShow: function(obj){
+        objShow: function(obj) {
             var blockArr = ['div', 'li', 'ul', 'ol', 'dl', 'table', 'article', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'hr', 'header', 'footer', 'details', 'summary', 'section', 'aside', '']
             if (blockArr.indexOf(obj.tagName.toLocaleLowerCase()) === -1) {
                 obj.style.display = 'inline';
@@ -630,7 +624,7 @@ layui.define(['jquery','layer'], function(exports) {
          * 隐藏元素
          * @param obj
          */
-        objHide: function(obj){
+        objHide: function(obj) {
             obj.style.display = "none";
         },
 
@@ -638,7 +632,7 @@ layui.define(['jquery','layer'], function(exports) {
          * 数据类型判断
          * 案例：istype([],'array')
          */
-        istype: function(o, type){
+        istype: function(o, type) {
             if (type) {
                 var _type = type.toLowerCase();
             }
@@ -676,7 +670,7 @@ layui.define(['jquery','layer'], function(exports) {
          * @param el
          * @returns {*}
          */
-        replaceKey: function(str, key, el){
+        replaceKey: function(str, key, el) {
             var arr = null,
                 regStr = null,
                 content = null,
@@ -698,7 +692,7 @@ layui.define(['jquery','layer'], function(exports) {
          * 调用：getUrlParam('http://xxxx?Id=100011938')
          * @param url
          */
-        getUrlParam: function(url){
+        getUrlParam: function(url) {
             url = url ? url : window.location.href;
             var _pa = url.substring(url.indexOf('?') + 1),
                 _arrS = _pa.split('&'),
@@ -721,7 +715,7 @@ layui.define(['jquery','layer'], function(exports) {
          * @param obj
          * @returns {string}
          */
-        setUrlParam: function(obj){
+        setUrlParam: function(obj) {
             var _rs = [];
             for (var p in obj) {
                 if (obj[p] != null && obj[p] != '') {
@@ -735,7 +729,7 @@ layui.define(['jquery','layer'], function(exports) {
          * 随机产生颜色
          * @returns {string}
          */
-        randomColor: function(){
+        randomColor: function() {
             return '#' + Math.random().toString(16).substring(2).substr(0, 6);
         },
 
@@ -745,18 +739,18 @@ layui.define(['jquery','layer'], function(exports) {
          * @param n2
          * @returns {number}
          */
-        randomNumber: function(n1, n2){
+        randomNumber: function(n1, n2) {
             //randomNumber(5,10)
             //返回5-10的随机整数，包括5，10
             if (arguments.length === 2) {
                 return Math.round(n1 + Math.random() * (n2 - n1));
             }
-                //randomNumber(10)
+            //randomNumber(10)
             //返回0-10的随机整数，包括0，10
             else if (arguments.length === 1) {
                 return Math.round(Math.random() * n1)
             }
-                //randomNumber()
+            //randomNumber()
             //返回0-255的随机整数，包括0，255
             else {
                 return Math.round(Math.random() * 255)
@@ -770,7 +764,7 @@ layui.define(['jquery','layer'], function(exports) {
          * @param sort
          * @returns {*}
          */
-        numberSort: function(arr, sort){
+        numberSort: function(arr, sort) {
             if (!sort) {
                 return arr
             }
@@ -788,7 +782,7 @@ layui.define(['jquery','layer'], function(exports) {
          * @param obj
          * @constructor
          */
-        Console:function (obj) {
+        Console: function(obj) {
             console.log(obj);
         },
 
@@ -798,12 +792,12 @@ layui.define(['jquery','layer'], function(exports) {
          * @param eventName 需要绑定的事件类型名称 string
          * @param fn  回调函数 function
          */
-        addSeveralEvent: function (element, eventName, fn) {
+        addSeveralEvent: function(element, eventName, fn) {
             var oddEvent = element["on" + eventName];
             if (oddEvent == null) {
                 element["on" + eventName] = fn;
             } else {
-                element["on" + eventName] = function () {
+                element["on" + eventName] = function() {
                     oddEvent();
                     fn();
                 }
@@ -817,12 +811,12 @@ layui.define(['jquery','layer'], function(exports) {
          * @param eventName 需要绑定的事件类型名称 string
          * @param fn 回调函数 function
          */
-        addEvent: function (element, eventName, fn) {
-            if (element.addEventListener) {  // 谷歌和火狐
+        addEvent: function(element, eventName, fn) {
+            if (element.addEventListener) { // 谷歌和火狐
                 element.addEventListener(eventName, fn, false);
-            } else if (element.attachEvent) {  // IE8
+            } else if (element.attachEvent) { // IE8
                 element.attachEvent("on" + eventName, fn);
-            } else {  // 所有浏览器
+            } else { // 所有浏览器
                 element["on" + eventName] = fn;
             }
         },
@@ -834,21 +828,21 @@ layui.define(['jquery','layer'], function(exports) {
          * @param eventName 需要绑定的事件类型名称 string
          * @param fn 回调函数 function
          */
-        removeEvent: function (element, eventName, fn) {
+        removeEvent: function(element, eventName, fn) {
             if (element.removeEventListener) { // 谷歌和火狐
                 element.removeEventListener(eventName, fn, false);
             } else if (element.attachEvent) { // IE8
                 element.attachEvent("on" + eventName, fn);
-            } else {  // 所有浏览器
+            } else { // 所有浏览器
                 element["on" + eventName] = null;
             }
         },
 
-        picView:function (obj,src) {
-            if(lucky.isEmpty(src)) return false;
-            var ext = src.substring(src.length,src.lastIndexOf('.'));
-            if(ext!='.png' && ext!='.jpg' && ext!='.gif' && ext!='.jpeg') return false;
-            layer.tips('<img src="'+lucky.htmlspecialchars(src)+'" height="120">', obj, {
+        picView: function(obj, src) {
+            if (lucky.isEmpty(src)) return false;
+            var ext = src.substring(src.length, src.lastIndexOf('.'));
+            if (ext != '.png' && ext != '.jpg' && ext != '.gif' && ext != '.jpeg') return false;
+            layer.tips('<img src="' + lucky.htmlspecialchars(src) + '" height="120">', obj, {
                 tips: [1, '#fff']
             });
         },
@@ -858,7 +852,7 @@ layui.define(['jquery','layer'], function(exports) {
          * @param str
          * @returns {*}
          */
-        htmlspecialchars:function (str) {
+        htmlspecialchars: function(str) {
             str = str.replace(/&/g, '&amp;');
             str = str.replace(/</g, '&lt;');
             str = str.replace(/>/g, '&gt;');
@@ -871,13 +865,13 @@ layui.define(['jquery','layer'], function(exports) {
          * @param obj
          * @param attr
          */
-        tip:function (obj,attr) {
-            attr=attr||"data-title";
-            var row=$(obj).attr(attr); //获取显示内容
+        tip: function(obj, attr) {
+            attr = attr || "data-title";
+            var row = $(obj).attr(attr); //获取显示内容
             //小tips
-            layer.tips(row,obj,{
-                tips:[1,"black"],
-                time:1000
+            layer.tips(row, obj, {
+                tips: [1, "black"],
+                time: 1000
             });
         },
 
@@ -886,14 +880,14 @@ layui.define(['jquery','layer'], function(exports) {
          * @param obj
          * @param attr
          */
-        hoverTip:function (obj,attr) {
-            attr=attr||"data-title";
-            $(obj).hover(function () {
-                layer.tips(attr,$(this),{
-                    tips:[1,"black"],
-                    time:1000
+        hoverTip: function(obj, attr) {
+            attr = attr || "data-title";
+            $(obj).hover(function() {
+                layer.tips(attr, $(this), {
+                    tips: [1, "black"],
+                    time: 1000
                 })
-            },function () {
+            }, function() {
                 layer.closeAll();
             });
         }
