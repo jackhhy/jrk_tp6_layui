@@ -42,7 +42,7 @@ class SystemLog
                 }
                 $info=\session(ADMIN_LOGIN_INFO);
                 $data = [
-                    'admin_id'    => session(ADMIN_LOGIN_INFO)['id'],
+                    'admin_id'    => isset($info['id']) ? $info['id'] :0,
                     'url'         => $url,
                     'method'      => $method,
                     'title'       => isset($info['nickname']) ? $info['nickname'] :'',
