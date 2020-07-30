@@ -1,0 +1,134 @@
+{extend name='public/base' /}
+
+
+{block name="content"}
+
+<div class="layui-col-md12">
+
+    <div class="layui-card">
+        <div class="layui-card-body layui-row ">
+            <blockquote class="layui-elem-quote layui-text">
+                百度站长请前往<a href="https://ziyuan.baidu.com/linksubmit/index" target="_blank">百度站长平台</a>获取Site和Token <br >
+                在系统设置=》推送配置中修改相应配置
+            </blockquote>
+        </div>
+    </div>
+</div>
+<div class="layui-col-md6">
+
+    <div class="layui-card">
+        <div class="layui-card-body layui-row ">
+
+            <form  class="layui-form" lay-filter="form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">推送事件：</label>
+                    <div class="layui-input-block input-custom-width">
+                        <input type="radio" name="action" value="urls" title="新增" lay-filter=""  checked>
+                        <input type="radio" name="action" value="del" title="删除" lay-filter="" >
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">推送链接：</label>
+                    <div class="layui-input-block input-custom-width" style="">
+                        <textarea name="urls" placeholder="一行一个连接" lay-verify="required" rows="20" lay-vertype="tips" lay-reqtext="推送链接必填" autocomplete="off" class="layui-textarea "></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-sm" lay-submit="" lay-filter="add">立即推送</button>
+                        <button class="layui-btn layui-btn-sm layui-btn-primary reload" >重置</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="layui-col-md6">
+
+    <div class="layui-card">
+        <div class="layui-card-body layui-row ">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">推送结果：</label>
+                <div class="layui-input-block input-custom-width" style="">
+                    <textarea name="result"  placeholder="推送结果"   autocomplete="off" class="layui-textarea " rows="20"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{/block}
+
+
+{block name="js"} <!--js处理区-->
+
+
+<script>
+
+    layui.use(['element', 'table', 'form', 'jquery', 'lucky'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var table = layui.table;
+        var $ = layui.jquery;
+        var lucky=layui.lucky;
+        form.render();
+
+        $(".reload").click(function () {
+            $("textarea[name=urls]").val("");
+            $("textarea[name=result]").val("");
+            return false;
+        });
+
+
+        form.on('submit(add)', function (data) {
+            $.ajax({
+                beforeSend:function(){
+                    layer.load(2);
+                },
+                url: "{:url('zhanzhang')}",
+                type: "POST",
+                async: true,
+                dataType: "json",
+                data:data.field,
+                error: function(error) {
+                    layer.msg("服务器错误或超时");
+                    return false;
+                },
+                success: function(res) {
+                    if (res.code==1){
+                        var html = "状态：成功\n";
+                        html += JSON.stringify(res.data);
+                        $("textarea[name=result]").val(html);
+                    } else {
+                        var html = "状态：失败\n";
+                        html = html + "失败原因：" + res.msg;
+                        $("textarea[name=result]").val(html);
+                    }
+
+                },
+                complete:function(){
+                    layer.closeAll('loading');
+                }
+            });
+            return false;
+        });
+
+    });
+
+</script >
+
+
+{/block}

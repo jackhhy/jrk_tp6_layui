@@ -1,0 +1,102 @@
+
+{extend name='public/base' /}
+
+{block name="content"}
+
+<div class="layui-col-md12">
+
+    <div class="layui-card">
+
+        <div class="layui-card-body">
+            <!--表格区-->
+            <div>
+                <form class="layui-form">
+                <table class="layui-table" >
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>最后执行时间</th>
+                        <th>完成时间</th>
+                        <th>执行内容</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="data.data" id="v" empty="暂无"}
+                    <tr>
+                        <td>
+                            {$v.id}
+                        </td>
+                        <td>{$v.executetime|FriendTime}</td>
+                        <td>
+                           {$v.completetime|FriendTime}
+                        </td>
+                        <td>
+                           {$v.content}
+                        </td>
+                        <td>
+                           {$v.status}
+                        </td>
+                        <td> <a class="layui-btn layui-btn-xs layui-btn-danger del_btn" log-id="{$v['id']}" title="删除" ><i class="layui-icon"></i></a></td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+                </form>
+                <!--分页开始-->
+                <div class="layui-row" style="text-align: center;">
+                    {$page|raw}
+                </div>
+                <!--分页结束-->
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{/block}
+
+{block name="js"} <!--js处理区-->
+
+<script>
+
+    layui.use(['element', 'table', 'form', 'jquery', 'lucky'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var table = layui.table;
+        var $ = layui.jquery;
+        var lucky=layui.lucky;
+        form.render();
+
+        //ajax删除
+        $('.del_btn').click(function(){
+            var id = $(this).attr('log-id');
+            layer.confirm('确定删除选择的日志?', function(index){
+                loading = layer.load(2, {
+                    shade: [0.2,'#000'] //0.2透明度的白色背景
+                });
+                $.post('{:url("logDel")}',{'id':id},function(data){
+                    if(data.code == 1){
+                        layer.close(loading);
+                        layer.msg(data.msg, {icon: 1, time: 1000}, function(){
+                            location.reload();//do something
+                        });
+                    }else{
+                        layer.close(loading);
+                        layer.msg(data.msg, {icon: 2, anim: 6, time: 1000});
+                    }
+                }).error(function () {
+                    layer.close(loading);
+                    layer.msg('服务器错误', {icon: 2, anim: 6, time: 1000});
+                });
+            });
+        });
+
+    });
+
+</script >
+
+
+{/block}

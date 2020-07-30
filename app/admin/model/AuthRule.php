@@ -208,8 +208,14 @@ class AuthRule extends AdminBaseModel implements Comm
         if (empty($node)) {
             return false;
         }
+        if (stripos($node,".")){
+            $n=explode(".",$node);
+            $node=$n[0].'.'.ucfirst($n[1]);
+        }else{
+            $node=ucfirst($node);
+        }
         //根据传入的节点获取当前 id
-        $id = self::where(["type" => 2, 'name' => ucfirst($node)])->value("id");
+        $id = self::where(["type" => 2, 'name' =>$node])->value("id");
         if (empty($id)) {
             return false;
         }

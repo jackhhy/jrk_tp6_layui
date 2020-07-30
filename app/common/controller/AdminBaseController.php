@@ -78,7 +78,10 @@ abstract class AdminBaseController
         // 控制器初始化
         $this->initialize();
 
+
     }
+
+
 
 
     /**

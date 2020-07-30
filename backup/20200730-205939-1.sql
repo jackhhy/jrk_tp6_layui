@@ -6,7 +6,7 @@
 -- Database : jrk_admin
 -- 
 -- Part : #1
--- Date : 2020-07-02 22:09:35
+-- Date : 2020-07-30 20:59:39
 -- -----------------------------
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -39,7 +39,7 @@ CREATE TABLE `jrk_admin` (
 -- -----------------------------
 -- Records of `jrk_admin`
 -- -----------------------------
-INSERT INTO `jrk_admin` VALUES ('1', 'jrkadmintp6', '超级管理员', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '1', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1593697536', '127.0.0.1', '', '1593179425', '1593695858', '13141962690', 'jackhhy520@qq.com', '1995-06-05', '11');
+INSERT INTO `jrk_admin` VALUES ('1', 'jrkadmintp6', '超级管理员', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '1', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1596110838', '127.0.0.1', '', '1593179425', '1596110838', '13141962690', 'jackhhy520@qq.com', '1995-06-05', '13');
 INSERT INTO `jrk_admin` VALUES ('2', 'test', '人事专员', '', '0', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1593450107', '127.0.0.1', '', '1593179425', '0', '13141962698', '', '', '2');
 INSERT INTO `jrk_admin` VALUES ('3', 'ceshi', '测试员1', '/uploads/adminuser/avatar/20200630/acd1e53a97ec152c14b5fca6f7ffb40d.jpg', '1', '$2y$10$WLfde3sqoLFRppVrn7m8Tu/kiydOefnefYeRtt92rALWXNh6U0Ti.', '1', '0', '', '', '1593505184', '1593505220', '13141962690', '13141962690@163.com', '2020-06-30', '0');
 INSERT INTO `jrk_admin` VALUES ('4', 'test2', '测试2_5_-', '/uploads/adminuser/avatar/20200630/92a02b58dc5c02e895a0d519765835ae.jpg', '0', '$2y$10$Q9dXmkFiVTsjs.WsNUxfIuy5etKwGd6a7K5612dhEzso1sgSu/btS', '1', '0', '', '', '1593505714', '1593505847', '13141962698', '', '2020-06-24', '0');
@@ -136,7 +136,7 @@ CREATE TABLE `jrk_auth_rule` (
   `update_time` int(11) unsigned DEFAULT '0' COMMENT '更新时间',
   `param` varchar(50) DEFAULT '' COMMENT '参数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
 
 -- -----------------------------
 -- Records of `jrk_auth_rule`
@@ -169,6 +169,14 @@ INSERT INTO `jrk_auth_rule` VALUES ('33', '2', 'Admin/index', '管理员管理',
 INSERT INTO `jrk_auth_rule` VALUES ('34', '2', '', '基本设置', '1', '1', '', '0', '1', 'fa-address-book-o', 'fa', '1593693025', '1593693025', '');
 INSERT INTO `jrk_auth_rule` VALUES ('35', '34', 'Admin/baseData', '基本资料', '1', '1', '', '0', '1', 'fa-address-card', 'fa', '1593693110', '1593693233', '');
 INSERT INTO `jrk_auth_rule` VALUES ('36', '34', 'Admin/changPass', '修改密码', '1', '1', '', '0', '1', 'fa-amazon', 'fa', '1593693191', '1593693191', '');
+INSERT INTO `jrk_auth_rule` VALUES ('37', '0', '', '模块管理', '1', '1', '', '0', '1', 'fa-book', 'fa', '1596108938', '1596108938', '');
+INSERT INTO `jrk_auth_rule` VALUES ('38', '37', '', '站长推送', '1', '1', '', '0', '1', 'fa-adn', 'fa', '1596108969', '1596108969', '');
+INSERT INTO `jrk_auth_rule` VALUES ('39', '38', 'Push/bindex', '百度推送', '1', '1', '', '0', '1', 'fa-ban', 'fa', '1596109006', '1596109006', '');
+INSERT INTO `jrk_auth_rule` VALUES ('40', '38', 'Push/xindex', '熊掌推送', '1', '1', '', '0', '1', 'fa-external-link', 'fa', '1596109037', '1596109037', '');
+INSERT INTO `jrk_auth_rule` VALUES ('41', '37', 'queue.queue/index', '定时任务', '1', '1', '', '0', '1', 'fa-align-center', 'fa', '1596110140', '1596110140', '');
+INSERT INTO `jrk_auth_rule` VALUES ('42', '26', '', '系统配置', '1', '1', '', '0', '1', 'fa-bullseye', 'fa', '1596111745', '1596111745', '');
+INSERT INTO `jrk_auth_rule` VALUES ('43', '42', 'config.Sysconfig/index', '配置列表', '1', '1', '', '0', '1', 'fa-bank', 'fa', '1596111773', '1596111773', '');
+INSERT INTO `jrk_auth_rule` VALUES ('44', '42', 'config.Sysconfigtab/index', '配置分类', '1', '1', '', '0', '1', 'fa-amazon', 'fa', '1596111801', '1596111801', '');
 
 -- -----------------------------
 -- Table structure for `jrk_sys_config`
@@ -176,52 +184,84 @@ INSERT INTO `jrk_auth_rule` VALUES ('36', '34', 'Admin/changPass', '修改密码
 DROP TABLE IF EXISTS `jrk_sys_config`;
 CREATE TABLE `jrk_sys_config` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '分组ID',
   `group` varchar(80) NOT NULL COMMENT '配置分组名',
   `name` varchar(80) NOT NULL COMMENT '配置名',
   `value` varchar(255) DEFAULT NULL COMMENT '配置值',
   `create_time` int(11) unsigned NOT NULL DEFAULT '0',
   `beizhu` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='配置表';
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='配置表';
 
 -- -----------------------------
 -- Records of `jrk_sys_config`
 -- -----------------------------
-INSERT INTO `jrk_sys_config` VALUES ('1', 'upload', 'accessKey', 'accessKey', '1593354333', '');
-INSERT INTO `jrk_sys_config` VALUES ('2', 'upload', 'secretKey', 'secretKey', '1593354333', '');
-INSERT INTO `jrk_sys_config` VALUES ('3', 'upload', 'uploadUrl', 'uploadUrl', '1593354333', '');
-INSERT INTO `jrk_sys_config` VALUES ('4', 'upload', 'storage_name', 'storage_name', '1593354333', '');
-INSERT INTO `jrk_sys_config` VALUES ('5', 'upload', 'storage_region', 'storage_region', '1593354333', '');
-INSERT INTO `jrk_sys_config` VALUES ('14', 'site', 'site_name', '网站名称', '1593354333', '');
-INSERT INTO `jrk_sys_config` VALUES ('15', 'site', 'site_url', '网站地址', '1593354333', '');
-INSERT INTO `jrk_sys_config` VALUES ('16', 'site', 'site_logo', '站点LOGO', '1593354333', '');
-INSERT INTO `jrk_sys_config` VALUES ('17', 'site', 'site_phone', '站点联系电话', '1593354333', '');
-INSERT INTO `jrk_sys_config` VALUES ('18', 'site', 'site_seo_title', 'SEO标题', '1593354333', '');
-INSERT INTO `jrk_sys_config` VALUES ('19', 'site', 'site_email', '站点联系邮箱', '1593354333', '');
-INSERT INTO `jrk_sys_config` VALUES ('20', 'site', 'site_qq', '站点联系QQ', '1593354333', '');
-INSERT INTO `jrk_sys_config` VALUES ('21', 'site', 'site_close', '网站关闭', '1593354333', '0=>开启\\n1=>PC端关闭\\n2=>WAP端关闭(含微信)\\n3=>全部关闭');
-INSERT INTO `jrk_sys_config` VALUES ('22', 'upload', 'upload_type', '1', '1593354333', '1=>本地存储\\n2=>七牛云存储\\n3=>阿里云OSS\\n4=>腾讯COS');
+INSERT INTO `jrk_sys_config` VALUES ('1', '3', 'upload', 'accessKey', 'accessKey', '1593354333', '');
+INSERT INTO `jrk_sys_config` VALUES ('2', '3', 'upload', 'secretKey', 'secretKey', '1593354333', '');
+INSERT INTO `jrk_sys_config` VALUES ('3', '3', 'upload', 'uploadUrl', 'uploadUrl', '1593354333', '');
+INSERT INTO `jrk_sys_config` VALUES ('4', '3', 'upload', 'storage_name', 'storage_name', '1593354333', '');
+INSERT INTO `jrk_sys_config` VALUES ('5', '3', 'upload', 'storage_region', 'storage_region', '1593354333', '');
+INSERT INTO `jrk_sys_config` VALUES ('14', '2', 'site', 'site_name', '网站名称', '1593354333', '');
+INSERT INTO `jrk_sys_config` VALUES ('15', '2', 'site', 'site_url', '网站地址', '1593354333', '');
+INSERT INTO `jrk_sys_config` VALUES ('16', '2', 'site', 'site_logo', '站点LOGO', '1593354333', '');
+INSERT INTO `jrk_sys_config` VALUES ('17', '2', 'site', 'site_phone', '站点联系电话', '1593354333', '');
+INSERT INTO `jrk_sys_config` VALUES ('18', '2', 'site', 'site_seo_title', 'SEO标题', '1593354333', '');
+INSERT INTO `jrk_sys_config` VALUES ('19', '2', 'site', 'site_email', '站点联系邮箱', '1593354333', '');
+INSERT INTO `jrk_sys_config` VALUES ('20', '2', 'site', 'site_qq', '站点联系QQ', '1593354333', '');
+INSERT INTO `jrk_sys_config` VALUES ('21', '2', 'site', 'site_close', '网站关闭', '1593354333', '0=>开启1=>PC端关闭2=>WAP端关闭(含微信)3=>全部关闭');
+INSERT INTO `jrk_sys_config` VALUES ('22', '3', 'upload', 'upload_type', '1', '1593354333', '1=>本地存储2=>七牛云存储3=>阿里云OSS4=>腾讯COS');
+INSERT INTO `jrk_sys_config` VALUES ('23', '4', 'push', 'xzappid', 'xzappid熊掌号的appid', '1596099671', '');
+INSERT INTO `jrk_sys_config` VALUES ('24', '4', 'push', 'xztoken', 'xztoken 熊掌号的token', '1596099698', '');
+INSERT INTO `jrk_sys_config` VALUES ('25', '4', 'push', 'zz_site', '1', '1596099776', '百度站长的站点');
+INSERT INTO `jrk_sys_config` VALUES ('26', '4', 'push', 'zz_token', '2', '1596099819', '百度站长token');
+INSERT INTO `jrk_sys_config` VALUES ('27', '2', 'site', 'site_keywords', 'keywords', '1596101048', '');
+INSERT INTO `jrk_sys_config` VALUES ('28', '2', 'site', 'site_description', 'description', '1596101062', '');
 
 -- -----------------------------
--- Table structure for `jrk_system_log_202007`
+-- Table structure for `jrk_sys_config_tab`
 -- -----------------------------
-DROP TABLE IF EXISTS `jrk_system_log_202007`;
-CREATE TABLE `jrk_system_log_202007` (
+DROP TABLE IF EXISTS `jrk_sys_config_tab`;
+CREATE TABLE `jrk_sys_config_tab` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL COMMENT '配置分类名称',
+  `eng_title` varchar(100) NOT NULL COMMENT '分类英文名',
+  `pid` int(10) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '0禁止1正常',
+  `create_time` int(11) NOT NULL DEFAULT '0',
+  `update_time` int(11) NOT NULL DEFAULT '0',
+  `beizhu` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='配置分类表';
+
+-- -----------------------------
+-- Records of `jrk_sys_config_tab`
+-- -----------------------------
+INSERT INTO `jrk_sys_config_tab` VALUES ('1', '默认分类', 'moren', '0', '1', '1596095169', '1596095169', '没有分配分类的配置');
+INSERT INTO `jrk_sys_config_tab` VALUES ('2', '站点配置', 'site', '0', '1', '1596095705', '1596095705', '后端站点所有配置');
+INSERT INTO `jrk_sys_config_tab` VALUES ('3', '上传配置', 'upload', '0', '1', '1596096079', '1596096079', '');
+INSERT INTO `jrk_sys_config_tab` VALUES ('4', '地址推送', 'push', '0', '1', '1596099565', '1596099565', '百度站长，熊掌号推送链接');
+
+-- -----------------------------
+-- Table structure for `jrk_sys_queue`
+-- -----------------------------
+DROP TABLE IF EXISTS `jrk_sys_queue`;
+CREATE TABLE `jrk_sys_queue` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `admin_id` int(10) unsigned DEFAULT '0' COMMENT '管理员ID',
-  `url` varchar(1500) NOT NULL DEFAULT '' COMMENT '操作页面',
-  `method` varchar(50) NOT NULL COMMENT '请求方法',
-  `title` varchar(100) DEFAULT '' COMMENT '日志标题',
-  `content` text NOT NULL COMMENT '内容',
-  `ip` varchar(50) NOT NULL DEFAULT '' COMMENT 'IP',
-  `useragent` varchar(255) DEFAULT '' COMMENT 'User-Agent',
-  `create_time` int(10) DEFAULT NULL COMMENT '操作时间',
-  `os` varchar(100) DEFAULT NULL,
-  `brower` varchar(100) DEFAULT NULL,
+  `type` varchar(10) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '事件类型',
+  `title` varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '事件标题',
+  `content` text CHARACTER SET utf8 NOT NULL COMMENT '事件内容',
+  `schedule` varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT 'Crontab格式',
+  `sleep` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '延迟秒数执行',
+  `maximums` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最大执行次数 0为不限',
+  `executes` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '已经执行的次数',
+  `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `begintime` int(10) DEFAULT '0' COMMENT '开始时间',
+  `endtime` int(10) DEFAULT '0' COMMENT '结束时间',
+  `executetime` int(10) DEFAULT '0' COMMENT '最后执行时间',
+  `weigh` int(10) NOT NULL DEFAULT '0' COMMENT '权重',
+  `status` enum('completed','expired','hidden','normal') CHARACTER SET utf8 NOT NULL DEFAULT 'normal' COMMENT '状态',
+  `ip` varchar(55) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='后台操作日志表 - 202007';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='定时任务表';
 
--- -----------------------------
--- Records of `jrk_system_log_202007`
--- -----------------------------
-INSERT INTO `jrk_system_log_202007` VALUES ('116', '1', '/admin/DataBackup/export.html', 'post', '超级管理员', 'a:1:{s:6:\"tables\";a:7:{i:0;s:9:\"jrk_admin\";i:1;s:14:\"jrk_attachment\";i:2;s:14:\"jrk_auth_group\";i:3;s:21:\"jrk_auth_group_access\";i:4;s:13:\"jrk_auth_rule\";i:5;s:14:\"jrk_sys_config\";i:6;s:21:\"jrk_system_log_202007\";}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36', '1593698975', 'windows', 'Chrome/80.0.3987.163');

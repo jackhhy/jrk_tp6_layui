@@ -1,0 +1,176 @@
+
+
+{extend name='public/window' /}
+
+{block name="content"}
+
+<div class="layui-fluid">
+    <div class="layui-card">
+
+        <div class="layui-card-body" style="padding: 15px;">
+            <form class="layui-form" action="" lay-filter="form">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">任务名称：</label>
+                    <div class="layui-input-block input-custom-width" style="">
+                        <input type="text" name="title" value="" placeholder="请输入任务名称" lay-verify="required" lay-vertype="tips" lay-reqtext="请输入任务名称" autocomplete="off" class="layui-input ">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">任务类型：</label>
+                    <div class="layui-input-block">
+                        <select name="type" lay-search="">
+                            {foreach ($typelist as $k=>$v)}
+                            <option value="{$k}" >{$v}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+
+                {if isset($info['id'])}
+                <input type="hidden" name="id" value="{$info.id}" >
+                {/if}
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">内容：</label>
+                    <div class="layui-input-block input-custom-width" style="">
+                        <textarea name="content" placeholder="" lay-verify="required"  autocomplete="off" class="layui-textarea "></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">执行周期：</label>
+                    <div class="layui-input-block input-custom-width" style="">
+                        <input type="text" name="schedule" id="schedule" value="* * * * *" style="font-size:12px;font-family: Verdana;word-spacing:23px;"  lay-verify="required" lay-vertype="tips" lay-reqtext="请输入执行周期" autocomplete="off" class="layui-input ">
+                    </div>
+                    <div style="margin-left: 100px;">
+                        <pre class="layui-code">*    *    *    *    *
+-    -    -    -    -
+|    |    |    |    +--- day of week (0 - 7) (Sunday=0 or 7)
+|    |    |    +-------- month (1 - 12)
+|    |    +------------- day of month (1 - 31)
+|    +------------------ hour (0 - 23)
++----------------------- min (0 - 59)</pre>
+                    </div>
+
+                    <h5 style="margin-left: 110px;font-size: 12px;">接下来<input type="number" id="pickdays" class="layui-input" value="7" style="display: inline-block;width:80px;">次的执行时间</h5>
+
+                    <div style="margin-top: 10px;margin-left: 110px;">
+                        <table class="layui-table" lay-size="sm">
+                            <thead>
+                            <tr>
+                                <th>时间</th>
+                            </tr>
+                            </thead>
+                            <tbody id="scheduleresult">
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">最多执行：</label>
+                    <div class="layui-input-inline input-custom-width" style="">
+                        <input type="number" name="maximums" value="0" size="6" lay-verify="required" lay-vertype="tips" autocomplete="off" class="layui-input ">
+                    </div>
+                    <label class="layui-form-label label-required-next">权重：</label>
+                    <div class="layui-input-inline " style="">
+                        <input type="number" name="weigh" value="0" size="6" lay-verify="required" lay-vertype="tips" autocomplete="off" class="layui-input ">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">开始时间：</label>
+                    <div class="layui-input-inline input-custom-width" style="">
+                        <input type="text" name="begintime" value="" id="test5" placeholder="yyyy-MM-dd HH:mm:ss" lay-verify="required" lay-vertype="tips" autocomplete="off" class="layui-input ">
+                    </div>
+                    <label class="layui-form-label label-required-next">结束时间：</label>
+                    <div class="layui-input-inline input-custom-width" style="">
+                        <input type="text" name="endtime" id="test6"  lay-verify="required" placeholder="yyyy-MM-dd HH:mm:ss" lay-vertype="tips" autocomplete="off" class="layui-input ">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">状态：</label>
+                    <div class="layui-input-block input-custom-width">
+                        <input type="radio" name="status" value="normal" title="正常" lay-filter=""  checked>
+                        <input type="radio" name="status" value="hidden" title="禁用" lay-filter="" >
+                        <input type="radio" name="status" value="completed" title="已完成" lay-filter="" >
+                        <input type="radio" name="status" value="expired" title="已过期" lay-filter="" >
+                    </div>
+
+                </div>
+
+
+                <div class="layui-form-item layui-layout-admin " style="width: 100%">
+                    <div class="layui-input-block">
+                        <div class="layui-footer" style="left: 0px;text-align: center;">
+                            <button class="layui-btn" lay-submit="" lay-filter="add">提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    layui.use(['element', 'form', 'jquery','lucky','code','laydate'], function () {
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var lucky=layui.lucky;
+        var laydate = layui.laydate;
+
+        layui.code();
+
+        //日期时间选择器
+        laydate.render({
+            elem: '#test5'
+            ,type: 'datetime'
+        });
+
+        //日期时间选择器
+        laydate.render({
+            elem: '#test6'
+            ,type: 'datetime'
+        });
+
+
+        var info = {:json_encode($info)};
+        form.val("form", info);
+        form.render();
+
+        $('#schedule').on('valid.field', function (e, result) {
+            $("#pickdays").trigger("change");
+        });
+
+        $(document).on("change", "#pickdays", function () {
+                $.post("{:url('get_schedule_future')}",{schedule: $("#schedule").val(), days: $(this).val()},function (data) {
+                    var result = [];
+                    $.each(data.data, function (i, j) {
+                        result.push("<tr><td>" + j + "</td></tr>")
+                    });
+                    console.log(data);
+                    $("#scheduleresult").append(result.join(""));
+
+            });
+
+        });
+        $("#pickdays").trigger("change");
+
+        form.on('submit(add)', function (data) {
+            lucky.FormSubmit("{:url('addQueue')}",data.field,"table_id",1);
+            return false;
+        });
+    })
+</script>
+
+{/block}
