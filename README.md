@@ -48,6 +48,28 @@ composer install
 3、数据库导入 sql <br>
 4、超管账号密码： jrkadmintp6   123456
 
+### 环境
+推荐使用 Nginx + php7.3 + mysql 
+
+### 浏览器
+推荐使用 谷歌，百分，火狐 浏览器
+
+### 导航栏目
+
+
+ | [官网地址](http://www.luckyhhy.cn)
+ | [TP6开发手册](https://www.kancloud.cn/manual/thinkphp6_0/1037479)
+ | [服务器](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=dligum2z)
+
+- - -
+
+### :tw-1f427: QQ交流群
+ JrkAdminQQ交流群: 498186248 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=9ad90a1a2a7cd611cc3343b9b8f59a8ab2a8bbffa2bed243344c41824ebc7f35"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="JrkAdmin" title="JrkAdmin"></a>
+
+####   :fire:  演示站      
+[演示地址](http://tp6.jackhhy.cn/)  <br>
+用户名密码： 进QQ群 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=9ad90a1a2a7cd611cc3343b9b8f59a8ab2a8bbffa2bed243344c41824ebc7f35"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="JrkAdmin" title="JrkAdmin"></a><br>
+
 
 ## 项目截图
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0702/221414_cbdabe55_1513275.png "2020-7-2 22-7-30.png")
