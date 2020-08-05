@@ -82,4 +82,4 @@ composer install
 
 1. [图标选择器](https://gitee.com/luckygyl/iconFonts)
 2. [JrkAdmin_Tp5.1](https://gitee.com/luckygyl/JrkAdmin)
-2. [luckyblog博客项目](https://gitee.com/luckygyl/luckyblog)
+2. [jrkadmin_tp6_bootstrap项目](https://gitee.com/luckygyl/jrkadmin_tp6_bootstrap)
