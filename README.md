@@ -1,7 +1,7 @@
 <h1 align="center"> JrkAdmin（TP6.0.3版本） —— 你值得信赖的后端开发框架</h1> 
 <p align="center">
-<img src="https://gitee.com/luckygyl/jrk_tp6/badge/star.svg?theme=dark"  /> 
-<img src="https://gitee.com/luckygyl/jrk_tp6/badge/fork.svg?theme=dark"  /> 
+<img src="https://gitee.com/luckygyl/jrk_tp6_layui/badge/star.svg?theme=dark"  /> 
+<img src="https://gitee.com/luckygyl/jrk_tp6_layui/badge/fork.svg?theme=dark"  /> 
 <a href="http://www.php.net/" target="_blank">
 <img src="https://img.shields.io/badge/php-%3E%3D5.6-8892BF.svg"  /> 
 </a>
@@ -50,7 +50,7 @@ JrkAdmin_Tp6（基础版）是ThinkPHP6.0和layui的快速开发的后台管理�
 ## 安装
 使用git安装
 ~~~
-git clone https://gitee.com/luckygyl/jrk_tp6.git
+git clone https://gitee.com/luckygyl/jrk_tp6_layui.git
 ~~~
 执行加载类库
 ~~~
