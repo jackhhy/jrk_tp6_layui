@@ -13,7 +13,7 @@
 
 
 ## 项目介绍
-JrkAdmin_Tp6（基础版）是ThinkPHP6.0和layui的快速开发的后台管理系统。<br>
+JrkAdmin_Tp6_Layui（基础版）是ThinkPHP6.0和layui的快速开发的后台管理系统。<br>
 后台采用RABC权限验证，不懂的同学可以查看相关文档<br>
 实现管理员管理，权限管理，角色管理，菜单管理，附件管理，日志管理
 
