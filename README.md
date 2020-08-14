@@ -27,9 +27,6 @@ JrkAdmin_Tp6_Layui（基础版）是ThinkPHP6.0和layui的快速开发的后台�
 - - -
 
 
-####   :fire:  演示站      
-[演示地址](http://tp6.jackhhy.cn/)  <br>
-用户名密码： 进QQ群 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=9ad90a1a2a7cd611cc3343b9b8f59a8ab2a8bbffa2bed243344c41824ebc7f35"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="JrkAdmin" title="JrkAdmin"></a><br>
 
 ### :tw-1f427: QQ交流群
  JrkAdminQQ交流群: 498186248 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=9ad90a1a2a7cd611cc3343b9b8f59a8ab2a8bbffa2bed243344c41824ebc7f35"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="JrkAdmin" title="JrkAdmin"></a>
@@ -82,4 +79,4 @@ composer install
 
 1. [图标选择器](https://gitee.com/luckygyl/iconFonts)
 2. [JrkAdmin_Tp5.1](https://gitee.com/luckygyl/JrkAdmin)
-2. [jrkadmin_tp6_bootstrap项目](https://gitee.com/luckygyl/jrkadmin_tp6_bootstrap)
+2. [jrkadmin_tp6_bootstrap项目](https://gitee.com/luckygyl/jrk_tp6_hhy)
