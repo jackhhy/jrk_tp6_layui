@@ -80,9 +80,8 @@
             elem: '#test1'
         });
 
-
         form.on('submit(add)', function (data) {
-            lucky.FormSubmit("{:url('update')}",data.field,"table_id",1);
+            lucky.FormSubmit("{:url('update')}",data.field,true);
             return false;
         });
     })

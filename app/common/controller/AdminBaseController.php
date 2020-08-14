@@ -10,7 +10,8 @@ use think\facade\View;
 use think\App;
 use think\exception\ValidateException;
 use think\Validate;
-
+use think\Exception;
+use think\Request;
 /**
  * Class AdminBaseController
  * @package app\common\controller
@@ -136,6 +137,24 @@ abstract class AdminBaseController
         }
     }
 
+
+    /**
+     * @param Request $request
+     * @return \think\response\Json
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:编辑添加
+     */
+    public function upAndAdd(Request $request){
+        if (IS_AJAX) {
+            $data = $request->post();
+            try {
+                $data['admin_id'] = self::$admin_info['id'];
+                return $this->model->doAll($data);
+            } catch (Exception $exception) {
+                return self::JsonReturn($exception->getMessage(), 0);
+            }
+        }
+    }
 
 
     /**
@@ -293,6 +312,44 @@ abstract class AdminBaseController
         exit($this->fetch('admin@public/404'));
     }
 
+
+
+    /**
+     * @param string $msg
+     * @param int $url
+     * @return \think\response\Json
+     * @throws \Exception
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @date: 2020/7/17 0017
+     * @describe:错误提醒页面
+     */
+    protected function failed($msg = '哎呀…亲…您访问的页面出现错误', $url = 0)
+    {
+        if ($this->request->isAjax()) {
+            return self::JsonReturn($msg,0,$url);
+        } else {
+            $this->assign(compact('msg', 'url'));
+            exit($this->fetch('public/error'));
+        }
+    }
+
+
+    /**
+     * @param string $msg
+     * @param int $url
+     * @return \think\response\Json
+     * @throws \Exception
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @describe:成功提醒
+     */
+    protected function successed($msg = '恭喜你，提交成功！', $url = 0){
+        if ($this->request->isAjax()) {
+            return self::JsonReturn($msg,1,$url);
+        } else {
+            $this->assign(compact('msg', 'url'));
+            exit($this->fetch('public/success'));
+        }
+    }
 
     /**
      * 验证数据

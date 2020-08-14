@@ -49,10 +49,7 @@ JrkAdmin_Tp6_Layui（基础版）是ThinkPHP6.0和layui的快速开发的后台�
 ~~~
 git clone https://gitee.com/luckygyl/jrk_tp6_layui.git
 ~~~
-执行加载类库
-~~~
-composer install
-~~~
+
 1、sql 文件在 backup 文件夹下面 <br>
 2、修改 .env 里面的数据库配置  <br>
 3、数据库导入 sql <br>

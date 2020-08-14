@@ -167,7 +167,7 @@
         $("#pickdays").trigger("change");
 
         form.on('submit(add)', function (data) {
-            lucky.FormSubmit("{:url('addQueue')}",data.field,"table_id",1);
+            lucky.FormSubmit("{:url('addQueue')}",data.field,true);
             return false;
         });
     })

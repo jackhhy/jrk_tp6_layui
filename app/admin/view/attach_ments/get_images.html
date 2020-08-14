@@ -141,7 +141,7 @@
 
         form.on('submit(add)', function (data) {
             var val=$('input:radio[name=imgCk]:checked').val();
-            console.log(val);
+           // console.log(val);
             if (val==undefined || val===""){
                 layer.msg("请选择一张图片",{kin: 'layui-layer-lan', icon:5,time:1500,shade:0.7});
                 return  false;

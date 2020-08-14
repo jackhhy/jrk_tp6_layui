@@ -68,7 +68,7 @@
 
 
         form.on('submit(add)', function (data) {
-            lucky.FormSubmit("{:url('addConfigTab')}",data.field,"table_id",1);
+            lucky.FormSubmit("{:url('addConfigTab')}",data.field,true);
             return false;
         });
     })

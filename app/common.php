@@ -7,6 +7,137 @@ if (file_exists(__DIR__ . "/../app/function.php")) {
     require __DIR__ . "/../app/function.php";
 }
 
+if (!function_exists('__')) {
+    /**
+     * @param $name
+     * @param array $vars
+     * @param string $lang
+     * @return mixed
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:获取语言变量值
+     */
+    function __($name, $vars = [], $lang = '')
+    {
+        if (is_numeric($name) || !$name) {
+            return $name;
+        }
+        if (!is_array($vars)) {
+            $vars = func_get_args();
+            array_shift($vars);
+            $lang = '';
+        }
+        return \think\Lang::get($name, $vars, $lang);
+    }
+
+}
+
+if (!function_exists('create_min_code')) {
+    /**
+     * @param $param
+     * @param bool $domain
+     * @return string
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:生成小程序二维码（小程序必须发布）
+     */
+    function create_min_code($param,$domain=false)
+    {
+        return \app\common\traits\QrcodeMin::min_qrcode($param,$domain);
+    }
+}
+
+
+if (!function_exists('create_qrcode')) {
+    /**
+     * @param $text //文本
+     * @param int $ize //大小
+     * @param bool $domain //是否返回当前域名
+     * @return string
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:生成普通二维码
+     */
+    function create_qrcode($text,$ize=105,$domain=false){
+        return \app\common\service\QrcodeSrvice::make_qrcode($text,$ize,$domain);
+    }
+}
+
+if(!function_exists("curl_get")){
+    /**
+     * @param $url
+     * @param array $data
+     * @return mixed
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:curl请求(get)
+     */
+    function curl_get($url, $data = [])
+    {
+        // 处理get数据
+        if (!empty($data)) {
+            $url = $url . '?' . http_build_query($data);
+        }
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);//这个是重点。
+        $result = curl_exec($curl);
+        curl_close($curl);
+        return $result;
+    }
+}
+
+if (!function_exists('array_merge_multiple')) {
+
+    /**
+     * @param $array1
+     * @param $array2
+     * @return array
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:多维数组合并
+     */
+    function array_merge_multiple($array1, $array2)
+    {
+        $merge = $array1 + $array2;
+        $data = [];
+        foreach ($merge as $key => $val) {
+            if (isset($array1[$key])
+                && is_array($array1[$key])
+                && isset($array2[$key])
+                && is_array($array2[$key])
+            ) {
+                $data[$key] = array_merge_multiple($array1[$key], $array2[$key]);
+            } else {
+                $data[$key] = isset($array2[$key]) ? $array2[$key] : $array1[$key];
+            }
+        }
+        return $data;
+    }
+}
+
+
+
+if (!function_exists('curl_post')) {
+
+    /**
+     * @param $url
+     * @param array $data
+     * @return mixed
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:curl请求(POST)
+     */
+    function curl_post($url, $data = [])
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
+    }
+}
 
 if (!function_exists('sysconfig')) {
 

@@ -196,7 +196,6 @@ class AuthRule extends AdminBaseModel implements Comm
      * @param $node
      * @return bool
      * @author: Hhy <jackhhy520@qq.com>
-     * @date: 2020/6/28 0028
      * @describe:节点权限验证
      */
     public static function auth_verify($node)
@@ -208,14 +207,14 @@ class AuthRule extends AdminBaseModel implements Comm
         if (empty($node)) {
             return false;
         }
-        if (stripos($node,".")){
-            $n=explode(".",$node);
-            $node=$n[0].'.'.ucfirst($n[1]);
-        }else{
-            $node=ucfirst($node);
+        if (!stripos($node, ".")) {
+            $node = ucfirst($node);
+        } else {
+            $n = explode(".", $node);
+            $node = $n[0] . '.' . ucfirst($n[1]);
         }
         //根据传入的节点获取当前 id
-        $id = self::where(["type" => 2, 'name' =>$node])->value("id");
+        $id = self::where(["type" => 2, 'name' => $node])->value("id");
         if (empty($id)) {
             return false;
         }
@@ -226,5 +225,4 @@ class AuthRule extends AdminBaseModel implements Comm
         }
         return false;
     }
-
 }

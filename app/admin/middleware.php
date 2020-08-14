@@ -5,7 +5,4 @@ return [
     // Session初始化
     \think\middleware\SessionInit::class,
 
-    // 系统操作日志
-    app\admin\middleware\SystemLog::class,
-
 ];

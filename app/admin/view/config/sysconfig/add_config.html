@@ -70,7 +70,7 @@
 
 
         form.on('submit(add)', function (data) {
-            lucky.FormSubmit("{:url('addConfig')}",data.field,"table_id",1);
+            lucky.FormSubmit("{:url('addConfig')}",data.field,true);
             return false;
         });
     })

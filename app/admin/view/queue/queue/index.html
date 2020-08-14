@@ -38,7 +38,7 @@
                         <button class="layui-btn icon-btn layui-btn-sm" lay-filter="search" lay-submit="">
                             <i class="layui-icon"></i>搜索
                         </button>
-                        <button class="layui-btn icon-btn layui-btn-normal layui-btn-sm" onclick="javascript:window.location.reload();">
+                        <button class="layui-btn icon-btn layui-btn-normal layui-btn-sm" type="reset">
                             <i class="layui-icon layui-icon-refresh"></i> 重置
                         </button>
                     </div>
@@ -76,7 +76,7 @@
                             <div class="yys-body-content clearfix changepwd">
                                 <div class="layui-col-lg12 layui-col-md10 layui-col-sm12 layui-col-xs12" style="width:100%">
                                     <div class="user-tables">
-                                        <table id="tableFilter" lay-filter="tableFilter"> </table>
+                                        <table id="table_id" lay-filter="table_id"> </table>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@
         var lucky=layui.lucky;
         form.render();
         table.render({
-            elem: '#tableFilter',
+            elem: '#table_id',
             url:"{:url('index')}",
             toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
             defaultToolbar: ['filter', 'exports', 'print'],
@@ -185,7 +185,7 @@
          * 表格搜索
          */
         form.on('submit(search)', function (obj) {
-            lucky.CreateSearch("table_id",obj.field); //查询
+            lucky.CreateSearch(obj.field); //查询
             return false;
         });
 
@@ -193,25 +193,25 @@
         /**
          * 监听单行工具操作
          */
-        table.on('tool(tableFilter)', function (obj) {
+        table.on('tool(table_id)', function (obj) {
             var data = obj.data;
             var _id=parseInt(data.id);
             var layEvent = obj.event;
             if(layEvent==="edit"){
                 var url="{:url('editQueue')}?id="+_id;
-                lucky.CreateOpenForm("编辑任务",'65%','85%',url,"table_id");
+                lucky.CreateOpenForm("编辑任务",url,'65%','85%');
             }else if(layEvent==="del"){
-                lucky.FormatData(_id,"{:url('del')}","table_id");
+                lucky.FormatData(_id,"{:url('del')}");
             }else if(layEvent==="view"){
                 var url="{:url('viewQueueLog')}?id="+_id;
-                lucky.CreateOpenForm("查看日志",'65%','85%',url,"table_id");
+                lucky.CreateOpenForm("查看日志",url,'65%','85%');
             }
         });
-        table.on('toolbar(tableFilter)', function(obj) {
+        table.on('toolbar(table_id)', function(obj) {
             var checkStatus = table.checkStatus(obj.config.id);
             var data = checkStatus.data;
             if(obj.event==="add"){
-                lucky.CreateOpenForm("添加任务",'65%','85%',"{:url('addQueue')}",obj.config.id,1);
+                lucky.CreateOpenForm("添加任务","{:url('addQueue')}");
                 return false;
             }else if(obj.event==="del"){
                 var num=0;
@@ -223,10 +223,10 @@
                 if (num<1) {
                     layer.msg("请选择一项",{time:1500});return false;
                 }
-                lucky.FormatData(id,"{:url('del')}",obj.config.id);
+                lucky.FormatData(id,"{:url('del')}");
                 return  false;
             }else if(obj.event==="reload"){
-                lucky.CreateReload(obj.config.id);
+                lucky.CreateReload();
             }
 
         });

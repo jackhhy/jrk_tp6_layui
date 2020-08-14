@@ -42,7 +42,7 @@ class SystemLogs extends AdminBaseModel implements Comm
      * @date: 2020/7/2 0002
      * @describe:获取数据
      */
-    public function getAdminPageData($param = [], $order = 'id asc')
+    public function getAdminPageData($param = [], $order = 'id desc')
     {
         // TODO: Implement getAdminPageData() method.
         //上传时间段
@@ -60,7 +60,7 @@ class SystemLogs extends AdminBaseModel implements Comm
         }
         // dd($this->tableSuffix);
         try {
-            $data = Db::name($this->tableName)->select()->toArray();
+            $data = Db::name($this->tableName)->order($order)->select()->toArray();
             $count = Db::name($this->tableName)->count("id");
             // dd($data);
             return parent::ajaxResult($data, $count);

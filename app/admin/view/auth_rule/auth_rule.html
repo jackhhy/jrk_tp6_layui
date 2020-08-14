@@ -133,16 +133,16 @@
             limit: 12,
             // 点击回调
             click: function (data) {
-                console.log(data);
+                //console.log(data);
             },
             // 渲染成功后的回调
             success: function (d) {
-                console.log(d);
+                //console.log(d);
             }
         });
 
         form.on('submit(add)', function (data) {
-            lucky.FormSubmit("{:url('addAuth')}",data.field,"table_id",1);
+            lucky.FormSubmit("{:url('addAuth')}",data.field,true);
             return false;
         });
     })

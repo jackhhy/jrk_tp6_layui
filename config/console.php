@@ -5,5 +5,6 @@
 return [
     // 指令定义
     'commands' => [
+        'make:jrkadmin_curd'    => app\command\JrkadminCurd::class
     ],
 ];

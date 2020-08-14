@@ -11,7 +11,7 @@
                 角色组可以有多个,角色有上下级层级关系,如果子角色有角色组和管理员的权限则可以派生属于自己组别的下级角色组或管理员
             </blockquote>
             <!--表格区-->
-            <table class="layui-hide" id="tableFilter" lay-filter="tableFilter"></table>
+            <table class="layui-hide" id="table_id" lay-filter="table_id"></table>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
         form.render();
 
         table.render({
-            elem: '#tableFilter',
+            elem: '#table_id',
             url:"{:url('index')}",
             toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
             defaultToolbar: ['filter', 'exports', 'print'],
@@ -89,29 +89,29 @@
         /**
          * 监听单行工具操作
          */
-        table.on('tool(tableFilter)', function (obj) {
+        table.on('tool(table_id)', function (obj) {
             var data = obj.data;
             var _id=parseInt(data.id);
             var layEvent = obj.event;
             if (layEvent==="quan") {
                 var urls = "{:url('userGroup')}?id=" + _id;
-                lucky.CreateOpenForm("角色组授权", '55%', '73%', urls, "table_id");
+                lucky.CreateOpenForm("角色组授权",urls);
             }else if(layEvent==="edit"){
                 var url = "{:url('addGroups')}?id=" + _id;
-                lucky.CreateOpenForm("编辑", '55%', '73%', url, "table_id");
+                lucky.CreateOpenForm("编辑", url);
             }else if(layEvent==="del"){
-                lucky.FormatData(_id,"{:url('del')}","table_id","确认删除吗？");
+                lucky.FormatData(_id,"{:url('del')}","确认删除吗？");
             }
         });
 
-        table.on('toolbar(tableFilter)', function(obj) {
+        table.on('toolbar(table_id)', function(obj) {
             var checkStatus = table.checkStatus(obj.config.id);
             var data = checkStatus.data;
             if(obj.event==="add"){
-                lucky.CreateOpenForm("添加角色组",'55%','73%',"{:url('addGroups')}",obj.config.id);
+                lucky.CreateOpenForm("添加角色组","{:url('addGroups')}");
                 return false;
             }else if(obj.event==="reload"){
-                lucky.CreateReload(obj.config.id);
+                lucky.CreateReload();
             }
 
         });

@@ -1,0 +1,105 @@
+
+{extend name='public/window' /}
+
+{block name="content"}
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body" style="padding: 15px;">
+            <form class="layui-form" action="" lay-filter="form" id="form">
+
+                <input type="hidden" name="__token__" id="token" value="{:token()}"/>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">模块名：</label>
+                    <div class="layui-input-inline input-custom-width" style="">
+                        <input type="text" name="app" value="admin" readonly placeholder="请输入模块名" lay-verify="required" lay-vertype="tips" lay-reqtext="请输入模块名" autocomplete="off" class="layui-input ">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">控制名：</label>
+                    <div class="layui-input-inline input-custom-width" style="">
+                        <input type="text" name="controller" value="" placeholder="请输入控制器" lay-verify="required" lay-vertype="tips" lay-reqtext="请输入控制器" autocomplete="off" class="layui-input ">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">模型名：</label>
+                    <div class="layui-input-block input-custom-width" style="">
+                        <input type="text" name="model" value="" placeholder="请输入模型名" lay-verify="required" lay-vertype="tips" lay-reqtext="请输入模型名" autocomplete="off" class="layui-input ">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">验证器名：</label>
+                    <div class="layui-input-block input-custom-width" style="">
+                        <input type="text" name="validate" value="" placeholder="请输入验证器名" lay-verify="required" lay-vertype="tips" lay-reqtext="请输入验证器名" autocomplete="off" class="layui-input ">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">命令行：</label>
+                    <div class="layui-input-block input-custom-width" style="">
+                        <input type="text" name="command" id="command" value="" readonly placeholder="生成的命令行"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-layout-admin " style="width: 100%">
+                    <div class="layui-input-block">
+                        <div class="layui-footer" style="left: 0px;text-align: center;">
+                            <button class="layui-btn layui-btn-warm" lay-submit="" lay-filter="add">生成命令行</button>
+                            <button class="layui-btn" id="docomm" type="button">立即执行</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['element', 'form', 'jquery','lucky'], function () {
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var lucky=layui.lucky;
+
+        form.on('submit(add)', function (data) {
+            var config = {
+                url: "{:url('add')}",
+                type: "post",
+                dataType: "json",
+                data: data.field,
+                beforeSend: function() {
+                    layer.load(2);
+                },
+                success: function(result) {
+                    if (result.code == 1) {
+                        $("#command").val(result.data.data);
+                    } else {
+                       lucky.layerMsg(result.msg,5)
+                    }
+                },
+                complete: function() {
+                    layer.closeAll('loading');
+                }
+            };
+            $.ajax(config);
+            return false;
+        });
+
+
+        $("#docomm").click(function () {
+            lucky.FormSubmit("{:url('doo')}",$("#form").serialize(),true);
+            return false;
+
+        });
+    })
+</script>
+
+{/block}
+

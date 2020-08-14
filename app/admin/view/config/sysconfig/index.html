@@ -54,7 +54,7 @@
     <div class="layui-card">
         <div class="layui-card-body">
             <!--表格区-->
-            <table class="layui-hide" id="tableFilter" lay-filter="tableFilter"></table>
+            <table class="layui-hide" id="table_id" lay-filter="table_id"></table>
         </div>
     </div>
 
@@ -95,9 +95,8 @@
             ,range: '~'
         });
 
-
         table.render({
-            elem: '#tableFilter',
+            elem: '#table_id',
             url:"{:url('index')}",
             toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
             defaultToolbar: ['filter', 'exports', 'print'],
@@ -137,7 +136,7 @@
          * 关键词搜索树
          */
         form.on('submit(search)', function (obj) {
-            lucky.CreateSearch("table_id",obj.field);
+            lucky.CreateSearch(obj.field);
             return false;
         });
 
@@ -145,27 +144,27 @@
         /**
          * 监听单行工具操作
          */
-        table.on('tool(tableFilter)', function (obj) {
+        table.on('tool(table_id)', function (obj) {
             var data = obj.data;
             var _id=parseInt(data.id);
             var layEvent = obj.event;
             if(layEvent==="del"){
-                lucky.FormatData(_id,"{:url('del')}","table_id","确认删除吗？");
+                lucky.FormatData(_id,"{:url('del')}","确认删除吗？");
             }else if(layEvent==="edit"){
                 var url = "{:url('update')}?id=" + _id;
-                lucky.CreateOpenForm("编辑", '55%', '73%', url, "table_id");
+                lucky.CreateOpenForm("编辑", url);
             }
         });
 
-        table.on('toolbar(tableFilter)', function(obj) {
+        table.on('toolbar(table_id)', function(obj) {
             var checkStatus = table.checkStatus(obj.config.id);
             var data = checkStatus.data;
 
             if(obj.event==="add"){
-                lucky.CreateOpenForm("添加配置",'55%','73%',"{:url('addConfig')}",obj.config.id);
+                lucky.CreateOpenForm("添加配置","{:url('addConfig')}");
                 return false;
             }else if(obj.event==="reload"){
-                lucky.CreateReload(obj.config.id);
+                lucky.CreateReload();
             }else if(obj.event==="del"){
                 var num=0;
                 var id=[];
@@ -177,7 +176,7 @@
                     layer.msg("请至少选择一个",{icon:15,time:1000,shade:0.3});
                     return  false;
                 }
-                lucky.FormatData(id,"{:url('del')}",obj.config.id,"确认删除选择的配置吗？");
+                lucky.FormatData(id,"{:url('del')}","确认删除选择的配置吗？");
             }
         });
 

@@ -53,7 +53,8 @@ class CheckAdminLogin
             'Common/UpFile',     //
             'Index/clearCache',      // 清除缓存
             'Index/weather',    // 天气
-            'Index/home'
+            'Index/home',
+            'Temp/icon'
         ];
         // 查询所有不验证的方法并放入白名单
         $authOpen=Db::name("auth_rule")->field("name,id")->where("auth_open","=",2)->where("status","=",1)->select();

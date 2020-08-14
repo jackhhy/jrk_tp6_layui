@@ -1,8 +1,12 @@
 <?php
 $cdnurl = function_exists('config') ? config('view_replace_str.__CDN__') : '';
 $publicurl = function_exists('config') ? config('view_replace_str.__PUBLIC__') : '/';
-$debug = function_exists('config') ? config('app_debug') : false;
-
+//$debug = function_exists('config') ? config('app_debug') : false;
+if (\think\facade\App::isDebug()) {
+$debug=true;
+  }else{
+  $debug=false;
+  }
 $lang = [
     'An error occurred' => '发生错误',
 'Home' => '返回主页',
@@ -44,10 +48,10 @@ $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
         .clearfix:before,.clearfix:after {content:"\0020";display:block;height:0;visibility:hidden;}
         .clearfix:after {clear:both;}
         body.error-page-wrapper,.error-page-wrapper.preview {background-position:center center;background-repeat:no-repeat;background-size:cover;position:relative;}
-        .error-page-wrapper .content-container {border-radius:2px;text-align:center;box-shadow:1px 1px 1px rgba(99,99,99,0.1);padding:50px;background-color:#fff;width:100%;max-width:560px;position:absolute;left:50%;top:50%;margin-top:-220px;margin-left:-280px;}
+        .error-page-wrapper .content-container {border-radius:2px;text-align:center;box-shadow:1px 1px 1px rgba(99,99,99,0.1);padding:50px;background-color:#fff;width:100%;max-width:560px;position:absolute;left:50%;top:32%;margin-top:-120px;margin-left:-280px;}
         .error-page-wrapper .content-container.in {left:0px;opacity:1;}
         .error-page-wrapper .head-line {transition:color .2s linear;font-size:40px;line-height:60px;letter-spacing:-1px;margin-bottom:20px;color:#777;}
-        .error-page-wrapper .subheader {transition:color .2s linear;font-size:32px;line-height:46px;color:#494949;}
+        .error-page-wrapper .subheader {transition:color .2s linear;font-size:32px;line-height:46px;color:#494949;word-wrap:break-word;}
         .error-page-wrapper .hr {height:1px;background-color:#eee;width:80%;max-width:350px;margin:25px auto;}
         .error-page-wrapper .context {transition:color .2s linear;font-size:16px;line-height:27px;color:#aaa;}
         .error-page-wrapper .context p {margin:0;}
@@ -61,7 +65,7 @@ $langSet == 'en' && $lang = array_combine(array_keys($lang), array_keys($lang));
             .error-page-wrapper {padding:30px 5%;}
             .error-page-wrapper .content-container {padding:37px;position:static;left:0;margin-top:0;margin-left:0;}
             .error-page-wrapper .head-line {font-size:36px;}
-            .error-page-wrapper .subheader {font-size:27px;line-height:37px;}
+            .error-page-wrapper .subheader {font-size:27px;line-height:37px;word-wrap:break-word;}
             .error-page-wrapper .hr {margin:30px auto;width:215px;}
         }
         @media screen and (max-width:450px) {

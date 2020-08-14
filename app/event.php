@@ -13,6 +13,8 @@ return [
     ],
 
     'subscribe' => [
-        \app\common\subscribes\AdminSubscribe::class//后台用户事件类
+        \app\common\subscribes\AdminSubscribe::class, //后台用户事件类
+        \app\common\subscribes\UserSubscribe::class, // 前台用户事件类
+
     ],
 ];

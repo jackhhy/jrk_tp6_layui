@@ -51,7 +51,7 @@
         var lucky=layui.lucky;
 
         form.on('submit(add)', function (data) {
-            lucky.FormSubmit("{:url('userGroup')}",data.field,"table_id",1);
+            lucky.FormSubmit("{:url('userGroup')}",data.field,true);
             return false;
         });
     })

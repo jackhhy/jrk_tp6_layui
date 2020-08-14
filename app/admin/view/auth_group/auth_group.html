@@ -22,9 +22,6 @@
                     </div>
                 </div>
 
-
-
-
                 {if isset($info.id)}
                 <input type="hidden" name="id" value="{$info.id}">
                 {/if}
@@ -104,7 +101,7 @@
         });
 
         form.on('submit(add)', function (data) {
-            lucky.FormSubmit("{:url('addGroups')}",data.field,"table_id",1);
+            lucky.FormSubmit("{:url('addGroups')}",data.field,true);
             return false;
         });
     })

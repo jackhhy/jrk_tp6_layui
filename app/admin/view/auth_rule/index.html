@@ -36,7 +36,7 @@
 
     <div class="layui-card">
         <div class="layui-card-body">
-            <table class="layui-hide" id="tableId" lay-filter="tableEvent"></table>
+            <table class="layui-hide" id="table_id" lay-filter="table_id"></table>
         </div>
     </div>
 
@@ -102,7 +102,7 @@
         };
 
       var treeTable = tableTree.render({
-            elem: '#tableId',
+            elem: '#table_id',
             url:"{:url('index')}",
             toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
             even: true, //开启隔行背景
@@ -157,7 +157,7 @@
          *表格的增删改都会回调此方法
          * 与table.on(tool(lay-filter))用法一致。
          **/
-        tableTree.on('tool(tableEvent)',function (obj) {
+        tableTree.on('tool(table_id)',function (obj) {
             var field = obj.field; //单元格字段
             var value = obj.value; //修改后的值
             var data = obj.data; //当前行数据
@@ -165,27 +165,27 @@
             //event为del为删除 add则新增 edit则修改 async则为异步请求数据。
             if(event !== 'del' && event !== 'add' && event !== 'url' && event !== 'async' && event !== 'sort' && event !== 'sorts'){
                 var urls="{:url('addAuth')}?id="+obj.data.id;
-                lucky.CreateOpenForm("编辑菜单",'55%','73%',urls,"table_id");
+                lucky.CreateOpenForm("编辑菜单",urls);
                 //console.log(obj)
             }
             if(event === 'url'){
                 var updates = {};
                 updates[field] = value;
-                lucky.Change_status("{:url('common/changeStatus')}","table_id","auth_rule",obj.data.id,obj.field,obj.value);
+                lucky.Change_status("{:url('common/changeStatus')}","auth_rule",obj.data.id,obj.field,obj.value);
                 obj.update(updates);
                // console.log(obj)
             }
             if (event==="sorts"){
                 var updated = {};
                 updated[field] = value;
-                lucky.Change_status("{:url('common/changeStatus')}","table_id","auth_rule",obj.data.id,obj.field,obj.value);
+                lucky.Change_status("{:url('common/changeStatus')}","auth_rule",obj.data.id,obj.field,obj.value);
                 obj.update(updated);
             }
 
             if (event==="sort"){
                 if (obj.data.type==1 && obj.data._no==1){
                     var urls="{:url('addNode')}?id="+obj.data.id;
-                    lucky.CreateOpenForm("添加节点",'55%','73%',urls,"table_id");
+                    lucky.CreateOpenForm("添加节点",urls);
                 }else if (obj.data.type==2){
                     layer.msg("操作节点不可添加子节点",{icon:15,time:1000,shade:0.3});
                     return false;
@@ -198,7 +198,7 @@
             if(event === 'del'){
                 //console.log(obj);
                 obj.del();
-                lucky.FormatData(obj.data.id,"{:url('del')}","table_id","确认删除吗？");
+                lucky.FormatData(obj.data.id,"{:url('del')}","确认删除吗？");
                // console.log(obj);
             }
             //添加子菜单
@@ -210,7 +210,7 @@
                     return false;
                 }else {
                     var url="{:url('addSon')}?id="+obj.data.id;
-                    lucky.CreateOpenForm("添加子菜单",'55%','73%',url,"table_id");
+                    lucky.CreateOpenForm("添加子菜单",url);
                 }
             }
             if(event === 'async'){ //点击方向箭头小图标时触发
@@ -221,7 +221,7 @@
         /**
          *监听复选框选中状态
          **/
-        tableTree.on('checkbox(tableEvent)', function(obj){
+        tableTree.on('checkbox(table_id)', function(obj){
          /*   console.log(obj.checked); //当前是否选中状态
             console.log(obj.data); //选中行的相关数据
             console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
@@ -229,10 +229,10 @@
         });
 
         var isAsc = true;
-        table.on('toolbar(tableEvent)', function(obj){
+        table.on('toolbar(table_id)', function(obj){
             var id = $(this).attr("id");
             if(id==="btn1"){
-                lucky.CreateOpenForm("添加菜单",'55%','73%',"{:url('addAuth')}",obj.config.id);
+                lucky.CreateOpenForm("添加菜单","{:url('addAuth')}");
                 return false;
             }else if(id === 'btn2') {
                 var data=treeTable.getCheckedTreeNodeData();
@@ -244,7 +244,7 @@
                     for (var i=0;i<data.length;i++){
                         _id.push(data[i].id)
                     }
-                    lucky.FormatData(_id,"{:url('del_all')}","table_id","确认删除选中的菜单吗？");
+                    lucky.FormatData(_id,"{:url('del_all')}","确认删除选中的菜单吗？");
                     return false;
                 }
 
@@ -266,7 +266,7 @@
         /**
          * 整个表格树排序，与layui进行了整合。
          */
-        table.on('sort(tableEvent)', function(obj){
+        table.on('sort(table_id)', function(obj){
             treeTable.sort({field:obj.field,desc:obj.type === 'desc'})
         });
 
