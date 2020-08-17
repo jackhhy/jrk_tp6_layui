@@ -30,6 +30,40 @@ layui.define(['jquery', 'layer'], function(exports) {
         },
 
         /**
+         * 查看大图
+         * @param src
+         */
+        imageView:function(src){
+            if ($.common.isMobile()) {
+                width = 'auto';
+                height = 'auto';
+                layer.open({
+                    title: false,
+                    type: 1,
+                    closeBtn: true,
+                    shadeClose: true,
+                    area: ['auto', 'auto'],
+                    content: "<img src='" + src + "' height='" + height + "' width='" + width + "'/>"
+                });
+            }else {
+                layer.open({
+                    title:false,
+                    type: 1,
+                    content: '<div class="layui-card text-center">\n' +
+                    '    <div class="layui-card-body">\n' +
+                    '        <div class="layadmin-homepage-pad-ver">\n' +
+                    '            <img class="layadmin-homepage-pad-img" src="'+src+'" width="450" height="485">\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '</div>',
+                    area: ["auto"],
+                    anim: 5,
+                    closeBtn:1
+                });
+            }
+        },
+
+        /**
          * 先关闭然后刷新父页面
          * @param tableid
          */

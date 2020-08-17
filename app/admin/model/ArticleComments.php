@@ -42,7 +42,7 @@ class ArticleComments extends AdminBaseModel implements Comm
             $where[] = ['c.status', '=', $status];
         }
         if (!empty($param['user_id'])) {
-            $where[] = ['c.status', '=', $param['user_id']];
+            $where[] = ['c.user_id', '=', $param['user_id']];
         }
 
         if (isset($param['time']) && $param['time'] != '') {

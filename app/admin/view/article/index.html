@@ -6,7 +6,9 @@
 <div class="layui-col-md12">
     <div class="layui-card">
         <div class="layui-card-body layui-row ">
-
+            <fieldset class="layui-elem-field">
+                <legend>搜索区</legend>
+                <div class="layui-field-box">
             <form action="" class="layui-form" method="get">
                 <div class="layui-form-item layui-form-pane">
 
@@ -14,16 +16,49 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">名称：</label>
                         <div class="layui-input-inline">
-                            <input name="name" class="layui-input"  value="" type="text" placeholder="请输入名称">
+                            <input name="title" class="layui-input"  value="" type="text" placeholder="请输入名称">
                         </div>
                     </div>
 
                     <div class="layui-inline">
-                        <label class="layui-form-label">列表：</label>
+                        <label class="layui-form-label">文章栏目：</label>
                         <div class="layui-input-inline">
-                            <select class="layui-select" name="group_id">
+                            <select class="layui-select" name="cate_id" lay-search="">
                                 <option value="">所有</option>
-                                <option value="1" >显示</option>
+                                {$cate|make_option='','title_show','id'}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">是否置顶：</label>
+                        <div class="layui-input-inline">
+                            <select class="layui-select" name="is_top">
+                                <option value="">所有</option>
+                                <option value="1" >否</option>
+                                <option value="2" >是</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">是否显示：</label>
+                        <div class="layui-input-inline">
+                            <select class="layui-select" name="is_show">
+                                <option value="">所有</option>
+                                <option value="1" >否</option>
+                                <option value="2" >是</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">是否推荐：</label>
+                        <div class="layui-input-inline">
+                            <select class="layui-select" name="is_recommend">
+                                <option value="">所有</option>
+                                <option value="1" >否</option>
+                                <option value="2" >是</option>
                             </select>
                         </div>
                     </div>
@@ -37,15 +72,16 @@
                     </div>
 
 
-                    <div class="layui-inline" style="padding-left: 20px;">
+                    <div class="layui-inline">
                         <button class="layui-btn icon-btn layui-btn-sm" data-id="table_id" lay-filter="search" lay-submit="">
                             <i class="layui-icon"></i>搜索
                         </button>
-                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm">重置</button>
+                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm"><i class="layui-icon layui-icon-refresh"></i>重置</button>
                     </div>
                 </div>
             </form>
-
+                </div>
+            </fieldset>
         </div>
 
     </div>
@@ -69,22 +105,47 @@
 </script>
 
 <script type="text/html" id="toolbarDemo">
-    <button class="layui-btn layui-btn-sm {:node('Article/add')}" lay-event="add"><i class="layui-icon"></i>新增</button>
+    <button class="layui-btn layui-btn-sm {:node('Article/add')}" lay-event="add"><i class="layui-icon"></i>新增内容</button>
     <button class="layui-btn layui-btn-sm layui-btn-primary" lay-event="reload"><i class="fa fa-refresh"></i> 刷新</button>
     <button class="layui-btn layui-btn-sm {:node('Article/del')} layui-btn-danger" lay-event="del"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
+    <button class="layui-btn layui-btn-sm layui-btn-info {:node('Article/recycle')}" lay-event="recycle">回收站</button>
+
 </script>
 <!-- 链接 -->
 
-<script type="text/html" id="type">
-    {{# if(d.type==1){ }}
-    <span class="layui-badge layui-bg-green">菜单</span>
+<script type="text/html" id="is_top">
+    {{# if(d.is_top==1){ }}
+    <span class="layui-badge layui-bg-green">是</span>
     {{# }else{ }}
-    <span class="layui-badge layui-bg-orange">按钮</span>
+    <span class="layui-badge layui-bg-orange">否</span>
     {{# } }}
 </script>
 
+
+<script type="text/html" id="is_show">
+    {{# if(d.is_show==1){ }}
+    <span class="layui-badge layui-bg-blue">展示</span>
+    {{# }else{ }}
+    <span class="layui-badge layui-bg-black">不展示</span>
+    {{# } }}
+</script>
+
+
+<script type="text/html" id="is_recommend">
+    {{# if(d.is_recommend==1){ }}
+    <span class="layui-badge layui-bg-gray">推荐</span>
+    {{# }else{ }}
+    <span class="layui-badge layui-bg-orange">不推荐</span>
+    {{# } }}
+</script>
+
+
+<script type="text/html" id="url">
+    <a href="{{d.url}}" title="查看文章"  target="_blank">{{d.title}}</a>
+</script>
+
 <script>
-    layui.use(['element', 'table', 'form', 'jquery', 'lucky','laydate','okTab','upload'], function () {
+    layui.use(['element', 'table', 'form', 'jquery', 'lucky','laydate','okTab','upload','opTable'], function () {
         var element = layui.element;
         var form = layui.form;
         var table = layui.table;
@@ -93,6 +154,7 @@
         var upload=layui.upload;
         var laydate = layui.laydate;
         var okTab=layui.okTab();
+        var opTable = layui.opTable;
         form.render();
 
         //日期范围
@@ -101,7 +163,7 @@
             ,range: '~'
         });
 
-        table.render({
+        var opTables = opTable.render({
             elem: '#table_id',
             url:"{:url('index')}",
             toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
@@ -117,23 +179,57 @@
             },
             id:'table_id',
             height: 'full-100',
+            // 第一列显示展开
+            openColumnIndex: 0,
+            // 不单独占一列
+            isAloneColumn: true
+            , opOrientation: 'h',
             text: {
                 none: '暂无相关数据'
             },
             cols: [[
                 {type:'checkbox'},
                 {field: 'id',  title: 'ID',width:60},
-                {field: 'group', width: 120, title: '分类英文名'},
-                {field: 'name', width: 250, title: '配置名'},
-                {field: 'value', width: 250, title: '配置值'},
-                {field: 'beizhu', width: 200, title: '备注'},
-                {field: 'create_time', title: '添加时间',align: 'center',width:180,sort:true},
-                {templet: '#operationTpl', width: 120, align: 'center', title: '操作'}
+                {field: 'title', minWidth: 150, title: '文章标题',templet:'#url'},
+                {field: 'cates', width: 100, title: '文章栏目',templet:function (d) {
+                    tr=JSON.stringify(d.cates);
+                    if ($.common.isNotEmpty(tr)){
+                        ck=JSON.parse(tr);
+                        return ck.name;
+                    }else {
+                        return '-';
+                    }
+                }},
+                {field: 'img_url', title: '封面图',width: 100,align: 'center',templet:function (d) {
+                    var s="+";
+                    if ($.common.isNotEmpty(d.img_url)){
+                        s="<img src='"+d.img_url+"' class='layui-nav-img' />";
+                    }
+                    return s;
+                }},
+                {field: 'author', width: 100, title: '作者'},
+                {field: 'is_top', templet: '#is_top', width: 60, title: '置顶'},
+                {field: 'is_show', templet: '#is_show', width: 90, title: '是否显示'},
+                {field: 'is_recommend', templet: '#is_recommend', width: 90, title: '是否推荐'},
+                {field: 'origin', width: 100, title: '来源'},
+                {field: 'create_time', title: '添加时间',align: 'center',width:170,sort:true},
+                {templet: '#operationTpl', width: 100, align: 'center', title: '操作'}
             ]],
+            //  展开的列配置
+            openCols: [
+                {field: 'keywords', title: '关键词'},
+                {field: 'hits',  title: '点击量'},
+                {field: 'range',  title: '评分等级'},
+                {field: 'comment_num',title: '评论量'},
+                {field: 'love', title: '喜欢量'}
+
+            ], openType: 0,
             done: function (res) {
                 layer.closeAll('loading');
             }
         });
+
+
 
         /**
          * 关键词搜索树
@@ -155,7 +251,7 @@
                 lucky.FormatData(_id,"{:url('del')}","确认删除吗？");
             }else if(layEvent==="edit"){
                 var url = "{:url('edit')}?id=" + _id;
-                lucky.CreateOpenForm("编辑", url);
+                lucky.CreateOpenForm("编辑文章", url,'98%','90%');
             }
         });
 
@@ -164,7 +260,7 @@
             var data = checkStatus.data;
 
             if(obj.event==="add"){
-                lucky.CreateOpenForm("添加","{:url('add')}");
+                lucky.CreateOpenForm("添加文章","{:url('add')}",'98%','90%');
                 return false;
             }else if(obj.event==="reload"){
                 lucky.CreateReload();
@@ -180,6 +276,10 @@
                     return  false;
                 }
                 lucky.FormatData(id,"{:url('del')}","确认删除吗？");
+
+            }else if(obj.event==="recycle"){
+                lucky.CreateOpenForm("回收站","{:url('recycle')}");
+                return false;
             }
         });
 

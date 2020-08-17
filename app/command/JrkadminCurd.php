@@ -13,6 +13,7 @@
 // | Description:
 // +----------------------------------------------------------------------
 namespace app\command;
+use Jrk\Tool;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -156,6 +157,7 @@ class JrkadminCurd extends Command
     public function makeView($controllerName, $appName)
     {
         $viewKpl = $this->appPath .  'command' . DIRECTORY_SEPARATOR . 'temp' .DIRECTORY_SEPARATOR. 'View.kpl';
+        $controllerName=Tool::humpToLine($controllerName);
         $viewPath  = $this->appPath . $appName . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . strtolower($controllerName);
         if (!is_dir($viewPath)) {
             @mkdir($viewPath, 0777, true);

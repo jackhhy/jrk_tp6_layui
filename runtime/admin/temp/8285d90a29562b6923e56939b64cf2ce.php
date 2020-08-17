@@ -1,4 +1,4 @@
-<?php /*a:3:{s:65:"D:\phpstudy_pro\WWW\jrk_tp6_layui\app\admin\view\admin\index.html";i:1597386627;s:65:"D:\phpstudy_pro\WWW\jrk_tp6_layui\app\admin\view\public\base.html";i:1597383421;s:65:"D:\phpstudy_pro\WWW\jrk_tp6_layui\app\admin\view\public\head.html";i:1597397016;}*/ ?>
+<?php /*a:3:{s:65:"D:\phpstudy_pro\WWW\jrk_tp6_layui\app\admin\view\admin\index.html";i:1597386627;s:65:"D:\phpstudy_pro\WWW\jrk_tp6_layui\app\admin\view\public\base.html";i:1597383421;s:65:"D:\phpstudy_pro\WWW\jrk_tp6_layui\app\admin\view\public\head.html";i:1597397144;}*/ ?>
 
 <!DOCTYPE html>
 <html>
@@ -9,6 +9,9 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
+
+    <link rel="stylesheet" href="/static/css/admin.css?v=<?php echo time(); ?>">
+
     <link rel="stylesheet" href="/static/css/jrkLoading.css?v=<?php echo time(); ?>"/>
     <script type="text/javascript" src="/static/js/backend/jrk_config.js?v=<?php echo time(); ?>"></script>
     <script type="text/javascript" src="/static/js/backend/jrkLoading.js?v=<?php echo time(); ?>"></script>
@@ -17,7 +20,7 @@
 
     <link rel="stylesheet" href="/static/css/jrkadmin.css?v=<?php echo time(); ?>">
 
-    <link rel="stylesheet" href="/static/css/admin.css?v=<?php echo time(); ?>">
+
 
     <script src="/static/js/jquery.min.js?v=1"></script>
 

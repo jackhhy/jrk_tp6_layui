@@ -6,7 +6,9 @@
 <div class="layui-col-md12">
     <div class="layui-card">
         <div class="layui-card-body layui-row ">
-
+            <fieldset class="layui-elem-field">
+                <legend>搜索区</legend>
+                <div class="layui-field-box">
             <form action="" class="layui-form" method="get">
                 <div class="layui-form-item layui-form-pane">
 
@@ -17,14 +19,16 @@
                         </div>
                     </div>
 
-                    <div class="layui-inline" style="padding-left: 20px;">
+                    <div class="layui-inline" >
                         <button class="layui-btn icon-btn layui-btn-sm" data-id="table_id" lay-filter="search" lay-submit="">
                             <i class="layui-icon"></i>搜索
                         </button>
-                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm">重置</button>
+                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm"><i class="layui-icon layui-icon-refresh"></i>重置</button>
                     </div>
                 </div>
             </form>
+                </div>
+            </fieldset>
 
         </div>
 

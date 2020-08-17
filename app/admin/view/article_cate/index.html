@@ -6,7 +6,9 @@
 <div class="layui-col-md12">
     <div class="layui-card">
         <div class="layui-card-body layui-row ">
-
+            <fieldset class="layui-elem-field">
+                <legend>搜索区</legend>
+                <div class="layui-field-box">
             <form action="" class="layui-form" method="get">
                 <div class="layui-form-item layui-form-pane">
 
@@ -19,33 +21,33 @@
                     </div>
 
                     <div class="layui-inline">
-                        <label class="layui-form-label">列表：</label>
+                        <label class="layui-form-label">状态：</label>
                         <div class="layui-input-inline">
-                            <select class="layui-select" name="group_id">
+                            <select class="layui-select" name="is_show">
                                 <option value="">所有</option>
                                 <option value="1" >显示</option>
+                                <option value="2" >不显示</option>
                             </select>
                         </div>
                     </div>
 
-
                     <div class="layui-inline">
-                        <label class="layui-form-label">选择时间：</label>
+                        <label class="layui-form-label">时间范围：</label>
                         <div class="layui-input-inline">
                             <input name="time" class="layui-input" id="time" value="" type="text" placeholder="请选择时间范围">
                         </div>
                     </div>
 
-
-                    <div class="layui-inline" style="padding-left: 20px;">
+                    <div class="layui-inline">
                         <button class="layui-btn icon-btn layui-btn-sm" data-id="table_id" lay-filter="search" lay-submit="">
                             <i class="layui-icon"></i>搜索
                         </button>
-                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm">重置</button>
+                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm"><i class="layui-icon layui-icon-refresh"></i>重置</button>
                     </div>
                 </div>
             </form>
-
+                </div>
+            </fieldset>
         </div>
 
     </div>
@@ -75,11 +77,12 @@
 </script>
 <!-- 链接 -->
 
-<script type="text/html" id="type">
-    {{# if(d.type==1){ }}
-    <span class="layui-badge layui-bg-green">菜单</span>
+
+<script type="text/html" id="is_show">
+    {{# if(d.is_show==1){ }}
+    <span class="layui-badge layui-bg-blue">展示</span>
     {{# }else{ }}
-    <span class="layui-badge layui-bg-orange">按钮</span>
+    <span class="layui-badge layui-bg-black">不展示</span>
     {{# } }}
 </script>
 
@@ -116,19 +119,29 @@
                 ,limits:[20,30,50]
             },
             id:'table_id',
-            height: 'full-100',
+            height: '',
             text: {
                 none: '暂无相关数据'
             },
             cols: [[
                 {type:'checkbox'},
                 {field: 'id',  title: 'ID',width:60},
-                {field: 'group', width: 120, title: '分类英文名'},
-                {field: 'name', width: 250, title: '配置名'},
-                {field: 'value', width: 250, title: '配置值'},
-                {field: 'beizhu', width: 200, title: '备注'},
-                {field: 'create_time', title: '添加时间',align: 'center',width:180,sort:true},
-                {templet: '#operationTpl', width: 120, align: 'center', title: '操作'}
+                {field: 'title_show', width: 180, title: '栏目名称'},
+                {field: 'url', width: 250, title: '栏目地址'},
+                {field: 'models', width: 100, title: '模型名',templet:function (d) {
+                    tr=JSON.stringify(d.models);
+                    if ($.common.isNotEmpty(tr)){
+                        ck=JSON.parse(tr);
+                        return ck.name;
+                    }else {
+                        return '-';
+                    }
+                }},
+                {field: 'sort', width: 80, title: '排序'},
+                {field: 'description', width: 200, title: '栏目描述'},
+                {field: 'is_show', templet: '#is_show', width: 90, title: '是否显示'},
+                {field: 'create_time', title: '添加时间',align: 'center',width:170,sort:true},
+                {templet: '#operationTpl', width: 100, align: 'center', title: '操作'}
             ]],
             done: function (res) {
                 layer.closeAll('loading');
@@ -155,7 +168,7 @@
                 lucky.FormatData(_id,"{:url('del')}","确认删除吗？");
             }else if(layEvent==="edit"){
                 var url = "{:url('edit')}?id=" + _id;
-                lucky.CreateOpenForm("编辑", url);
+                lucky.CreateOpenForm("编辑栏目", url);
             }
         });
 
@@ -164,7 +177,7 @@
             var data = checkStatus.data;
 
             if(obj.event==="add"){
-                lucky.CreateOpenForm("添加","{:url('add')}");
+                lucky.CreateOpenForm("添加栏目","{:url('add')}");
                 return false;
             }else if(obj.event==="reload"){
                 lucky.CreateReload();

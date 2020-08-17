@@ -14,6 +14,7 @@
 // +----------------------------------------------------------------------
 
 namespace Jrk;
+
 use think\facade\Request;
 use think\facade\Session;
 use think\facade\Db;
@@ -100,8 +101,8 @@ class Auth
 
 
     /**
-     * @param $name  //需要验证的规则列表，支持逗号分隔的权限规则或索引数组
-     * @param $uid   //认证用户ID
+     * @param $name //需要验证的规则列表，支持逗号分隔的权限规则或索引数组
+     * @param $uid //认证用户ID
      * @param string $relation //如果为 'or' 表示满足任一条规则即通过验证;如果为 'and' 则表示需满足所有规则才能通过验证
      * @param string $mode //执行check的模式
      * @param int $type //规则类型
@@ -119,7 +120,7 @@ class Auth
             return true;
         }
         $authList = $this->getAuthList($uid, $type);
-       // dd($authList);
+        // dd($authList);
         if (is_string($name)) {
             $name = strtolower($name);
             if (strpos($name, ',') !== false) {
@@ -269,30 +270,36 @@ class Auth
     }
 
 
-   public function getRuleIds($uid)
+    /**
+     * @param $uid
+     * @return array
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:用户所属用户组设置的所有权限规则ID
+     */
+    public function getRuleIds($uid)
     {
         //读取用户所属用户组
         $rule = $this->getGroups($uid);
-          $ids = []; // 保存用户所属用户组设置的所有权限规则ID
-          if (!empty($rule)){
+        $ids = []; // 保存用户所属用户组设置的所有权限规则ID
+        if (!empty($rule)) {
             foreach ($rule as $g) {
-              //分割成数组
-                $f=explode(',', trim($g['rules'], ','));
+                //分割成数组
+                $f = explode(',', trim($g['rules'], ','));
                 //合并数组
                 $ids = array_merge($ids, $f);
             }
-                $ids = array_unique($ids);
-                 if (!empty($ids)){
-                    //转换成int 类型
-                      foreach ($ids as $k=>$v){
-                                $ids[$k]=intval($v);
-                            }
-                        }
-                    }
+            $ids = array_unique($ids);
+            if (!empty($ids)) {
+                //转换成int 类型
+                foreach ($ids as $k => $v) {
+                    $ids[$k] = intval($v);
+                }
+            }
+        }
         return $ids;
     }
 
-    
+
     /**
      * @param string $route
      * @return array
@@ -340,7 +347,7 @@ class Auth
                     'url' => 'Index/index',
                     'title' => '控制台',
                     'icon' => 'fa-dashboard',
-                    'font_family'=>'fa'
+                    'font_family' => 'fa'
                 ];
             }
         }

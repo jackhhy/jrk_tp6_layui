@@ -10,7 +10,7 @@ layui.config({
     tableEdit: 'tableTree/tableEdit',//表格树依赖我另外写的tableEdit模块
     tableTree: 'tableTree/tableTree', //表格树
     opTable:'opTable/opTable', //展开表
-    tip:'lucky_tip/tip', //提示
+    tip:'lucky_tip/tip' //提示
 }).use(['element','jquery', 'tip'],function () {
     var element = layui.element;
     var $ = layui.jquery;

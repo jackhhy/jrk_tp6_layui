@@ -61,6 +61,30 @@ class Common extends AdminBaseController
 
 
     /**
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @describe:下载 excel文件
+     */
+    public function download(){
+        $param=$this->request->param();
+        $file_name=$param['fileName'];
+        $file_path=app()->getRootPath().'public/'.$param['fileName'];
+        if(!file_exists($file_path)){
+            $this->error("文件不存在");exit;
+        }
+        $file1=fopen($file_path,"r");
+        Header("Content-type: application/octet-stream;charset=utf-8");
+        Header("Accept-Ranges: bytes");
+        header("Content-Length: " . filesize($file_path));//文件大小
+        header('Content-Disposition:attachment;filename='.$file_name.'');
+        ob_clean();
+        flush();
+        echo fread($file1,filesize($file_path)); //输出文件大小到浏览器
+        fclose($file1);
+        @unlink($file_path); //删除文件
+        exit();
+    }
+
+    /**
      * @return \think\response\Json
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -106,6 +130,53 @@ class Common extends AdminBaseController
             return parent::JsonReturn("上传成功",1,'',$file);
         }else{
             return ['code' => 0, 'msg' => '上传失败'];
+        }
+    }
+
+
+    /**
+     * @return \think\response\Json
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @describe: 弹出层上传图片
+     */
+    public function UpImagesList(){
+        $res= self::UpImages("attachment/images");
+        if (is_array($res)){
+            return parent::JsonReturn("上传成功",1,'',$res);
+        }else{
+            return parent::JsonReturn($res,0);
+        }
+    }
+
+
+
+    /**
+     * @return \think\response\Json
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:文章封面
+     */
+    public function UpArticlePic(){
+        $res= self::UpImages("article/images");
+        if (is_array($res)){
+            return parent::JsonReturn("上传成功",1,'',$res);
+        }else{
+            return parent::JsonReturn($res,0);
+        }
+    }
+
+
+    /**
+     * @return array|\think\response\Json
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:Editormd 图片上传
+     */
+    public function uploadEditormdImages(){
+        $file= self::UpImages("editormd/images",1,"editormd-image-file");
+        if (is_array($file)){
+            $data = ['success' => 1, 'message' => "上传成功",'url'=>$file['dir'],"time"=>time()];
+            return json($data);
+        }else{
+            return json(['success' => 0, 'message' => $file]);
         }
     }
 

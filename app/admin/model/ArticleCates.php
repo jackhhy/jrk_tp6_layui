@@ -35,8 +35,8 @@ class ArticleCates extends AdminBaseModel implements Comm
         // TODO: Implement getAdminPageData() method.
 
         $where = [];
-        if (isset($param['username']) && $param['username'] != '') {
-            $where[] = ['username', 'like', "%" . $param['username'] . "%"];
+        if (isset($param['name']) && $param['name'] != '') {
+            $where[] = ['name', 'like', "%" . $param['name'] . "%"];
         }
 
 
@@ -46,11 +46,10 @@ class ArticleCates extends AdminBaseModel implements Comm
             $e = $ck[1] . " 23:59:59";
             $where[] = ['create_time', 'between', [strtotime($b), strtotime($e)]];
         }
-
-          if (!empty($param['status'])){
-                $status=(int)$param['status']-1;
-                $where[] = ['status', '=', $status];
-            }
+        if (!empty($param['is_show'])) {
+            $status = (int)$param['is_show'] - 1;
+            $where[] = ['is_show', '=', $status];
+        }
 
         try {
             $data = self::with("models")->limit_select($where, $order);

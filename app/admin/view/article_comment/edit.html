@@ -1,0 +1,61 @@
+
+{extend name='public/window' /}
+
+{block name="content"}
+
+<div class="layui-fluid">
+    <div class="layui-card">
+
+        <div class="layui-card-body" style="padding: 15px;">
+            <form class="layui-form" action="" lay-filter="form">
+
+
+                {if isset($info.id)}
+                <input type="hidden" name="id" value="{$info.id}">
+                {/if}
+
+                <input type="hidden" name="__token__" id="token" value="{:token()}"/>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">评论：</label>
+                    <div class="layui-input-block input-custom-width" style="">
+                        <textarea name="content" placeholder="" lay-verify="required"  autocomplete="off" class="layui-textarea"></textarea>
+                        <p class="help-block"></p>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-layout-admin " style="width: 100%">
+                    <div class="layui-input-block">
+                        <div class="layui-footer" style="left: 0px;text-align: center;">
+                            <button class="layui-btn" lay-submit="" lay-filter="add">提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['element', 'form', 'jquery','lucky'], function () {
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var lucky=layui.lucky;
+        //表单赋值
+        var info = {:json_encode($info)};
+        form.val("form",info);
+
+        form.on('submit(add)', function (data) {
+            lucky.FormSubmit("{:url('upAndAdd')}",data.field,true);
+            return false;
+        });
+    })
+</script>
+
+{/block}
+

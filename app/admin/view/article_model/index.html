@@ -6,46 +6,30 @@
 <div class="layui-col-md12">
     <div class="layui-card">
         <div class="layui-card-body layui-row ">
-
+            <fieldset class="layui-elem-field">
+                <legend>搜索区</legend>
+                <div class="layui-field-box">
             <form action="" class="layui-form" method="get">
                 <div class="layui-form-item layui-form-pane">
 
 
                     <div class="layui-inline">
-                        <label class="layui-form-label">名称：</label>
+                        <label class="layui-form-label">模型名称：</label>
                         <div class="layui-input-inline">
                             <input name="name" class="layui-input"  value="" type="text" placeholder="请输入名称">
                         </div>
                     </div>
 
                     <div class="layui-inline">
-                        <label class="layui-form-label">列表：</label>
-                        <div class="layui-input-inline">
-                            <select class="layui-select" name="group_id">
-                                <option value="">所有</option>
-                                <option value="1" >显示</option>
-                            </select>
-                        </div>
-                    </div>
-
-
-                    <div class="layui-inline">
-                        <label class="layui-form-label">选择时间：</label>
-                        <div class="layui-input-inline">
-                            <input name="time" class="layui-input" id="time" value="" type="text" placeholder="请选择时间范围">
-                        </div>
-                    </div>
-
-
-                    <div class="layui-inline" style="padding-left: 20px;">
                         <button class="layui-btn icon-btn layui-btn-sm" data-id="table_id" lay-filter="search" lay-submit="">
                             <i class="layui-icon"></i>搜索
                         </button>
-                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm">重置</button>
+                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm"><i class="layui-icon layui-icon-refresh"></i>重置</button>
                     </div>
                 </div>
             </form>
-
+                </div>
+            </fieldset>
         </div>
 
     </div>
@@ -65,23 +49,12 @@
 <!--模板-->
 <script type="text/html" id="operationTpl">
     <a href="javascript:;" class="layui-btn layui-btn-normal layui-btn-xs {:node('ArticleModel/edit')}"  data-title="编辑" lay-event="edit"><i class="layui-icon"></i></a>
-    <a href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs {:node('ArticleModel/del')}"  data-title="删除" lay-event="del"><i class="layui-icon "></i></a>
 </script>
 
 <script type="text/html" id="toolbarDemo">
-    <button class="layui-btn layui-btn-sm {:node('ArticleModel/add')}" lay-event="add"><i class="layui-icon"></i>新增</button>
     <button class="layui-btn layui-btn-sm layui-btn-primary" lay-event="reload"><i class="fa fa-refresh"></i> 刷新</button>
-    <button class="layui-btn layui-btn-sm {:node('ArticleModel/del')} layui-btn-danger" lay-event="del"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
 </script>
 <!-- 链接 -->
-
-<script type="text/html" id="type">
-    {{# if(d.type==1){ }}
-    <span class="layui-badge layui-bg-green">菜单</span>
-    {{# }else{ }}
-    <span class="layui-badge layui-bg-orange">按钮</span>
-    {{# } }}
-</script>
 
 <script>
     layui.use(['element', 'table', 'form', 'jquery', 'lucky','laydate','okTab','upload'], function () {
@@ -123,10 +96,13 @@
             cols: [[
                 {type:'checkbox'},
                 {field: 'id',  title: 'ID',width:60},
-                {field: 'group', width: 120, title: '分类英文名'},
-                {field: 'name', width: 250, title: '配置名'},
-                {field: 'value', width: 250, title: '配置值'},
-                {field: 'beizhu', width: 200, title: '备注'},
+                {field: 'name', width: 180, title: '模型名'},
+                {field: 'tablename', width: 120, title: '表名'},
+                {field: 'index_template', width: 120, title: '首页模板'},
+                {field: 'list_template', width: 120, title: '列表页模板'},
+                {field: 'show_template', width: 120, title: '详情页模板'},
+                {field: 'sort', width: 70, title: '排序'},
+
                 {field: 'create_time', title: '添加时间',align: 'center',width:180,sort:true},
                 {templet: '#operationTpl', width: 120, align: 'center', title: '操作'}
             ]],
@@ -152,34 +128,18 @@
             var _id=parseInt(data.id);
             var layEvent = obj.event;
             if(layEvent==="del"){
-                lucky.FormatData(_id,"{:url('del')}","确认删除吗？");
+
             }else if(layEvent==="edit"){
                 var url = "{:url('edit')}?id=" + _id;
-                lucky.CreateOpenForm("编辑", url);
+                lucky.CreateOpenForm("编辑模型", url);
             }
         });
 
         table.on('toolbar(table_id)', function(obj) {
             var checkStatus = table.checkStatus(obj.config.id);
             var data = checkStatus.data;
-
-            if(obj.event==="add"){
-                lucky.CreateOpenForm("添加","{:url('add')}");
-                return false;
-            }else if(obj.event==="reload"){
+           if(obj.event==="reload"){
                 lucky.CreateReload();
-            }else if(obj.event==="del"){
-                var num=0;
-                var id=[];
-                for (var i in data) {
-                    num++;
-                    id.push(data[i].id);
-                }
-                if (id.length <1){
-                    layer.msg("请至少选择一个",{icon:15,time:1000,shade:0.3});
-                    return  false;
-                }
-                lucky.FormatData(id,"{:url('del')}","确认删除吗？");
             }
         });
 

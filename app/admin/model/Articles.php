@@ -45,10 +45,6 @@ class Articles extends AdminBaseModel implements Comm
             $where[] = ['title', 'like', "%" . $param['title'] . "%"];
         }
 
-        if (!empty($param['isAsc']) && !empty($param['orderByColumn'])) {
-            $order = "{$param['orderByColumn']} {$param['isAsc']}";
-        }
-
         if (!empty($param['is_show']) && (int)$param['is_show']!=0) {
             $status = (int)$param['is_show'] - 1;
             $where[] = ['is_show', '=', $status];
@@ -97,9 +93,6 @@ class Articles extends AdminBaseModel implements Comm
      */
     public function getRecycleData($param = [], $order = 'id asc'){
         $where = [];
-        if (!empty($param['isAsc']) && !empty($param['orderByColumn'])) {
-            $order = "{$param['orderByColumn']} {$param['isAsc']}";
-        }
 
         if (isset($param['time']) && $param['time'] != '') {
             $ck = @explode(" ~ ", $param['time']);

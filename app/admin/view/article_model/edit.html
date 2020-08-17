@@ -1,0 +1,89 @@
+
+{extend name='public/window' /}
+
+{block name="content"}
+
+<div class="layui-fluid">
+    <div class="layui-card">
+
+        <div class="layui-card-body" style="padding: 15px;">
+            <form class="layui-form" action="" lay-filter="form">
+
+                {if isset($info.id)}
+                <input type="hidden" name="id" value="{$info.id}">
+                {/if}
+
+                <input type="hidden" name="__token__" id="token" value="{:token()}"/>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">模型名称：</label>
+                    <div class="layui-input-inline input-custom-width" style="">
+                        <input type="text" name="name" value="" placeholder="请输入模型名称" lay-verify="required" lay-vertype="tips" lay-reqtext="请输入模型名称" autocomplete="off" class="layui-input ">
+                    </div>
+                    <label class="layui-form-label ">表名：</label>
+                    <div class="layui-input-inline input-custom-width" style="">
+                        <input type="text" name="tablename" value="" placeholder="表名" lay-verify="" lay-vertype="tips" lay-reqtext="请输入表名" autocomplete="off" class="layui-input ">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">封面页模板：</label>
+                    <div class="layui-input-inline input-custom-width" style="">
+                        <input type="text" name="index_template" value="" placeholder="请输入封面页模板" lay-verify="required" lay-vertype="tips" lay-reqtext="请输入封面页模板" autocomplete="off" class="layui-input ">
+                    </div>
+                    <label class="layui-form-label ">列表模板：</label>
+                    <div class="layui-input-inline input-custom-width" style="">
+                        <input type="text" name="list_template" value="" placeholder="列表模板" lay-verify="" lay-vertype="tips" lay-reqtext="请输入列表模板" autocomplete="off" class="layui-input ">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">详情页模板：</label>
+                    <div class="layui-input-inline input-custom-width" style="">
+                        <input type="text" name="show_template" value="" placeholder="请输入详情页模板" lay-verify="required" lay-vertype="tips" lay-reqtext="请输入详情页模板" autocomplete="off" class="layui-input ">
+                    </div>
+                    <label class="layui-form-label ">排序：</label>
+                    <div class="layui-input-inline input-custom-width" style="">
+                        <input type="number" min="0" name="sort" value="" placeholder="排序" lay-verify="" lay-vertype="tips" lay-reqtext="请输入排序" autocomplete="off" class="layui-input ">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-layout-admin " style="width: 100%">
+                    <div class="layui-input-block">
+                        <div class="layui-footer" style="left: 0px;text-align: center;">
+                            <button class="layui-btn" lay-submit="" lay-filter="add">提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['element', 'form', 'jquery','lucky','upload'], function () {
+        var element = layui.element;
+        var table = layui.table;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var lucky=layui.lucky;
+        var upload = layui.upload;
+
+        //表单赋值
+        var info = {:json_encode($info)};
+        form.val("form",info);
+
+        form.on('submit(add)', function (data) {
+            lucky.FormSubmit("{:url('upAndAdd')}",data.field,true);
+            return false;
+        });
+    })
+</script>
+
+{/block}
+

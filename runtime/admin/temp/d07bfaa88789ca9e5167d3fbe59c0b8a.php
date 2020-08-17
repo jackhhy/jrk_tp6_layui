@@ -1,4 +1,4 @@
-<?php /*a:3:{s:69:"D:\phpstudy_pro\WWW\jrk_tp6_layui\app\admin\view\auth_rule\index.html";i:1597387159;s:65:"D:\phpstudy_pro\WWW\jrk_tp6_layui\app\admin\view\public\base.html";i:1597383421;s:65:"D:\phpstudy_pro\WWW\jrk_tp6_layui\app\admin\view\public\head.html";i:1597397144;}*/ ?>
+<?php /*a:3:{s:69:"D:\phpstudy_pro\WWW\jrk_tp6_layui\app\admin\view\auth_rule\index.html";i:1597626042;s:65:"D:\phpstudy_pro\WWW\jrk_tp6_layui\app\admin\view\public\base.html";i:1597383421;s:65:"D:\phpstudy_pro\WWW\jrk_tp6_layui\app\admin\view\public\head.html";i:1597626924;}*/ ?>
 
 <!DOCTYPE html>
 <html>
@@ -9,9 +9,7 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
-
     <link rel="stylesheet" href="/static/css/admin.css?v=<?php echo time(); ?>">
-
     <link rel="stylesheet" href="/static/css/jrkLoading.css?v=<?php echo time(); ?>"/>
     <script type="text/javascript" src="/static/js/backend/jrk_config.js?v=<?php echo time(); ?>"></script>
     <script type="text/javascript" src="/static/js/backend/jrkLoading.js?v=<?php echo time(); ?>"></script>
@@ -19,8 +17,6 @@
     <link rel="stylesheet" href="/static/css/animate.min.css" media="all"/>
 
     <link rel="stylesheet" href="/static/css/jrkadmin.css?v=<?php echo time(); ?>">
-
-
 
     <script src="/static/js/jquery.min.js?v=1"></script>
 
@@ -86,7 +82,9 @@
 <div class="layui-col-md12">
     <div class="layui-card">
         <div class="layui-card-body layui-row ">
-
+            <fieldset class="layui-elem-field">
+                <legend>搜索区</legend>
+                <div class="layui-field-box">
             <form action="" class="layui-form" method="get">
                 <div class="layui-form-item layui-form-pane">
 
@@ -97,14 +95,16 @@
                         </div>
                     </div>
 
-                    <div class="layui-inline" style="padding-left: 20px;">
+                    <div class="layui-inline">
                         <button class="layui-btn icon-btn layui-btn-sm" data-id="table_id" lay-filter="search" lay-submit="">
                             <i class="layui-icon"></i>搜索
                         </button>
-                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm">重置</button>
+                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm"><i class="layui-icon layui-icon-refresh"></i>重置</button>
                     </div>
                 </div>
             </form>
+                </div>
+            </fieldset>
 
         </div>
 

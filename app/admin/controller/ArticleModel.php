@@ -34,29 +34,6 @@ class ArticleModel extends AdminBaseController
 
 
 
-   /**
-     * @param Request $request
-     * @return string|\think\response\Json
-     * @author: Hhy <jackhhy520@qq.com>
-     * @describe:添加
-     */
-    public function add(Request $request){
-        if (IS_AJAX) {
-            $data = $request->post();
-            try{
-
-                return $this->model->doAll($data);
-
-            }catch (Exception $exception){
-                return parent::JsonReturn($exception->getMessage(), 0);
-            }
-        }
-
-
-        return $this->fetch();
-    }
-
-
     /**
      * @param $id
      * @return string|\think\response\Json
@@ -69,8 +46,6 @@ class ArticleModel extends AdminBaseController
         if (!$info){
             return parent::failed("未查询到数据");
         }
-
-
         $this->assign(compact("info"));
         return $this->fetch();
     }

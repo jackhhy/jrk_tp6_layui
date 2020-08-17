@@ -157,6 +157,7 @@ class SystemLogs extends AdminBaseModel implements Comm
         // TODO: Implement delById() method.
     }
 
+
     public function doAll($data)
     {
         // TODO: Implement doAll() method.

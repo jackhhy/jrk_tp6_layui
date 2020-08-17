@@ -17,13 +17,19 @@
 
 </style >
 
-
 <!-- 正文开始 -->
 <div class="layui-fluid">
     <div class="layui-row layui-col-space10">
         <div class="layui-col-md12">
 
-            <div class="layui-card">
+            <div class="layui-card" style="margin-top: 15px;">
+                <div class="layui-card-header">
+                    <div class="layadmin-homepage-pad-ver" style="text-align: left">
+                        <div class="layui-btn-group">
+                            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="upload">上传图片</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="layui-card-body">
 
                     <div class="layui-form">
@@ -138,6 +144,31 @@
             });
         });
 
+        upload.render({
+            elem: '#upload'
+            ,url: "{:url( 'admin/common/UpImagesList')} " //上传地址
+            ,accept:'images'
+            ,acceptMime:'image/*'
+            ,size: 1024*12 //最大允许上传的文件大小
+            ,before: function(obj){
+                //预读本地文件
+            }
+            ,done: function(data){
+                //上传完毕回调
+                if (data.code==1){
+                    layer.msg(data.msg, {icon: 1, time: 1000},function () {
+                        //上传成功
+                        location.reload();
+                    });
+                } else {
+                    layer.msg(data.msg, {icon: 5, time: 1000});
+                }
+            }
+            ,error: function(){
+                //请求异常回调
+                layer.msg("网络错误 ", {icon: 5, time: 1500});
+            }
+        });
 
         form.on('submit(add)', function (data) {
             var val=$('input:radio[name=imgCk]:checked').val();

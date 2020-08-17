@@ -138,7 +138,6 @@ if (!function_exists('curl_post')) {
         return $result;
     }
 }
-
 if (!function_exists('sysconfig')) {
 
     /**
@@ -337,6 +336,83 @@ if (!function_exists('get_this_class_methods')) {
             $arraynow = $arrayall;
         }
         return array_diff($arraynow, $unarray);//去除无用的
+    }
+}
+
+
+
+
+if (!function_exists('build_ueditor')) {
+    /**
+     * @param array $params
+     * @return string
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @name: build_ueditor
+     * @describe:百度编辑器内容
+     */
+    function build_ueditor($params = array())
+    {
+        $name = isset($params['name']) ? $params['name'] : null;
+        $theme = isset($params['theme']) ? $params['theme'] : 'normal';
+        $content = isset($params['content']) ? $params['content'] : null;
+        $h = isset($params['h']) ? $params['h'] : 350;
+        /* 指定使用哪种主题 */
+        $themes = array(
+            'normal' => "[   
+           'fullscreen', 'source', '|', 'undo', 'redo', '|',
+            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+            'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+            'directionalityltr', 'directionalityrtl', 'indent', '|',
+            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+            'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+            'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
+            'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+            'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+            'print', 'preview', 'searchreplace', 'drafts', 'help'
+       ]", 'simple' => " ['fullscreen', 'source', 'undo', 'redo', 'bold']",
+        );
+        switch ($theme) {
+            case 'simple':
+                $theme_config = $themes['simple'];
+                break;
+            case 'normal':
+                $theme_config = $themes['normal'];
+                break;
+            default:
+                $theme_config = $themes['normal'];
+                break;
+        }
+        /* 配置界面语言 */
+        switch ('zh-cn') {
+            case 'zh-cn':
+                $lang = '/plugs/ueditor/lang/zh-cn/zh-cn.js';
+                break;
+            case 'en-us':
+                $lang =  '/plugs/ueditor/lang/en/en.js';
+                break;
+            default:
+                $lang = '/plugs/ueditor/lang/zh-cn/zh-cn.js';
+                break;
+        }
+        $include_js = '<script type="text/javascript" charset="utf-8" src="/plugs/ueditor/ueditor.config.js"></script> <script type="text/javascript" charset="utf-8" src="/plugs/ueditor/ueditor.all.min.js""> </script><script type="text/javascript" charset="utf-8" src="' . $lang . '"></script>';
+        $content = json_encode($content);
+        $str = <<<EOT
+$include_js
+<script type="text/javascript">
+var ue = UE.getEditor('{$name}',{
+    toolbars:[{$theme_config}],
+    autoHeightEnabled:false,
+    initialFrameHeight:{$h},
+        });
+    if($content){
+ue.ready(function() {
+       this.setContent($content);	
+})
+   }
+</script>
+EOT;
+        return $str;
     }
 }
 

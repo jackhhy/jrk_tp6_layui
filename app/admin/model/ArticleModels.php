@@ -36,23 +36,9 @@ class ArticleModels extends AdminBaseModel implements Comm
         // TODO: Implement getAdminPageData() method.
 
         $where = [];
-        if (isset($param['username']) && $param['username'] != '') {
-            $where[] = ['username', 'like', "%" . $param['username'] . "%"];
+        if (isset($param['name']) && $param['name'] != '') {
+            $where[] = ['name', 'like', "%" . $param['name'] . "%"];
         }
-
-
-        if (isset($param['time']) && $param['time'] != '') {
-            $ck = @explode(" ~ ", $param['time']);
-            $b = $ck[0] . " 00:00:00";
-            $e = $ck[1] . " 23:59:59";
-            $where[] = ['create_time', 'between', [strtotime($b), strtotime($e)]];
-        }
-
-          if (!empty($param['status'])){
-                $status=(int)$param['status']-1;
-                $where[] = ['status', '=', $status];
-            }
-
         try {
             $data = self::limit_select($where, $order);
             $count = self::hhy_count($where);

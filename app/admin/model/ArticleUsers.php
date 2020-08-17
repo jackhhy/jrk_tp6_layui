@@ -8,29 +8,31 @@
 // +----------------------------------------------------------------------
 // | Author: LuckyHhy <jackhhy520@qq.com>
 // +----------------------------------------------------------------------
-// | Date: 2020/8/14 0014
+// | Date: 2020-08-17 15:22:18
 // +----------------------------------------------------------------------
 // | Description:
 // +----------------------------------------------------------------------
 
 namespace app\admin\model;
 
-
 use app\common\impl\Comm;
 use app\common\model\AdminBaseModel;
 use Jrk\Tool;
 use think\Exception;
+use think\facade\Db;
+use Jrk\Tree;
+
 
 class ArticleUsers extends AdminBaseModel implements Comm
 {
-
-    //文章用户
-    protected $name="articles_user";
+    //表名
+    protected $name = "articles_user";
 
 
     public function getAdminPageData($param = [], $order = 'id asc')
     {
         // TODO: Implement getAdminPageData() method.
+
         $where = [];
         if (isset($param['qq']) && $param['qq'] != '') {
             $where[] = ['qq', 'like', "" . $param['qq'] . "%"];
@@ -57,17 +59,6 @@ class ArticleUsers extends AdminBaseModel implements Comm
         }
     }
 
-    public function delById($id)
-    {
-        // TODO: Implement delById() method.
-        return parent::del($id);
-    }
-
-    public function doAll($data)
-    {
-        // TODO: Implement doAll() method.
-        return parent::doAllData($data);
-    }
 
     /**
      * @param $data
@@ -90,6 +81,20 @@ class ArticleUsers extends AdminBaseModel implements Comm
             ];
             self::create($arr);
         }
+    }
+
+    public function delById($id)
+    {
+        // TODO: Implement delById() method.
+
+        return parent::del($id);
+    }
+
+
+    public function doAll($data)
+    {
+        // TODO: Implement doAll() method.
+        return parent::doAllData($data);
     }
 
 

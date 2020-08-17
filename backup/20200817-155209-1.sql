@@ -6,7 +6,7 @@
 -- Database : jrk_admin_layui
 -- 
 -- Part : #1
--- Date : 2020-08-14 17:27:45
+-- Date : 2020-08-17 15:52:09
 -- -----------------------------
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -39,7 +39,7 @@ CREATE TABLE `jrk_admin` (
 -- -----------------------------
 -- Records of `jrk_admin`
 -- -----------------------------
-INSERT INTO `jrk_admin` VALUES ('1', 'jrkadmintp6', '超级管理员', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '1', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1597383773', '127.0.0.1', '', '1593179425', '1597383773', '13141962690', 'jackhhy520@qq.com', '1995-06-05', '14');
+INSERT INTO `jrk_admin` VALUES ('1', 'jrkadmintp6', '超级管理员', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '1', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1597625146', '127.0.0.1', '', '1593179425', '1597625146', '13141962690', 'jackhhy520@qq.com', '1995-06-05', '15');
 INSERT INTO `jrk_admin` VALUES ('2', 'test', '人事专员', '/uploads/adminuser/avatar/20200814/9fb56f259b55337ef9f1f2ac90d0dcab.jpg', '0', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1593450107', '127.0.0.1', '', '1593179425', '1597386066', '13141962698', '', '', '2');
 INSERT INTO `jrk_admin` VALUES ('3', 'ce', '测试员1', '/uploads/adminuser/avatar/20200630/acd1e53a97ec152c14b5fca6f7ffb40d.jpg', '1', '$2y$10$WLfde3sqoLFRppVrn7m8Tu/kiydOefnefYeRtt92rALWXNh6U0Ti.', '1', '0', '', '', '1593505184', '1597386201', '13141962690', '13141962690@163.com', '2020-06-30', '0');
 INSERT INTO `jrk_admin` VALUES ('4', 'test', '测试2_5_-', '/uploads/adminuser/avatar/20200630/92a02b58dc5c02e895a0d519765835ae.jpg', '0', '$2y$10$Q9dXmkFiVTsjs.WsNUxfIuy5etKwGd6a7K5612dhEzso1sgSu/btS', '1', '0', '', '', '1593505714', '1597386214', '13141962698', '', '2020-06-24', '0');
@@ -82,7 +82,7 @@ CREATE TABLE `jrk_articles` (
 -- Records of `jrk_articles`
 -- -----------------------------
 INSERT INTO `jrk_articles` VALUES ('1', '2', '测试标题', '', '0', '奥德赛大所,123', '&lt;p&gt;搭搭撒撒多&lt;/p&gt;&lt;p&gt;大萨达撒多撒&lt;/p&gt;&lt;p&gt;打撒大大&lt;/p&gt;&lt;p&gt;国风大赏...', '', 'jrkadmintp6', '原创', '<p>搭搭撒撒多</p><p>大萨达撒多撒</p><p>打撒大大</p><p>国风大赏鬼地方个地方</p><p>gfhgfjhghgjgh萨顶顶撒奥</p><p>更大的郭德纲的观点</p>', '0', '1', '0', '0', '0', '0', '1', '1', '', '1597219278', '1597224466', '1597224466');
-INSERT INTO `jrk_articles` VALUES ('2', '2', '大萨达十大大萨达撒', '#2B6199', '4', '敖德萨多', '阿达打算', '', 'jrkadmintp6', '原创', '# 敖德萨多撒\n### 大萨达\n> 奥德赛大\n\n##### 达大撒多所', '11', '1', '0', '0', '0', '0', '1', '1', '/index/article/show.html?id=2', '1597219392', '1597310195', '0');
+INSERT INTO `jrk_articles` VALUES ('2', '2', '大萨达十大大萨达撒', '#2B6199', '4', '敖德萨多', '阿达打算', '', 'jrkadmintp6', '原创', '# 敖德萨多撒\n### 大萨达\n> 奥德赛大\n\n##### 达大撒多所', '11', '1', '11', '12', '0', '0', '1', '1', '/index/article/show.html?id=2', '1597219392', '1597310195', '0');
 
 -- -----------------------------
 -- Table structure for `jrk_articles_cate`
@@ -211,7 +211,7 @@ CREATE TABLE `jrk_attachment` (
   `update_time` int(11) unsigned DEFAULT '0',
   `ext` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='附件管理表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='附件管理表';
 
 -- -----------------------------
 -- Records of `jrk_attachment`
@@ -223,6 +223,8 @@ INSERT INTO `jrk_attachment` VALUES ('4', '7ac160ff6f9b3b798d1d3174ab379cb6.jpeg
 INSERT INTO `jrk_attachment` VALUES ('5', '91a0b83b7e61d518a7a3ceee6cf53491.jpg', '/uploads/adminuser/avatar/20200702/91a0b83b7e61d518a7a3ceee6cf53491.jpg', '/uploads/adminuser/avatar/20200702/91a0b83b7e61d518a7a3ceee6cf53491.jpg', '37399', 'adminuser/avatar', 'image/jpg', '1593694742', '1', '1', '1593694742', 'jpg');
 INSERT INTO `jrk_attachment` VALUES ('6', '5e19638241c47d668ad937cd5fde4847.jpg', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '119892', 'adminuser/avatar', 'image/jpeg', '1593695855', '1', '1', '1593695855', 'jpg');
 INSERT INTO `jrk_attachment` VALUES ('7', '9fb56f259b55337ef9f1f2ac90d0dcab.jpg', '/uploads/adminuser/avatar/20200814/9fb56f259b55337ef9f1f2ac90d0dcab.jpg', '/uploads/adminuser/avatar/20200814/9fb56f259b55337ef9f1f2ac90d0dcab.jpg', '66243', 'adminuser/avatar', 'image/jpeg', '1597386063', '1', '1', '1597386063', 'jpg');
+INSERT INTO `jrk_attachment` VALUES ('8', '929662552e9dbbf4926d7be6853ea00a.jpg', '/uploads/attachment/images/20200817/929662552e9dbbf4926d7be6853ea00a.jpg', '/uploads/attachment/images/20200817/929662552e9dbbf4926d7be6853ea00a.jpg', '168009', 'attachment/images', 'image/jpeg', '1597633346', '1', '1', '1597633346', 'jpg');
+INSERT INTO `jrk_attachment` VALUES ('9', 'ff08af9f69367ac0f041b17968ff5efb.jpeg', '/uploads/article/images/20200817/ff08af9f69367ac0f041b17968ff5efb.jpeg', '/uploads/article/images/20200817/ff08af9f69367ac0f041b17968ff5efb.jpeg', '1687469', 'article/images', 'image/jpeg', '1597633355', '1', '1', '1597633355', 'jpeg');
 
 -- -----------------------------
 -- Table structure for `jrk_auth_group`
@@ -286,7 +288,7 @@ CREATE TABLE `jrk_auth_rule` (
   `update_time` int(11) unsigned DEFAULT '0' COMMENT '更新时间',
   `param` varchar(50) DEFAULT '' COMMENT '参数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
 
 -- -----------------------------
 -- Records of `jrk_auth_rule`
@@ -334,6 +336,24 @@ INSERT INTO `jrk_auth_rule` VALUES ('48', '46', 'ArticleModel/index', '文章模
 INSERT INTO `jrk_auth_rule` VALUES ('49', '46', 'ArticleCate/index', '文章栏目', '1', '1', '', '0', '1', 'fa-amazon', 'fa', '1597394826', '1597394826', '');
 INSERT INTO `jrk_auth_rule` VALUES ('50', '46', 'ArticleComment/index', '文章评论', '1', '1', '', '0', '1', 'fa-bullhorn', 'fa', '1597394856', '1597394856', '');
 INSERT INTO `jrk_auth_rule` VALUES ('51', '37', 'Friendlink/index', '友情链接', '1', '1', '', '0', '1', 'fa-chain', 'fa', '1597394895', '1597394895', '');
+INSERT INTO `jrk_auth_rule` VALUES ('52', '46', 'ArticleUser/index', '内容用户', '1', '1', '', '0', '1', 'fa-address-book-o', 'fa', '1597649685', '1597649685', '');
+INSERT INTO `jrk_auth_rule` VALUES ('53', '52', 'ArticleUser/del', '删除', '2', '1', '', '0', '1', '', 'fa', '1597650267', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('54', '50', 'ArticleComment/del', '删除', '2', '1', '', '0', '1', '', 'fa', '1597650331', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('55', '50', 'ArticleComment/edit', '编辑', '2', '1', '', '0', '1', '', 'fa', '1597650331', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('56', '50', 'ArticleComment/check', '审核', '2', '1', '', '0', '1', '', 'fa', '1597650331', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('57', '49', 'ArticleCate/edit', '编辑', '2', '1', '', '0', '1', '', 'fa', '1597650386', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('58', '49', 'ArticleCate/del', '删除', '2', '1', '', '0', '1', '', 'fa', '1597650386', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('59', '49', 'ArticleCate/add', '新增', '2', '1', '', '0', '1', '', 'fa', '1597650386', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('60', '48', 'ArticleModel/edit', '编辑', '2', '1', '', '0', '1', '', 'fa', '1597650417', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('61', '47', 'Article/edit', '编辑', '2', '1', '', '0', '1', '', 'fa', '1597650476', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('62', '47', 'Article/del', '删除', '2', '1', '', '0', '1', '', 'fa', '1597650476', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('63', '47', 'Article/add', '新增', '2', '1', '', '0', '1', '', 'fa', '1597650476', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('64', '47', 'Article/recycle', '回收站', '2', '1', '', '0', '1', '', 'fa', '1597650476', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('65', '51', 'Friendlink/edit', '编辑', '2', '1', '', '0', '1', '', 'fa', '1597650538', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('66', '51', 'Friendlink/add', '新增', '2', '1', '', '0', '1', '', 'fa', '1597650538', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('67', '51', 'Friendlink/del', '删除', '2', '1', '', '0', '1', '', 'fa', '1597650538', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('68', '45', 'Command/del', '删除', '2', '1', '', '0', '1', '', 'fa', '1597650591', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('69', '45', 'Command/add', '新增', '2', '1', '', '0', '1', '', 'fa', '1597650591', '0', '');
 
 -- -----------------------------
 -- Table structure for `jrk_commands`
@@ -354,7 +374,7 @@ CREATE TABLE `jrk_commands` (
   `create_time` int(11) NOT NULL,
   `update_time` int(11) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='在线命令管理';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='在线命令管理';
 
 -- -----------------------------
 -- Records of `jrk_commands`
@@ -364,6 +384,7 @@ INSERT INTO `jrk_commands` VALUES ('4', '1', '生成菜单', 'admin', 'php think
 INSERT INTO `jrk_commands` VALUES ('5', '1', '生成菜单', 'admin', 'php think make:jrkadmin_curd ArticleComment ArticleComments ArticleComment --app admin', 'ArticleComment', 'ArticleComments', 'ArticleComment', '[\"ArticleComment\",\"ArticleComments\",\"ArticleComment\",\"--app\",\"admin\"]', '2020-08-14 16:31:07', '1', '1597393867', '1597393867');
 INSERT INTO `jrk_commands` VALUES ('6', '1', '生成菜单', 'admin', 'php think make:jrkadmin_curd ArticleModel ArticleModels ArticleModel --app admin', 'ArticleModel', 'ArticleModels', 'ArticleModel', '[\"ArticleModel\",\"ArticleModels\",\"ArticleModel\",\"--app\",\"admin\"]', '2020-08-14 16:32:05', '1', '1597393925', '1597393925');
 INSERT INTO `jrk_commands` VALUES ('7', '1', '生成菜单', 'admin', 'php think make:jrkadmin_curd Friendlink Friendlinks Friendlink --app admin', 'Friendlink', 'Friendlinks', 'Friendlink', '[\"Friendlink\",\"Friendlinks\",\"Friendlink\",\"--app\",\"admin\"]', '2020-08-14 16:48:41', '1', '1597394921', '1597394921');
+INSERT INTO `jrk_commands` VALUES ('8', '1', '生成菜单', 'admin', 'php think make:jrkadmin_curd ArticleUser ArticleUsers ArticleUser --app admin', 'ArticleUser', 'ArticleUsers', 'ArticleUser', '[\"ArticleUser\",\"ArticleUsers\",\"ArticleUser\",\"--app\",\"admin\"]', '2020-08-17 15:22:18', '1', '1597648938', '1597648938');
 
 -- -----------------------------
 -- Table structure for `jrk_friendlinks`
@@ -439,7 +460,7 @@ CREATE TABLE `jrk_sys_config_tab` (
   `update_time` int(11) NOT NULL DEFAULT '0',
   `beizhu` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='配置分类表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='配置分类表';
 
 -- -----------------------------
 -- Records of `jrk_sys_config_tab`
