@@ -19,6 +19,13 @@ JrkAdmin_Tp6_Layui（完整版）是ThinkPHP6.0和layui的快速开发的后台�
 phpquerylist数据采集，phpword导出word文档，
 OSS,COS等云端图片上传，jpush极光推送，queue队列定时任务
 
+## CURD命令
+
+~~~
+php think make:jrkadmin_curd Hello Hello Hello --app admin [ # 普通CURD增删改查+验证器+模型+视图 ]
+                             控制器 模型  验证器       模块名 
+~~~
+
 ### 导航栏目
 
 
