@@ -120,7 +120,7 @@ class Auth
             return true;
         }
         $authList = $this->getAuthList($uid, $type);
-        // dd($authList);
+
         if (is_string($name)) {
             $name = strtolower($name);
             if (strpos($name, ',') !== false) {
@@ -205,11 +205,13 @@ class Auth
         if (isset($_authList[$uid . $t])) {
             return $_authList[$uid . $t];
         }
+
         if ($this->_config['auth_type'] == 2 && Session::has('_AUTH_LIST_' . $uid . $t)) {
             return Session::get('_AUTH_LIST_' . $uid . $t);
         }
         // 读取用户所属用户组
         $groups = $this->getGroups($uid);
+
         $ids = []; // 保存用户所属用户组设置的所有权限规则ID
         foreach ($groups as $g) {
             $ids = array_merge($ids, explode(',', trim($g['rules'], ',')));
@@ -221,12 +223,12 @@ class Auth
         }
         $map = [
             ['id', 'in', $ids],
-            ['type', '=', $type],
             ['status', '=', 1],
             ['auth_open', '=', 1]
         ];
         // 读取用户组所有权限规则
-        $rules = Db::name($this->_config['auth_rule'])->where($map)->field('condition,name')->select();
+        $rules = Db::name($this->_config['auth_rule'])->where($map)->field('id,condition,name')->select();
+
         // 循环规则，判断结果。
         $authList = [];
         foreach ($rules as $rule) {

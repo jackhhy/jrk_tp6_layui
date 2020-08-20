@@ -92,6 +92,7 @@ class CheckAdminLogin
         }
         // 查找当前控制器和方法，控制器首字母大写，方法名首字母小写 如：Index/index
         $route = Request::controller() . '/' . lcfirst(Request::action());
+
         //当前用户登录的ID
         if (!empty($allow)){
             $admin_id=session(ADMIN_LOGIN_INFO)['id'];
@@ -101,6 +102,7 @@ class CheckAdminLogin
                     //开始认证
                     $auth = new Auth();
                     $result = $auth->check($route, $admin_id);
+
                     if (!$result) {
                         if ($request->isAjax() || $request->isPost()){
                             return self::JsonReturn("您无此操作权限",0);

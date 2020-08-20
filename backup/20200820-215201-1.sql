@@ -3,10 +3,10 @@
 -- 
 -- Host     : 127.0.0.1
 -- Port     : 3306
--- Database : jrk_admin_layui
+-- Database : jrk_admin_tp6
 -- 
 -- Part : #1
--- Date : 2020-08-17 15:52:09
+-- Date : 2020-08-20 21:52:01
 -- -----------------------------
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -39,10 +39,10 @@ CREATE TABLE `jrk_admin` (
 -- -----------------------------
 -- Records of `jrk_admin`
 -- -----------------------------
-INSERT INTO `jrk_admin` VALUES ('1', 'jrkadmintp6', '超级管理员', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '1', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1597625146', '127.0.0.1', '', '1593179425', '1597625146', '13141962690', 'jackhhy520@qq.com', '1995-06-05', '15');
-INSERT INTO `jrk_admin` VALUES ('2', 'test', '人事专员', '/uploads/adminuser/avatar/20200814/9fb56f259b55337ef9f1f2ac90d0dcab.jpg', '0', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1593450107', '127.0.0.1', '', '1593179425', '1597386066', '13141962698', '', '', '2');
+INSERT INTO `jrk_admin` VALUES ('1', 'jrkadmintp6', '超级管理员', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '1', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1597931219', '127.0.0.1', '', '1593179425', '1597931219', '13141962690', 'jackhhy520@qq.com', '1995-06-05', '17');
+INSERT INTO `jrk_admin` VALUES ('2', 'test', '人事专员', '/uploads/adminuser/avatar/20200814/9fb56f259b55337ef9f1f2ac90d0dcab.jpg', '0', '$2y$10$3YQI7c/fbHn2I9j3DeERzeKxbXUaldYXhX6GDDphuhN4MhfyH096y', '1', '1597930258', '127.0.0.1', '', '1593179425', '1597930258', '13141962698', '', '', '3');
 INSERT INTO `jrk_admin` VALUES ('3', 'ce', '测试员1', '/uploads/adminuser/avatar/20200630/acd1e53a97ec152c14b5fca6f7ffb40d.jpg', '1', '$2y$10$WLfde3sqoLFRppVrn7m8Tu/kiydOefnefYeRtt92rALWXNh6U0Ti.', '1', '0', '', '', '1593505184', '1597386201', '13141962690', '13141962690@163.com', '2020-06-30', '0');
-INSERT INTO `jrk_admin` VALUES ('4', 'test', '测试2_5_-', '/uploads/adminuser/avatar/20200630/92a02b58dc5c02e895a0d519765835ae.jpg', '0', '$2y$10$Q9dXmkFiVTsjs.WsNUxfIuy5etKwGd6a7K5612dhEzso1sgSu/btS', '1', '0', '', '', '1593505714', '1597386214', '13141962698', '', '2020-06-24', '0');
+INSERT INTO `jrk_admin` VALUES ('4', 'testsss', '测试2_5_-', '/uploads/adminuser/avatar/20200630/92a02b58dc5c02e895a0d519765835ae.jpg', '0', '$2y$10$Q9dXmkFiVTsjs.WsNUxfIuy5etKwGd6a7K5612dhEzso1sgSu/btS', '1', '0', '', '', '1593505714', '1597386214', '13141962698', '', '2020-06-24', '0');
 
 -- -----------------------------
 -- Table structure for `jrk_articles`
@@ -245,7 +245,7 @@ CREATE TABLE `jrk_auth_group` (
 -- Records of `jrk_auth_group`
 -- -----------------------------
 INSERT INTO `jrk_auth_group` VALUES ('1', '1593248783', '0', '1', '超级管理', 'all', '0');
-INSERT INTO `jrk_auth_group` VALUES ('2', '1593444916', '1593697699', '1', '人事权限', '2,6,1,33,34,35,36,26,27,32,28', '0');
+INSERT INTO `jrk_auth_group` VALUES ('2', '1593444916', '1597930173', '1', '人事权限', '2,6,13,15,1,3,33,9,34,35,36,26,27,32,28,37,38,39,40,41,45,68,69,51,65,66,67', '0');
 
 -- -----------------------------
 -- Table structure for `jrk_auth_group_access`
@@ -261,12 +261,13 @@ CREATE TABLE `jrk_auth_group_access` (
   UNIQUE KEY `uid_group_id` (`uid`,`group_id`) USING BTREE,
   KEY `uid` (`uid`) USING BTREE,
   KEY `group_id` (`group_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='权限关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='权限关系表';
 
 -- -----------------------------
 -- Records of `jrk_auth_group_access`
 -- -----------------------------
 INSERT INTO `jrk_auth_group_access` VALUES ('1', '2', '2', '1593248783', '0');
+INSERT INTO `jrk_auth_group_access` VALUES ('2', '4', '2', '1597930242', '0');
 
 -- -----------------------------
 -- Table structure for `jrk_auth_rule`
@@ -288,7 +289,7 @@ CREATE TABLE `jrk_auth_rule` (
   `update_time` int(11) unsigned DEFAULT '0' COMMENT '更新时间',
   `param` varchar(50) DEFAULT '' COMMENT '参数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='菜单表';
 
 -- -----------------------------
 -- Records of `jrk_auth_rule`
@@ -303,10 +304,9 @@ INSERT INTO `jrk_auth_rule` VALUES ('9', '33', 'Admin/addAdmin', '添加', '2', 
 INSERT INTO `jrk_auth_rule` VALUES ('10', '33', 'Admin/del', '删除', '2', '1', '', '0', '1', '', 'fa', '1593508463', '1593508463', '');
 INSERT INTO `jrk_auth_rule` VALUES ('11', '33', 'Admin/addAdmin', '编辑', '2', '1', '', '0', '1', '', 'fa', '1593508493', '1593508986', '');
 INSERT INTO `jrk_auth_rule` VALUES ('12', '6', 'AuthGroup/userGroup', '角色授权', '2', '1', '', '0', '1', '', 'fa', '1593508559', '1593508559', '');
-INSERT INTO `jrk_auth_rule` VALUES ('13', '6', 'AuthGroup/addGroups', '编辑', '2', '1', '', '0', '1', '', 'fa', '1593508580', '1593508580', '');
+INSERT INTO `jrk_auth_rule` VALUES ('13', '6', 'AuthGroup/addGroups', '添加和编辑', '2', '1', '', '0', '1', '', 'fa', '1593508580', '1597931278', '');
 INSERT INTO `jrk_auth_rule` VALUES ('14', '6', 'AuthGroup/del', '删除', '2', '1', '', '0', '1', '', 'fa', '1593508598', '1593508598', '');
-INSERT INTO `jrk_auth_rule` VALUES ('15', '6', 'AuthGroup/addGroups', '新增', '2', '1', '', '0', '1', '', 'fa', '1593508625', '1593508625', '');
-INSERT INTO `jrk_auth_rule` VALUES ('16', '0', 'DataBackup/index', '数据备份', '1', '1', '', '0', '2', 'fa-bank', 'fa', '1593570323', '1593570323', '');
+INSERT INTO `jrk_auth_rule` VALUES ('16', '0', '', '数据备份', '1', '1', '', '0', '2', 'fa-bank', 'fa', '1593570323', '1593570323', '');
 INSERT INTO `jrk_auth_rule` VALUES ('17', '16', 'DataBackup/index', '数据表列表', '1', '1', '', '0', '2', 'fa-align-left', 'fa', '1593570431', '1593570431', '');
 INSERT INTO `jrk_auth_rule` VALUES ('18', '16', 'DataBackup/importlist', '备份列表', '1', '1', '', '0', '2', 'fa-align-right', 'fa', '1593573590', '1593573590', '');
 INSERT INTO `jrk_auth_rule` VALUES ('25', '1', 'AuthRule/addNode', '添加节点', '2', '1', '', '0', '1', '', 'fa', '1593661475', '0', '');
@@ -354,6 +354,7 @@ INSERT INTO `jrk_auth_rule` VALUES ('66', '51', 'Friendlink/add', '新增', '2',
 INSERT INTO `jrk_auth_rule` VALUES ('67', '51', 'Friendlink/del', '删除', '2', '1', '', '0', '1', '', 'fa', '1597650538', '0', '');
 INSERT INTO `jrk_auth_rule` VALUES ('68', '45', 'Command/del', '删除', '2', '1', '', '0', '1', '', 'fa', '1597650591', '0', '');
 INSERT INTO `jrk_auth_rule` VALUES ('69', '45', 'Command/add', '新增', '2', '1', '', '0', '1', '', 'fa', '1597650591', '0', '');
+INSERT INTO `jrk_auth_rule` VALUES ('70', '6', 'AuthGroup/getRoles', '获取授权菜单', '2', '1', '', '0', '1', '', 'fa', '1597931377', '0', '');
 
 -- -----------------------------
 -- Table structure for `jrk_commands`
