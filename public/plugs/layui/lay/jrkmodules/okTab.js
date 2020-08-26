@@ -352,7 +352,7 @@ layui.define(["element", "jquery", "okUtils"], function (exports) {
          element.tabChange(tabFilter, tabId);
          this.navMove("rightmax");
 
-         var iframeSrc="iframe[lay=id='"+tabId+"']";
+         var iframeSrc="iframe[lay-id='"+tabId+"']";
          $(iframeSrc)[0].src=url;
       }
    };
