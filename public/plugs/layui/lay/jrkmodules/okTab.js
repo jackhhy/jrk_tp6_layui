@@ -351,6 +351,9 @@ layui.define(["element", "jquery", "okUtils"], function (exports) {
          // 切换选项卡
          element.tabChange(tabFilter, tabId);
          this.navMove("rightmax");
+
+         var iframeSrc="iframe[lay=id='"+tabId+"']";
+         $(iframeSrc)[0].src=url;
       }
    };
 
