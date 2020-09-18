@@ -16,7 +16,7 @@
 JrkAdmin_Tp6_Layui（完整版）是ThinkPHP6.0和layui的快速开发的后台管理系统。<br>
 后台采用RABC权限验证，不懂的同学可以查看相关文档<br>
 实现管理员管理，权限管理，角色管理，菜单管理，附件管理，日志管理
-phpquerylist数据采集，phpword导出word文档，
+phpquerylist数据采集，phpword导出word文档，API接口管理，
 OSS,COS等云端图片上传，jpush极光推送，queue队列定时任务
 
 ## CURD命令

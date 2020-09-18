@@ -417,26 +417,103 @@ EOT;
 }
 
 
+if(!function_exists("is_email")){
+    function is_email($user_email)
+    {
+        $chars = "/^([a-z0-9+_]|\\-|\\.)+@(([a-z0-9_]|\\-)+\\.)+[a-z]{2,6}\$/i";
+        if (strpos($user_email, '@') !== false && strpos($user_email, '.') !== false) {
+            if (preg_match($chars, $user_email)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+}
+
+
+if(!function_exists("send_email")){
+    /**
+     * @param $to
+     * @param string $subject 邮件标题
+     * @param string $content 邮件内容(html模板渲染后的内容)
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe: 发送邮件
+     */
+    function send_email($to, $subject = '', $content = ''){
+        $mail = new PHPMailer\PHPMailer\PHPMailer();
+        $config =sysconfig("smtp");//获取配置
+        $mail->CharSet = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
+        $mail->isSMTP();
+        $mail->SMTPDebug = 0;
+        //调试输出格式
+        //$mail->Debugoutput = 'html';
+        //smtp服务器
+        $mail->Host = $config['smtp_server'];
+        //端口 - likely to be 25, 465 or 587
+        $mail->Port = $config['smtp_port'];
+
+        if ($mail->Port == '465') {
+            $mail->SMTPSecure = 'ssl';
+        }// 使用安全协议
+        //Whether to use SMTP authentication
+        $mail->SMTPAuth = true;
+        //发送邮箱
+        $mail->Username = $config['smtp_user'];
+        //密码
+        $mail->Password = $config['smtp_pwd'];
+        //Set who the message is to be sent from
+        $mail->setFrom($config['smtp_user'], $config['email_id']);
+        //回复地址
+        //$mail->addReplyTo('replyto@example.com', 'First Last');
+        //接收邮件方
+        if (is_array($to)) {
+            foreach ($to as $v) {
+                if(is_email($v)){
+                    $mail->addAddress($v);
+                }
+            }
+        } else {
+            if(is_email($to)){
+                $mail->addAddress($to);
+            }
+        }
+        $mail->isHTML(true);// send as HTML
+        //标题
+        $mail->Subject = $subject;
+        //HTML内容转换
+        $mail->msgHTML($content);
+        return $mail->send();
+    }
+}
+
+
+
 if (!function_exists('add_log')){
     /**
-     * @param $data
-     * @param string $file
+     * @param $param
+     * @param string $file 文件夹
      * @author: Hhy <jackhhy520@qq.com>
      * @describe:
      */
-     function add_log($data,$file=''){
-         if (empty($file)) $file="jrk";
-        $name = date("Y_m_d", time());
-        $jia=date("Ym");
-        $file_path = app()->getRootPath()."Logs/".$file."/".$jia;
-        if (!is_dir($file_path)) {
-            mkdir($file_path, 0777, true);
-        }
-        @file_put_contents(
-            $file_path.'/'.$name.'.log',
-            date('Y-m-d H:i:s', time()).' '.var_export(json_encode($data)."\r\n", true)."\r\n",
-            FILE_APPEND
-        );
+     function writeLog($param,$file=''){
+         $filename=date("Y_m_d",time());
+         if (empty($root)) {
+             $myfile =$filename.".txt";
+         }else{
+             $f=app()->getRootPath().'Logs/'.$file."/";
+             if (!is_dir($f)){
+                 @mkdir($f,0777,true);
+             }
+             $myfile=app()->getRootPath().'Logs/'.$file."/".$filename.".txt";
+         }
+         @file_put_contents(
+             $myfile,
+             "执行日期："."\r\n".date('Y-m-d H:i:s', time()) . ' ' . "\n" . json_encode($param) . "\r\n",
+             FILE_APPEND
+         );
     }
 
 }
