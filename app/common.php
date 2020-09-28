@@ -509,9 +509,12 @@ if (!function_exists('add_log')){
              }
              $myfile=app()->getRootPath().'Logs/'.$file."/".$filename.".txt";
          }
+         if (is_array($param)){
+             $param=json_encode($param);
+         }
          @file_put_contents(
              $myfile,
-             "执行日期："."\r\n".date('Y-m-d H:i:s', time()) . ' ' . "\n" . json_encode($param) . "\r\n",
+             "执行日期："."\r\n".date('Y-m-d H:i:s', time()) . ' ' . "\n" . $param . "\r\n",
              FILE_APPEND
          );
     }
