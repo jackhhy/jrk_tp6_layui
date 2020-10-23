@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\api\v1\controller;
+namespace app\api\controller\v1;
 
 
 use app\api\controller\Base;
