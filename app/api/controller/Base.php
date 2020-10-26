@@ -4,6 +4,7 @@ declare (strict_types = 1);
 
 namespace app\api\controller;
 
+use app\api\service\JwtService;
 use think\App;
 use think\facade\Config;
 use think\facade\Request;
@@ -73,6 +74,16 @@ abstract class Base
     }
 
 
+    /**
+     * @return mixed
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:获取用户id
+     */
+    protected function getUid(){
+        $jwtAuth = JwtService::getInstance();
+        return $jwtAuth->getUid();
+    }
+
 
     /**
      * 返回封装后的API数据到客户端
@@ -81,9 +92,8 @@ abstract class Base
      * @param  integer $code 返回的code
      * @param  string  $type 返回数据格式
      * @param  array   $header 发送的Header信息
-     * @return Response
      */
-    protected function ReturnAjax($msg, $data=[], int $code = 0,  string $type = '', array $header = []): Response
+    protected function ReturnAjax($msg, $data=[], int $code = 0,  string $type = '')
     {
         $result = [
             'code' => $code,
@@ -92,9 +102,7 @@ abstract class Base
             'data' => $data,
         ];
 
-        $type     = $type ?: 'json';
-        $response = Response::create($result, $type)->header($header);
-        throw new HttpResponseException($response);
+       return  json($result);
     }
 
 }

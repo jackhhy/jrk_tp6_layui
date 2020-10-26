@@ -6,7 +6,7 @@
 -- Database : jrk_admin_tp6
 -- 
 -- Part : #1
--- Date : 2020-08-20 21:52:01
+-- Date : 2020-10-26 10:27:44
 -- -----------------------------
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -39,7 +39,7 @@ CREATE TABLE `jrk_admin` (
 -- -----------------------------
 -- Records of `jrk_admin`
 -- -----------------------------
-INSERT INTO `jrk_admin` VALUES ('1', 'jrkadmintp6', '超级管理员', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '1', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1597931219', '127.0.0.1', '', '1593179425', '1597931219', '13141962690', 'jackhhy520@qq.com', '1995-06-05', '17');
+INSERT INTO `jrk_admin` VALUES ('1', 'jrkadmintp6', '超级管理员', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '1', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1603679241', '127.0.0.1', '', '1593179425', '1603679241', '13141962690', 'jackhhy520@qq.com', '1995-06-05', '18');
 INSERT INTO `jrk_admin` VALUES ('2', 'test', '人事专员', '/uploads/adminuser/avatar/20200814/9fb56f259b55337ef9f1f2ac90d0dcab.jpg', '0', '$2y$10$3YQI7c/fbHn2I9j3DeERzeKxbXUaldYXhX6GDDphuhN4MhfyH096y', '1', '1597930258', '127.0.0.1', '', '1593179425', '1597930258', '13141962698', '', '', '3');
 INSERT INTO `jrk_admin` VALUES ('3', 'ce', '测试员1', '/uploads/adminuser/avatar/20200630/acd1e53a97ec152c14b5fca6f7ffb40d.jpg', '1', '$2y$10$WLfde3sqoLFRppVrn7m8Tu/kiydOefnefYeRtt92rALWXNh6U0Ti.', '1', '0', '', '', '1593505184', '1597386201', '13141962690', '13141962690@163.com', '2020-06-30', '0');
 INSERT INTO `jrk_admin` VALUES ('4', 'testsss', '测试2_5_-', '/uploads/adminuser/avatar/20200630/92a02b58dc5c02e895a0d519765835ae.jpg', '0', '$2y$10$Q9dXmkFiVTsjs.WsNUxfIuy5etKwGd6a7K5612dhEzso1sgSu/btS', '1', '0', '', '', '1593505714', '1597386214', '13141962698', '', '2020-06-24', '0');
@@ -407,6 +407,30 @@ CREATE TABLE `jrk_friendlinks` (
 -- Records of `jrk_friendlinks`
 -- -----------------------------
 INSERT INTO `jrk_friendlinks` VALUES ('2', '测试', 'http://ht.1230t.com/', '1', '1', '1', '1597396368', '1597396368');
+
+-- -----------------------------
+-- Table structure for `jrk_member`
+-- -----------------------------
+DROP TABLE IF EXISTS `jrk_member`;
+CREATE TABLE `jrk_member` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `last_login_time` int(11) unsigned NOT NULL DEFAULT '0',
+  `create_time` int(11) NOT NULL DEFAULT '0',
+  `create_ip` varchar(50) DEFAULT NULL,
+  `last_login_ip` varchar(50) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `type_id` tinyint(1) NOT NULL DEFAULT '1',
+  `sex` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='api 模块测试-会员表';
+
+-- -----------------------------
+-- Records of `jrk_member`
+-- -----------------------------
+INSERT INTO `jrk_member` VALUES ('1', 'hhy@qq.com', 'hhy@qq.com', '$2y$10$nL/lLXYe1qSC/sqLzQ9xpeYmG3vfupCRzGTGcqMEx1lt0YtPG18B2', '1603675607', '1603675572', '127.0.0.1', '127.0.0.1', '1', '1', '0');
 
 -- -----------------------------
 -- Table structure for `jrk_sys_config`

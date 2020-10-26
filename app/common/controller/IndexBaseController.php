@@ -15,9 +15,9 @@ use think\Request;
 /**
  * Class AdminBaseController
  * @package app\common\controller
- * 后台继承的控制器
+ * 前台继承的控制器
  */
-abstract class AdminBaseController
+abstract class IndexBaseController
 {
 
     //自定义 数据返回
@@ -48,7 +48,7 @@ abstract class AdminBaseController
      * 检测是否登录
      * @var array
      */
-    protected $middleware = ['app\admin\middleware\CheckAdminLogin'];
+    protected $middleware = ['app\index\middleware\CheckIndexLogin'=>['except' => ['index']]];
 
     //请求参数
     protected $param;
@@ -62,7 +62,7 @@ abstract class AdminBaseController
     protected $service;
 
     //登录信息
-    static $admin_info;
+    static $index_info;
 
     /**
      * AdminBaseController constructor.
@@ -75,11 +75,8 @@ abstract class AdminBaseController
     {
         $this->app = $app;
         $this->request = $this->app->request;
-
         // 控制器初始化
         $this->initialize();
-
-
     }
 
 
@@ -96,63 +93,14 @@ abstract class AdminBaseController
     protected function initialize()
     {
         //用户登录信息
-        self::$admin_info=session(ADMIN_LOGIN_INFO);
+        self::$index_info=session(INDEX_LOGIN_INFO);
 
         $this->initConfig();
         $this->initAssign();
         $this->initRequestConfig();
-       //左侧菜单
-        $this->menuList();
+
     }
 
-
-    /**
-     * @return string
-     * @throws \Exception
-     * @author: LuckyHhy <jackhhy520@qq.com>
-     * @describe:index
-     */
-    public function index(){
-
-        if (IS_AJAX){
-            return $this->model->getAdminPageData($this->param);
-        }
-        return $this->fetch();
-    }
-
-
-    /**
-     * @return mixed
-     * @author: LuckyHhy <jackhhy520@qq.com>
-     * @describe:删除
-     */
-    public function del()
-    {
-        if (IS_AJAX) {
-            $ids = $this->request->post("ids");
-
-            return $this->model->delById($ids);
-        }
-    }
-
-
-    /**
-     * @param Request $request
-     * @return \think\response\Json
-     * @author: Hhy <jackhhy520@qq.com>
-     * @describe:编辑添加
-     */
-    public function upAndAdd(Request $request){
-        if (IS_AJAX) {
-            $data = $request->post();
-            try {
-                $data['admin_id'] = self::$admin_info['id'];
-                return $this->model->doAll($data);
-            } catch (Exception $exception) {
-                return self::JsonReturn($exception->getMessage(), 0);
-            }
-        }
-    }
 
 
     /**
@@ -224,30 +172,6 @@ abstract class AdminBaseController
     }
 
 
-    /**
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @author: LuckyHhy <jackhhy520@qq.com>
-     * @describe:菜单列表
-     */
-    public function menuList(){
-
-        if (self::$admin_info['id'] !=1){
-            $data=AuthRule::where("id","in",session("admin_rules"))->where("type","1")->where("status",1)->select()->toArray();
-            if (!empty($data)){
-                foreach ($data as $k => $v) {
-                    if (!empty($v['name'])) {
-                        $data[$k]['url'] = (string)url($v['name']);
-                    }
-                }
-            }
-        }else{
-            //超级管理员拥有所有权限
-            $data = AuthRule::menuList();
-        }
-        View::assign("menulist",  empty($data) ? []:Tree::DeepTree($data));
-    }
 
     /**
      * @author: LuckyHhy <jackhhy520@qq.com>
@@ -259,13 +183,8 @@ abstract class AdminBaseController
         //获取当前配置的网站地址
         $this->domain = $this->request->domain();
         $this->assign("domain", $this->domain);
-        //系统名称和版本号和站点地址
-        $this->assign('_version', VERSION);
-        $this->assign('_name', _NAME);
-        $this->assign("_site",SITE_URL);
 
-        //用户登录信息
-        $this->assign("_info",session(ADMIN_LOGIN_INFO));
+
     }
 
 
@@ -279,22 +198,11 @@ abstract class AdminBaseController
     protected function exception($msg = '无法打开页面')
     {
         $this->assign(compact('msg'));
-        exit($this->fetch('public/exception'));
+        exit($this->fetch('admin@public/exception'));
     }
 
 
-    /**
-     * @return string
-     * @author: LuckyHhy <jackhhy520@qq.com>
-     * @name: makeToken
-     * @describe:生成一个不会重复的字符串
-     */
-    public function makeToken()
-    {
-        $str = md5(uniqid(md5(microtime(true)), true)); //
-        $str = sha1($str); //加密
-        return $str;
-    }
+
 
     /**
      * @param $name
@@ -324,7 +232,7 @@ abstract class AdminBaseController
             return self::JsonReturn($msg,0,$url);
         } else {
             $this->assign(compact('msg', 'url'));
-            exit($this->fetch('public/error'));
+            exit($this->fetch('admin@public/error'));
         }
     }
 
@@ -342,7 +250,7 @@ abstract class AdminBaseController
             return self::JsonReturn($msg,1,$url);
         } else {
             $this->assign(compact('msg', 'url'));
-            exit($this->fetch('public/success'));
+            exit($this->fetch('admin@public/success'));
         }
     }
 

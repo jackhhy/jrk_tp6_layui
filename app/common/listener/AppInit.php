@@ -35,6 +35,7 @@ class AppInit
         !defined('DS') && define('DS', DIRECTORY_SEPARATOR);
         !defined('DS_CONS') && define('DS_CONS', '\\');
         !defined('ADMIN_LOGIN_INFO') && define('ADMIN_LOGIN_INFO', env("jrk.admin_login_info")); //定义 配置的 后台登录信息
+        !defined('INDEX_LOGIN_INFO') && define('INDEX_LOGIN_INFO', env("jrk.index_login_info")); //定义 配置的 前台登录信息
     }
 
 }

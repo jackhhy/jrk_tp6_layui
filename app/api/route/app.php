@@ -14,6 +14,8 @@ Route::post('update_pwd', 'v1.Member/updatePwd')->name('update_pwd');
 
 
 
+
+
 //miss 路由
 Route::miss(function() {
     if(app()->request->isOptions()){

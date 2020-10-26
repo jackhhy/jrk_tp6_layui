@@ -22,8 +22,8 @@ trait QrcodeMin
     //获取配置
     protected static function _C($type){
         $arr=[
-            'APPID'=>'wx857f236c3ba595', //你的APPID
-            'APP_SECRET'=>'7bfd44f96541b23660e8993cef163' //你的app_secret
+            'APPID'=>'wx857f26c3ba595', //你的APPID
+            'APP_SECRET'=>'7bfd44f6541b23660e8993cef163' //你的app_secret
         ];
         return $arr[$type];
     }

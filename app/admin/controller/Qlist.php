@@ -13,7 +13,7 @@
 // | Description:QueryList 采集
 // +----------------------------------------------------------------------
 
-namespace admin\controller;
+namespace app\admin\controller;
 header('Content-Type: text/html; charset=utf-8');
 
 use app\common\controller\AdminBaseController;

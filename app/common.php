@@ -46,6 +46,24 @@ if (!function_exists('create_min_code')) {
 }
 
 
+
+if (!function_exists("makeToken")){
+    /**
+     * @return string
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @name: makeToken
+     * @describe:生成一个不会重复的字符串
+     */
+    function makeToken()
+    {
+        $str = md5(uniqid(md5(microtime(true)), true)); //
+        $str = sha1($str); //加密
+        return $str;
+    }
+}
+
+
+
 if (!function_exists('create_qrcode')) {
     /**
      * @param $text //文本
