@@ -4,6 +4,12 @@ namespace app\index\controller;
 
 use app\BaseController;
 use app\common\controller\IndexBaseController;
+use app\admin\model\AttachMent;
+use app\admin\service\UploadFileService;
+use Jrk\Tool;
+use PHPMailer\PHPMailer\PHPMailer;
+use think\Exception;
+use think\facade\Request;
 
 class Index extends IndexBaseController
 {
@@ -16,6 +22,213 @@ class Index extends IndexBaseController
     public function index()
     {
         return  $this->fetch();
+    }
+
+
+    /**
+     * @author: Hhy <jackhhy520@qq.com>
+     * @describe:批量邮件发送
+     */
+    public function email(){
+        return  $this->fetch();
+    }
+
+
+    /**
+     * @param Request $request
+     * @throws \PHPMailer\PHPMailer\Exception
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @describe:
+     */
+    public function emailpost(){
+        if (IS_POST){
+            $data=$this->request->post();
+            //邮箱验证表达式
+            $regex="/([a-z0-9]*[-_.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[.][a-z]{2,3}([.][a-z]{2})?/i";
+            $data=$_POST;
+            $adre=@explode(",",$data['maile']);
+            //去除空值
+            $cont=$this->array_remove_empty($adre);
+            if (count($cont) >1){
+                $arr=[];
+                foreach ($cont as $v){
+                    //验证邮箱
+                    $result = preg_match($regex,$v);
+                    if (!$result){
+                        unset($v);
+                    }else{
+                        $arr[]=$v;
+                    }
+                }
+                $address=$arr;
+            }else{
+                $result = preg_match($regex,$cont[0]);
+                if (!$result){
+                    $this->error("接收人邮箱有误");
+                }
+                $address=$cont[0];
+            }
+            //发送邮件
+            $res=$this->SendEmaile($address,$data['subject'],$data['content'],$data['nickname'],$data['username'],$data['password'],$data['smpt']);
+
+
+            if ($res['error']==0){
+                return json(['code'=>1,'msg'=>"发送成功"]);
+            }else{
+                return json(['code'=>0,'msg'=>"发送失败-".$res['msg']]);
+            }
+        }
+
+    }
+
+
+    /**
+     * @param $address
+     * @param $content
+     * @param $sub
+     * @param $nick
+     * @param $user
+     * @param $pass
+     * @param $smpt
+     * @return array
+     * @throws \PHPMailer\PHPMailer\Exception
+     * 发送邮件
+     */
+    public function SendEmaile($address,$content,$sub,$nick,$user,$pass,$smpt)
+    {
+        try {
+            $mail = new PHPMailer();
+            $mail->CharSet = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
+            $mail->isSMTP();
+            $mail->SMTPDebug = 0;
+            //调试输出格式
+            //$mail->Debugoutput = 'html';
+            //smtp服务器
+            $mail->Host = $smpt;
+            //端口 - likely to be 25, 465 or 587
+            $mail->Port = 465;
+            $mail->SMTPSecure = 'ssl';
+            // 使用安全协议
+            //Whether to use SMTP authentication
+            $mail->SMTPAuth = true;
+            //发送邮箱
+            $mail->Username = $user;
+            //密码
+            $mail->Password = $pass;
+            //Set who the message is to be sent from
+            $mail->setFrom($user, $nick);
+            //回复地址
+            //$mail->addReplyTo('replyto@example.com', 'First Last');
+            //接收邮件方
+            if (is_array($address)) {
+                foreach ($address as $v) {
+                    $mail->addAddress($v);
+                }
+            } else {
+                $mail->addAddress($address);
+            }
+            $mail->isHTML(true);// send as HTML
+            //标题
+            $mail->Subject = $sub;
+            //HTML内容转换
+            $mail->msgHTML($content);
+            $status= $mail->send();
+
+            if ($status) {
+                return array("error" => 0);
+            } else {
+                return array("error" => 1, "msg" => $mail->ErrorInfo);
+            }
+        }catch (Exception $exception){
+            return ['error'=>1,'msg'=>$exception->getMessage()];
+        }
+    }
+
+
+
+    /**
+     * @author: Hhy <jackhhy520@qq.com>
+     * @date: 2020/7/2 0002
+     * @describe:上传文件
+     */
+    public function UpFile(){
+        $file= self::UpFiles("attachment/files");
+        if ($file["status"]==true){
+            $str=$this->getTxtcontent($file['dir']);
+
+            if (isset($str['code'])){
+                return json(array('code'=>0,'msg'=>$str['msg']));
+            }else{
+                return json(array('code'=>1,'msg'=>'导入成功','path'=>$file['dir'],'str'=>$str));
+            }
+        }else{
+            return json(['code' => 0, 'msg' => '上传失败']);
+        }
+    }
+
+
+
+    /**
+     * @param $txtfile
+     * @return array|stringni nim
+     * 逐行读取TXT文件
+     */
+    private function getTxtcontent($txtfile){
+        $file = @fopen(app()->getRootPath().'public'.$txtfile,'r');
+        $content = array();
+        if(!$file){
+            return ['code'=>0,'msg'=>'文件读取失败'];
+        }else{
+            $i = 0;
+            while (!feof($file)){
+                $content[$i] = mb_convert_encoding(fgets($file),"UTF-8","GBK,ASCII,ANSI,UTF-8");
+                $i++ ;
+            }
+            fclose($file);
+            $content = $this->array_remove_empty($content); //数组去空
+        }
+        @unlink(app()->getRootPath().'public'.$txtfile);
+        $str=@implode(",",$content);
+        return $str;
+    }
+
+
+    /**
+     * 方法库-数组去除空值
+     * @param string $num  数值
+     * @return string
+     */
+    private function array_remove_empty(&$arr, $trim = true) {
+        if (!is_array($arr)) return false;
+        foreach($arr as $key => $value){
+            if (is_array($value)) {
+                self::array_remove_empty($arr[$key]);
+            } else {
+                $value = ($trim == true) ? trim($value) : $value;
+                if (empty($value) || $value=="") {
+                    unset($arr[$key]);
+                } else {
+                    $arr[$key] = $value;
+                }
+            }
+        }
+        return $arr;
+    }
+
+    /**
+     * @param $path
+     * @param int $is_save
+     * @param string $fileName
+     * @return mixed|object
+     * @author: Hhy <jackhhy520@qq.com>
+     * @date: 2020/7/2 0002
+     * @describe:上传附件
+     */
+    protected static function UpFiles($path,$is_save=0,$fileName="file"){
+        if (empty($path)) $path="common/files";
+        $res=UploadFileService::instance()->setUploadPath($path)->file($fileName);
+        $res=Tool::object_to_array($res);
+        return $res;
     }
 
 }

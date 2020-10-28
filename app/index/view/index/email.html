@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>邮件批量发送</title>
+    <script src="__JS__/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PLUG__/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="__PLUG__/layui/css/layui.css" />
+</head>
+<body>
+
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+
+        <div class="layui-col-md8 layui-col-md-offset2">
+
+            <div class="layui-card">
+                <div class="layui-card-header" style="background-color: rgb(30,159,255); color: white;">邮件批量发送</div>
+                <div class="layui-card-body">
+
+                    <form class="layui-form" action="" lay-filter="component-form-element">
+                        <div class="layui-row layui-col-space10 layui-form-item">
+
+                            <div class="layui-form-item ">
+                                <label class="layui-form-label">登录账号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="username" lay-verify="required|email"  disabled value="482749118@qq.com" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">账号</div>
+                            </div>
+                            <div class="layui-form-item ">
+                                <label class="layui-form-label">登录密码：</label>
+                                <div class="layui-input-inline">
+                                    <input type="password" name="password" lay-verify="required" disabled value="egpkualstfbibiea" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">密码</div>
+
+                            </div>
+                            <div class="layui-form-item ">
+                                <label class="layui-form-label">SMPT：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="smpt" value="smtp.qq.com" disabled autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item ">
+                                <label class="layui-form-label">昵称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="nickname" lay-verify="required" value="jackhhy" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">发件人的昵称</div>
+
+                            </div>
+                            <div class="layui-form-item ">
+                                <label class="layui-form-label">邮件标题：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="subject" lay-verify="required" placeholder="请填写邮件标题" autocomplete="off" class="layui-input">
+                                </div>
+
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">邮件内容：</label>
+                                <div class="layui-input-block">
+                                    <textarea class="layui-textarea" name="content" placeholder="邮件内容必须填写" lay-verify="content"   id="LAY_demo1" ></textarea>
+
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">导入邮箱：</label>
+                                <button style="" type="button" class="layui-btn" id="test3">上传文件</button>&nbsp;&nbsp;&nbsp;
+                                <font color="red">支持：txt </font>
+                            </div>
+
+                            <div class="layui-form-item ">
+                                <label class="layui-form-label">模板讲解：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" readonly autocomplete="off" class="layui-input" value="txt文件每行一个邮箱">
+                                </div>
+
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">邮箱：</label>
+                                <div class="layui-input-block">
+                                    <textarea name="maile" id="xin" rows="8" class="layui-textarea" lay-verify="required" placeholder="多个邮箱用英文,隔开"></textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="demo1" >立即发送</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    layui.use(['form', 'element', 'layer', 'layedit','upload'], function() {
+        var element = layui.element;
+        var layer = layui.layer;
+        var form = layui.form;
+        var jq = layui.$;
+        var layedit=layui.layedit;
+        var upload=layui.upload;
+        form.render();
+
+
+        //自定义工具栏
+        var demo1s= layedit.build('LAY_demo1', {
+            tool: ['strong','italic','underline','del','link', 'unlink', '|', 'left', 'center', 'right']
+            ,height: 150
+        });
+
+        //自定义验证规则
+        form.verify({
+            content: function(value){
+                layedit.sync(demo1s);
+            },
+        });
+
+        //指定允许上传的文件类型
+        upload.render({
+            elem: '#test3'
+            ,url: "{:url('UpFile')}"
+            ,accept: 'file' //普通文件
+            ,exts: 'txt'
+            , before: function (input) {
+                loading = layer.load(2, {
+                    shade: [0.2, '#000'] //0.2透明度的白色背景
+                });
+            }
+            ,done: function(res){
+                layer.close(loading);
+                if (res.code==1) {
+                    layer.msg(res.msg, {icon: 1, time: 1000},function () {
+                        jq("#xin").val(res.str);
+                    });
+                }else {
+                    layer.msg(res.msg, {icon: 2, time: 1000});
+                }
+                //console.log(res)
+            }
+            , error: function () {
+                layer.close(loading);
+                layer.msg('网络错误',{icon:2,time:1500});
+            }
+        });
+
+
+        //监听提交
+        form.on('submit(demo1)', function(data) {
+            loading = layer.load(2, {
+                shade: [0.2, '#000'] //0.2透明度的白色背景
+            });
+            var param = data.field;
+            //console.log(param);
+            jq.post(
+                "{:url('emailpost')}",
+                param,
+                function(data) {
+                    if(data.code == 1) {
+                        layer.close(loading);
+                        layer.msg(data.msg, {
+                            icon: 1,
+                            time: 1500
+                        }, function() {
+                            location.reload();
+                        });
+                    } else {
+                        layer.close(loading);
+                        layer.msg(data.msg, {
+                            icon: 2,
+                            anim: 6,
+                            time: 3000
+                        });
+                    }
+                }).error(function() {
+                layer.close(loading);
+                layer.msg('服务器错误', {
+                    icon: 2,
+                    anim: 6,
+                    time: 1500
+                });
+            });
+            return false;
+        });
+
+    });
+</script>
+
+
+<script>
+
+    $(function () {
+        document.onkeydown = document.onkeyup = document.onkeypress = function(event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode == 123) {
+                e.returnValue = false;
+                /* let toastHTML = '<span>复制成功，请遵循本文的转载规则</span>';
+                 M.toast({html: toastHTML})*/
+                return (false);
+            }
+        };
+        document.oncontextmenu = new Function("return false;");
+    });
+    layui.use(['layer','form','util'],
+        function(){
+            $ = layui.jquery;
+            layer = layui.layer;//弹出层//
+            util = layui.util;
+            util.fixbar({  //返回顶部
+                top: true
+                ,css: {right: 15, bottom: 55}
+                ,bgcolor: '#393D49'
+                ,click: function(type){
+                    if(type === 'top'){
+                        console.log("回到顶部");
+                    }
+                }
+            });
+        });
+
+</script>
+
+</body>
+
+</html>

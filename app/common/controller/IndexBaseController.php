@@ -48,7 +48,7 @@ abstract class IndexBaseController
      * 检测是否登录
      * @var array
      */
-    protected $middleware = ['app\index\middleware\CheckIndexLogin'=>['except' => ['index']]];
+    protected $middleware = ['app\index\middleware\CheckIndexLogin'=>['except' => ['index','email']]];
 
     //请求参数
     protected $param;
