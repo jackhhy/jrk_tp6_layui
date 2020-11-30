@@ -528,7 +528,7 @@ if (!function_exists('add_log')){
              $myfile=app()->getRootPath().'Logs/'.$file."/".$filename.".txt";
          }
          if (is_array($param)){
-             $param=json_encode($param);
+             $param=json_encode($param,JSON_FORCE_OBJECT|JSON_UNESCAPED_UNICODE);
          }
          @file_put_contents(
              $myfile,
