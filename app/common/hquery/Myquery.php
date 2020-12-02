@@ -25,7 +25,10 @@ class Myquery extends Query
      * @param $where
      * @param $order
      * @return array
-     * @author: Hhy <jackhhy520@qq.com>
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author: LuckyHhy <jackhhy520@qq.com>
      * @describe: 带分页的
      */
     public function limit_select($where,$order)
@@ -38,7 +41,10 @@ class Myquery extends Query
      * @param $where
      * @param $order
      * @return array
-     * @author: Hhy <jackhhy520@qq.com>
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author: LuckyHhy <jackhhy520@qq.com>
      * @describe:不带分页的
      */
     public function hhy_select($where,$order)

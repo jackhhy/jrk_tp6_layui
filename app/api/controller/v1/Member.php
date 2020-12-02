@@ -29,7 +29,7 @@ class Member extends Base
             ->field('u.*,ut.name as type_name')*/
             ->where('u.id', $this->getUid())
             ->find();
-        return $this->ReturnAjax("个人信息", $user, 1);
+        return SendSuccess("个人信息", $user, 1);
     }
 
 
@@ -46,7 +46,7 @@ class Member extends Base
         //接收参数
         $param = $this->request->param();
         if (!isset($param['username'], $param['password'])) {
-            return $this->ReturnAjax("参数错误");
+            return SendError("参数错误");
         }
         $username = $param['username'];
         $password = $param['password'];
@@ -54,15 +54,15 @@ class Member extends Base
         //查询用户信息
         $info = Db::name("member")->where("username|email", $username)->find();
         if (!$info) {
-            return $this->ReturnAjax("用户名错误");
+            return SendError("用户名错误");
         }
         //验证密码
         if (password_very($password, $info['password']) == false) {
-            return $this->ReturnAjax("用户密码错误");
+            return SendError("用户密码错误");
         }
 
         if ($info['status'] == 0) {
-            return $this->ReturnAjax("用户已被禁用");
+            return SendError("用户已被禁用");
         }
         //获取jwt的句柄
         $jwtAuth = JwtService::getInstance();
@@ -71,7 +71,7 @@ class Member extends Base
         //更新信息
         Db::name("member")->where('id', $info['id'])->update(['last_login_time' => time(), 'last_login_ip' => Request::ip()]);
 
-        return $this->ReturnAjax("登录成功", ['token' => $token], 1);
+        return SendSuccess("登录成功", ['token' => $token], 1);
     }
 
 
@@ -88,7 +88,7 @@ class Member extends Base
         //接收参数
         $param = $this->request->param();
         if (!isset($param['username'], $param['password'])) {
-            return $this->ReturnAjax("参数错误");
+            return SendError("参数错误");
         }
 
         $username = $param['username'];
@@ -96,18 +96,18 @@ class Member extends Base
 
         // 密码长度不能低于6位
         if (strlen($password) < 6) {
-            return $this->ReturnAjax("密码长度不能低于6位");
+            return SendError("密码长度不能低于6位");
         }
         // 邮箱合法性判断
         if (!is_email($username)) {
-            return $this->ReturnAjax("用户名邮箱格式错误");
+            return SendError("用户名邮箱格式错误");
         }
 
         try {
             // 防止重复
             $id = Db::name('member')->where('email|username', '=', $username)->find();
             if ($id) {
-                return $this->ReturnAjax("邮箱已被注册");
+                return SendError("邮箱已被注册");
             }
 
             // 注册入库
@@ -122,12 +122,12 @@ class Member extends Base
             $data['sex'] = Request::post('sex') ? Request::post('sex') : 0;
             $id = Db::name('member')->insertGetId($data);
             if ($id) {
-                return $this->ReturnAjax("注册成功", [], 1);
+                return SendSuccess("注册成功", [], 1);
             } else {
-                return $this->ReturnAjax("注册失败");
+                return SendError("注册失败");
             }
         } catch (\Exception $exception) {
-            return $this->ReturnAjax($exception->getMessage());
+            return SendError($exception->getMessage());
         }
     }
 
@@ -145,11 +145,11 @@ class Member extends Base
         //接收参数
         $param = $this->request->param();
         if (!isset($param['newpwd'], $param['oldpwd'])) {
-            return $this->ReturnAjax("参数错误");
+            return SendError("参数错误");
         }
         // 密码长度不能低于6位
         if (strlen($param['newpwd']) < 6) {
-            return $this->ReturnAjax("密码长度不能低于6位");
+            return SendError("密码长度不能低于6位");
         }
         // 查看原密码是否正确
         $user = Db::name("member")->where('id', $this->getUid())
@@ -157,11 +157,11 @@ class Member extends Base
             ->find();
 
         if (!$user) {
-            return $this->ReturnAjax('原密码输入有误');
+            return SendError('原密码输入有误');
         }
         //更新信息
         Db::name("member")->where("id", $this->getUid())->update(['password' => password($param['newpwd'])]);
-        return $this->ReturnAjax('密码修改成功', [], 1);
+        return SendSuccess('密码修改成功', [], 1);
     }
 
 

@@ -10,11 +10,13 @@
 // +----------------------------------------------------------------------
 // | Date: 2020/11/30 0030
 // +----------------------------------------------------------------------
-// | Description:
+// | Description: 单例redis 锁
 // +----------------------------------------------------------------------
 
 namespace app\common\service;
 
+
+use think\Exception;
 
 class RedisLock {
 
@@ -22,11 +24,10 @@ class RedisLock {
      * 单据锁redis key模板
      */
     const REDIS_LOCK_KEY_TEMPLATE = 'order_lock_%s';
-
     /**
      * 单据锁默认超时时间（秒）
      */
-    const REDIS_LOCK_DEFAULT_EXPIRE_TIME = 86400;
+    const REDIS_LOCK_DEFAULT_EXPIRE_TIME = 8;
     /**
      * Redis配置：IP
      */
@@ -35,14 +36,19 @@ class RedisLock {
      * Redis配置：端口
      */
     const REDIS_CONFIG_PORT = 6379;
-
+    /**
+     * 加锁key
+     */
     const REDIS_LOCK_UNIQUE_ID_KEY = 'lock_unique_id';
 
+
     /**
-     * 加单据锁
-     * @param int $intOrderId 单据ID
-     * @param int $intExpireTime 锁过期时间（秒）
-     * @return bool|int 加锁成功返回唯一锁ID，加锁失败返回false
+     * @param $intOrderId
+     * @param int $intExpireTime
+     * @return bool|int
+     * @throws Exception
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @describe: redis 加锁
      */
     public static function lock($intOrderId, $intExpireTime = self::REDIS_LOCK_DEFAULT_EXPIRE_TIME)
     {
@@ -64,10 +70,12 @@ class RedisLock {
 
 
     /**
-     * 解单据锁
-     * @param int $intOrderId 单据ID
-     * @param int $intLockId 锁唯一ID
+     * @param $intOrderId
+     * @param $intLockId
      * @return bool
+     * @throws Exception
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @describe:redis 解锁
      */
     public static function unlock($intOrderId, $intLockId)
     {
@@ -90,24 +98,34 @@ class RedisLock {
     }
 
 
-
     /**
-     * 获取Redis连接（简易版本，可用单例实现）
-     * @param string $strIp IP
-     * @param int $intPort 端口
-     * @return object Redis连接
+     * @param string $strIp
+     * @param int $intPort
+     * @return \Redis
+     * @throws Exception
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @describe:获取Redis连接（简易版本，可用单例实现）
      */
     public static function getRedisConn($strIp = self::REDIS_CONFIG_HOST, $intPort = self::REDIS_CONFIG_PORT)
     {
-        $objRedis = new \Redis();
-        $objRedis->connect($strIp, $intPort);
-        return $objRedis;
+        try {
+            if (!extension_loaded('redis')) {
+                throw new \BadFunctionCallException('not support: redis');
+            }
+            $objRedis = new \Redis();
+            $objRedis->connect($strIp, $intPort);
+            return $objRedis;
+        }catch (Exception $exception){
+            throw new Exception($exception->getMessage());
+        }
     }
 
 
     /**
-     * 生成锁唯一ID（通过Redis incr指令实现简易版本，可结合日期、时间戳、取余、字符串填充、随机数等函数，生成指定位数唯一ID）
-     * @return mixed
+     * @return int
+     * @throws Exception
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @describe:生成锁唯一ID（通过Redis incr指令实现简易版本，可结合日期、时间戳、取余、字符串填充、随机数等函数，生成指定位数唯一ID）
      */
     public static function generateUniqueLockId()
     {

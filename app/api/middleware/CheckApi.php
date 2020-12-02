@@ -29,7 +29,6 @@ class CheckApi
                 if (count(explode('.', $token)) <> 3) {
                    return $this->result([], 0, 'token格式错误');
                 }
-
                 $jwtAuth = JwtService::getInstance();
                 $jwtAuth->setToken($token);
                 //验证token

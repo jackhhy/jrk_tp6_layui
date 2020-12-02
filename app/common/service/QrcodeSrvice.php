@@ -28,7 +28,8 @@ class QrcodeSrvice
      * @param int $size
      * @param bool $domain
      * @return string
-     * @author: Hhy <jackhhy520@qq.com>
+     * @throws \Endroid\QrCode\Exceptions\ImageTypeInvalidException
+     * @author: LuckyHhy <jackhhy520@qq.com>
      * @describe:生成普通二维码
      */
     public static function make_qrcode($text,$size=105,$domain=false){
@@ -65,9 +66,11 @@ class QrcodeSrvice
     /**
      * @param $text
      * @param $logo
+     * @param bool $domain
      * @return string
-     * @throws Exception
-     * @author: Hhy <jackhhy520@qq.com>
+     * @throws \Endroid\QrCode\Exceptions\DataDoesntExistsException
+     * @throws \Endroid\QrCode\Exceptions\ImageTypeInvalidException
+     * @author: LuckyHhy <jackhhy520@qq.com>
      * @describe:生成带logo 的二维码
      */
     public static function QrCodeWithLogo($text,$logo,$domain=false){

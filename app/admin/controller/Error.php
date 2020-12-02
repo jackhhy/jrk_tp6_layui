@@ -2,8 +2,11 @@
 
 namespace app\admin\controller;
 
+use liliuwei\think\Jump;
+
 class Error
 {
+    use Jump;
     public function __call($name, $arguments)
     {
          $result = [
@@ -14,6 +17,6 @@ class Error
         if (request()->isAjax()) {
              return json($result, 200);
         }
-        return "不存在的请求";
+        $this->error("不存在的请求");
     }
 }
