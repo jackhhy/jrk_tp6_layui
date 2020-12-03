@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 
-if (function_exists("SendError")){
+if (!function_exists("SendError")){
     /**
      * @param $msg
      * @param array $data
@@ -32,7 +32,7 @@ if (function_exists("SendError")){
 }
 
 
-if (function_exists("SendSuccess")){
+if (!function_exists("SendSuccess")){
     /**
      * @param $msg
      * @param array $data

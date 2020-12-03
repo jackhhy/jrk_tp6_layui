@@ -13,6 +13,10 @@ class Member extends Base
 {
 
 
+    public function test(){
+        return SendSuccess("测试");
+    }
+
     /**
      * @return \think\Response
      * @throws \think\db\exception\DbException
@@ -29,7 +33,7 @@ class Member extends Base
             ->field('u.*,ut.name as type_name')*/
             ->where('u.id', $this->getUid())
             ->find();
-        return SendSuccess("个人信息", $user, 1);
+        return SendSuccess("个人信息", $user);
     }
 
 
@@ -71,7 +75,7 @@ class Member extends Base
         //更新信息
         Db::name("member")->where('id', $info['id'])->update(['last_login_time' => time(), 'last_login_ip' => Request::ip()]);
 
-        return SendSuccess("登录成功", ['token' => $token], 1);
+        return SendSuccess("登录成功", ['token' => $token]);
     }
 
 
@@ -122,7 +126,7 @@ class Member extends Base
             $data['sex'] = Request::post('sex') ? Request::post('sex') : 0;
             $id = Db::name('member')->insertGetId($data);
             if ($id) {
-                return SendSuccess("注册成功", [], 1);
+                return SendSuccess("注册成功");
             } else {
                 return SendError("注册失败");
             }
@@ -161,7 +165,7 @@ class Member extends Base
         }
         //更新信息
         Db::name("member")->where("id", $this->getUid())->update(['password' => password($param['newpwd'])]);
-        return SendSuccess('密码修改成功', [], 1);
+        return SendSuccess('密码修改成功');
     }
 
 

@@ -44,7 +44,7 @@ abstract class Base
      * @var array
      */
     protected $middleware = [
-        'app\api\middleware\CheckApi'=>['except' => ['login', 'register']],
+        'app\api\middleware\CheckApi'=>['except' => ['login', 'register','test']],
     ];
 
     /**

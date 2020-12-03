@@ -12,7 +12,7 @@ Route::get('index', 'v1.Member/index')->name('index');
 //更新密码
 Route::post('update_pwd', 'v1.Member/updatePwd')->name('update_pwd');
 
-
+Route::get('test', 'v1.Member/test')->name('test');
 
 
 
