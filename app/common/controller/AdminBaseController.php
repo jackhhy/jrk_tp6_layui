@@ -97,9 +97,11 @@ abstract class AdminBaseController
     {
         //用户登录信息
         self::$admin_info=session(ADMIN_LOGIN_INFO);
+        
+        $this->initAssign();
 
         $this->initConfig();
-        $this->initAssign();
+
         $this->initRequestConfig();
        //左侧菜单
         $this->menuList();
@@ -256,6 +258,14 @@ abstract class AdminBaseController
      */
     public function initAssign()
     {
+       if(empty(self::$admin_info) || self::$admin_info==null){
+            if ($this->request->isAjax() || $this->request->isPost()){
+                header('Content-Type:application/json; charset=utf-8');
+				exit(json_encode(['code'=>0,'msg'=>'您的登录信息已过期请先登录',"time"=>time()], 0));
+            }else{
+                return redirect((string)url('Login/index'));
+            }
+        }
         //获取当前配置的网站地址
         $this->domain = $this->request->domain();
         $this->assign("domain", $this->domain);
@@ -263,9 +273,8 @@ abstract class AdminBaseController
         $this->assign('_version', VERSION);
         $this->assign('_name', _NAME);
         $this->assign("_site",SITE_URL);
-
         //用户登录信息
-        $this->assign("_info",session(ADMIN_LOGIN_INFO));
+        $this->assign("_info",self::$admin_info);
     }
 
 
