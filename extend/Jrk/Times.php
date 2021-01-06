@@ -637,4 +637,21 @@
             return $date ? date($format, $LastYear) : $LastYear;
         }
 
+        /**
+         * @param int $num
+         * @return datetime
+         * @describe:将EXCEL中的数字，转换成日期
+         */
+        public static function excelNumToDate($num)
+        {
+            $date = '';
+            if ($num == (int) $num) {
+        
+                $time = ($num - 25569) * 24 * 60 * 60;
+                return date('Y-m-d', $time);
+            }
+            return $date;
+        }
+        
+
     }
