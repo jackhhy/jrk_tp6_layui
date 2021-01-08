@@ -26,7 +26,11 @@ return [
         Env::get('jrk.api', 'api') => 'api',
     ],
     // 域名绑定（自动多应用模式有效）
-    'domain_bind'      => [],
+    'domain_bind'      => [
+         //'blog'        =>  'blog',  //  blog子域名绑定到blog应用
+         //'www.pwweb.xyz' =>  'admin',  //  完整域名绑定 admin
+        // '*'           =>  'index', // 二级泛域名绑定到index应用
+    ],
     // 禁止URL访问的应用列表（自动多应用模式有效）
     'deny_app_list'    => ['common'],
 
