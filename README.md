@@ -35,6 +35,9 @@ php think make:jrkadmin_curd Hello Hello Hello --app admin [ # 普通CURD增删�
 
 - - -
 
+## Stargazers over time
+    [![Stargazers over time](https://whnb.wang/img/luckygyl/jrk_tp6_layui)](https://whnb.wang/luckygyl/jrk_tp6_layui)
+
 
 
 ### :tw-1f427: QQ交流群
