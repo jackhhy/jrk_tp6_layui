@@ -113,6 +113,7 @@ layui.define(['jquery', 'layer'], function(exports) {
                 type: 'post',
                 data: data,
                 error: function(error) {
+                    layer.closeAll('loading');
                     var json = JSON.parse(error.responseText);
                     $.each(json.errors, function(idx, obj) {
                         layer.msg(obj[0], { icon: 15, time: 1500, shade: 0.3, anim: 4 });
@@ -145,7 +146,8 @@ layui.define(['jquery', 'layer'], function(exports) {
                 },
                 complete: function() {
                     layer.closeAll('loading');
-                }
+                },
+
             });
         },
 

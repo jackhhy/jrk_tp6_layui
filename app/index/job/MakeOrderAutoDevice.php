@@ -48,7 +48,7 @@ class MakeOrderAutoDevice
 
 
     /*在宝塔里的  Supervisord管理器==添加手护进程
-     * 名称就是 队列名称，启动命令是：php think queue:listen --queue
+     * 名称就是 队列名称，启动命令是：php think queue:listen --queue +队列名
      * 启动用户：root
      * */
 

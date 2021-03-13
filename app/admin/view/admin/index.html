@@ -136,6 +136,12 @@
                         return s;
                     }},
                 {field: 'logins', title: '登录次数',width:90},
+                {field: 'secret', title: '谷歌秘钥',width:180},
+                {field: 'google_url', title: '谷歌验证二维码',width: 160,align: 'center',templet:function (rd) {
+
+                        return "<img src='"+rd.google_url+"' width='50' height='50' />";
+
+                    }},
                 {field: 'login_time', title: '最近登录时间',width:180,templet:function (d) {
                         if (d.login_time===0){
                             return "暂无";

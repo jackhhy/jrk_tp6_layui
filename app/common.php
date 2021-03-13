@@ -26,23 +26,21 @@ if (!function_exists('__')) {
             array_shift($vars);
             $lang = '';
         }
-        return \think\Lang::get($name, $vars, $lang);
+        return \think\facade\Lang::get($name, $vars, $lang);
     }
 
 }
 
 if (! function_exists('upload_file')) {
     /**
-     * 上传文件.
-     *
-     * @param  string  $file  上传的文件
-     * @param  string  $name  上传的位置
-     * @param  string  $path  上传的文件夹
-     * @param  string  $validate  规则验证
-     * @param  string  $url  前缀
-     *
-     * @return string|bool
-     * @author niu
+     * @param null $file
+     * @param string $name
+     * @param string $path
+     * @param string $validate
+     * @param string $url
+     * @return bool|string
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @describe:上传文件.
      */
     function upload_file($file = null, $name = 'local', $path = '', $validate = '', $url = '/')
     {
@@ -75,6 +73,14 @@ if (! function_exists('upload_file')) {
 
 
 if (! function_exists('parseName')) {
+    /**
+     * @param $name
+     * @param int $type
+     * @param bool $ucfirst
+     * @return string
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @describe:
+     */
     function parseName($name, $type = 0, $ucfirst = true)
     {
         if ($type) {

@@ -19,6 +19,7 @@ namespace app\admin\controller;
 use app\admin\model\AdminUser;
 use app\admin\validate\CheckAdminUser;
 use app\common\controller\AdminBaseController;
+use app\common\service\GoogleAuthenticator;
 use think\Exception;
 
 class Admin extends AdminBaseController
@@ -54,6 +55,18 @@ class Admin extends AdminBaseController
                         unset($data['password']);
                     }
                     unset($data['repassword']);
+                    $username=AdminUser::where(['id' => $data['id']])->value("username");
+
+                    if ($username!=$data['username']){
+                        //谷歌验证码
+                        $google=new GoogleAuthenticator();
+                        $secret=$google->createSecret();
+                        $qrCodeUrl = $google->getQRCodeGoogleUrl($data['username'], $secret);
+                        $data['secret']=$secret;
+                        $data['google_url']=$qrCodeUrl;
+                    }
+
+
                 } else {
                     $res = AdminUser::where(['username' => "" . $data['username'] . ""])->find();
                     if ($res) {
@@ -61,6 +74,14 @@ class Admin extends AdminBaseController
                     }
                     $data['password'] = password($data['password']);
                     unset($data['repassword']);
+
+                    //谷歌验证码
+                    $google=new GoogleAuthenticator();
+                    $secret=$google->createSecret();
+                    $qrCodeUrl = $google->getQRCodeGoogleUrl($data['username'], $secret);
+                    $data['secret']=$secret;
+                    $data['google_url']=$qrCodeUrl;
+
                 }
             } catch (Exception $exception) {
                 return parent::JsonReturn($exception->getMessage(), 0);

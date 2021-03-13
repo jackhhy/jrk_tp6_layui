@@ -59,11 +59,11 @@ abstract class BaseController
         app()->http->setBind(true);
         $this->request = $this->app->request;
         // 控制器初始化
-        $this->_initialize();
+        $this->initialize();
     }
 
     // 初始化
-    protected function _initialize()
+    protected function initialize()
     {
     }
 

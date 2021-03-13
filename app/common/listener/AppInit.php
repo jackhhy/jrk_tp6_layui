@@ -21,7 +21,6 @@ class AppInit
     public function handle(){
         // 设置mbstring字符编码
         mb_internal_encoding('UTF-8');
-
         $this->initSystemConst();
     }
 

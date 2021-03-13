@@ -25,6 +25,15 @@
 
         <input type="hidden" name="__token__" id="token" value="{:token()}"/>
 
+
+        {if $config.google.google_check}
+        <div class="layui-form-item input-item">
+            <label for="google_captcha">谷歌验证码</label>
+            <input type="password" lay-verify="required|google" name="google_captcha" value="" placeholder="" autocomplete="off" id="google_captcha" class="layui-input">
+        </div>
+        {/if}
+
+
         <div class="layui-form-item input-item captcha-box">
             <label for="captcha">验证码</label>
             <input type="text" lay-verify="required" name="captcha" placeholder="" autocomplete="off" id="captcha" maxlength="4" class="layui-input">
@@ -56,6 +65,7 @@
          */
         form.verify({
             password: [/^[\S]{6,12}$/, "密码必须6到12位，且不能出现空格"],
+            google: [/^[\S]{5,8}$/, "密码必须6到8位，且不能出现空格"],
         });
 
         /**
@@ -70,7 +80,6 @@
                 type:'post',
                 data:data.field,
                 success:function(data){
-                    console.log(data);
                     if(data.code==1)
                     {
                         layer.msg(data.msg, {icon: 1, time: 1500, anim: 4,shade:0.5}, function () {

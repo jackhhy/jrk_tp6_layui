@@ -35,11 +35,11 @@
         </div>
         <h1><?php echo(strip_tags($msg));?></h1>
         <p class="jump">
-            <a href="javascript:">请关闭当前页面或者弹窗！！！</a>
+            <a href="javascript:">{:__('Please close the current page or pop-up window')}！！！</a>
         </p>
         <p class="clearfix">
-            <a href="#" onClick="javascript :history.back(-1);" class="btn btn-grey">返回上一页</a>
-            <a id="href" href="{$url}" class="btn btn-primary">立即跳转</a>
+            <a href="#" onClick="javascript :history.back(-1);" class="btn btn-grey">{:__('Go back')}</a>
+            <a id="href" href="{$url}" class="btn btn-primary">{:__('Jump now')}</a>
         </p>
     </div>
  	<script type="text/javascript">

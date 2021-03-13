@@ -16,8 +16,7 @@
 
     namespace app\admin\controller\queue;
 
-
-    use app\BaseController;
+    use app\common\controller\BaseController;
     use Cron\CronExpression;
     use Jrk\Http;
     use liliuwei\think\Jump;

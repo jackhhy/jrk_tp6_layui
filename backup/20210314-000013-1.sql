@@ -6,7 +6,7 @@
 -- Database : jrk_admin_tp6
 -- 
 -- Part : #1
--- Date : 2020-10-26 10:27:44
+-- Date : 2021-03-14 00:00:13
 -- -----------------------------
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -33,16 +33,16 @@ CREATE TABLE `jrk_admin` (
   `email` varchar(30) DEFAULT NULL COMMENT '邮箱号',
   `birthday` varchar(80) DEFAULT NULL COMMENT '出生日期',
   `logins` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '登录次数',
+  `secret` varchar(255) DEFAULT NULL COMMENT '谷歌秘钥',
+  `google_url` text COMMENT '谷歌验证二位码',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='后台管理员表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='后台管理员表';
 
 -- -----------------------------
 -- Records of `jrk_admin`
 -- -----------------------------
-INSERT INTO `jrk_admin` VALUES ('1', 'jrkadmintp6', '超级管理员', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '1', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1603679241', '127.0.0.1', '', '1593179425', '1603679241', '13141962690', 'jackhhy520@qq.com', '1995-06-05', '18');
-INSERT INTO `jrk_admin` VALUES ('2', 'test', '人事专员', '/uploads/adminuser/avatar/20200814/9fb56f259b55337ef9f1f2ac90d0dcab.jpg', '0', '$2y$10$3YQI7c/fbHn2I9j3DeERzeKxbXUaldYXhX6GDDphuhN4MhfyH096y', '1', '1597930258', '127.0.0.1', '', '1593179425', '1597930258', '13141962698', '', '', '3');
-INSERT INTO `jrk_admin` VALUES ('3', 'ce', '测试员1', '/uploads/adminuser/avatar/20200630/acd1e53a97ec152c14b5fca6f7ffb40d.jpg', '1', '$2y$10$WLfde3sqoLFRppVrn7m8Tu/kiydOefnefYeRtt92rALWXNh6U0Ti.', '1', '0', '', '', '1593505184', '1597386201', '13141962690', '13141962690@163.com', '2020-06-30', '0');
-INSERT INTO `jrk_admin` VALUES ('4', 'testsss', '测试2_5_-', '/uploads/adminuser/avatar/20200630/92a02b58dc5c02e895a0d519765835ae.jpg', '0', '$2y$10$Q9dXmkFiVTsjs.WsNUxfIuy5etKwGd6a7K5612dhEzso1sgSu/btS', '1', '0', '', '', '1593505714', '1597386214', '13141962698', '', '2020-06-24', '0');
+INSERT INTO `jrk_admin` VALUES ('1', 'jrkadmintp6', '超级管理员', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '1', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1615648897', '127.0.0.1', '', '1593179425', '1615648897', '13141962690', 'jackhhy520@qq.com', '1995-06-05', '20', '2NEDPBG2YIM5642L', 'https://api.qrserver.com/v1/create-qr-code/?data=otpauth%3A%2F%2Ftotp%2Fjrkadmintp6%3Fsecret%3D2NEDPBG2YIM5642L&size=200x200&ecc=M');
+INSERT INTO `jrk_admin` VALUES ('5', 'test', 'test', '/uploads/adminuser/avatar/20210313/c38869c36842c2b686f7913ba394e86c.png', '0', '$2y$10$LNwbAqBCfgjCw9n4e6ND8eqT8jZ0uty2Ih1nN0DxpB1Lx2OofyAte', '1', '0', '', '', '1615648969', '1615648969', '13141962698', '', '2021-03-17', '0', 'SRKIVUCGTFDXBHO2', 'https://api.qrserver.com/v1/create-qr-code/?data=otpauth%3A%2F%2Ftotp%2Ftest%3Fsecret%3DSRKIVUCGTFDXBHO2&size=200x200&ecc=M');
 
 -- -----------------------------
 -- Table structure for `jrk_articles`
@@ -82,7 +82,7 @@ CREATE TABLE `jrk_articles` (
 -- Records of `jrk_articles`
 -- -----------------------------
 INSERT INTO `jrk_articles` VALUES ('1', '2', '测试标题', '', '0', '奥德赛大所,123', '&lt;p&gt;搭搭撒撒多&lt;/p&gt;&lt;p&gt;大萨达撒多撒&lt;/p&gt;&lt;p&gt;打撒大大&lt;/p&gt;&lt;p&gt;国风大赏...', '', 'jrkadmintp6', '原创', '<p>搭搭撒撒多</p><p>大萨达撒多撒</p><p>打撒大大</p><p>国风大赏鬼地方个地方</p><p>gfhgfjhghgjgh萨顶顶撒奥</p><p>更大的郭德纲的观点</p>', '0', '1', '0', '0', '0', '0', '1', '1', '', '1597219278', '1597224466', '1597224466');
-INSERT INTO `jrk_articles` VALUES ('2', '2', '大萨达十大大萨达撒', '#2B6199', '4', '敖德萨多', '阿达打算', '', 'jrkadmintp6', '原创', '# 敖德萨多撒\n### 大萨达\n> 奥德赛大\n\n##### 达大撒多所', '11', '1', '11', '12', '0', '0', '1', '1', '/index/article/show.html?id=2', '1597219392', '1597310195', '0');
+INSERT INTO `jrk_articles` VALUES ('2', '2', '大萨达十大大萨达撒', '#2B6199', '4', '敖德萨多', '阿达打算', '/uploads/attachment/images/20200817/929662552e9dbbf4926d7be6853ea00a.jpg', 'jrkadmintp6', '原创', '# 敖德萨多撒\n### 大萨达\n> 奥德赛大\n\n##### 达大撒多所', '11', '1', '11', '12', '2', '0', '1', '1', '/index/article/show.html?id=2', '1597219392', '1615649184', '0');
 
 -- -----------------------------
 -- Table structure for `jrk_articles_cate`
@@ -211,7 +211,7 @@ CREATE TABLE `jrk_attachment` (
   `update_time` int(11) unsigned DEFAULT '0',
   `ext` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='附件管理表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='附件管理表';
 
 -- -----------------------------
 -- Records of `jrk_attachment`
@@ -225,6 +225,14 @@ INSERT INTO `jrk_attachment` VALUES ('6', '5e19638241c47d668ad937cd5fde4847.jpg'
 INSERT INTO `jrk_attachment` VALUES ('7', '9fb56f259b55337ef9f1f2ac90d0dcab.jpg', '/uploads/adminuser/avatar/20200814/9fb56f259b55337ef9f1f2ac90d0dcab.jpg', '/uploads/adminuser/avatar/20200814/9fb56f259b55337ef9f1f2ac90d0dcab.jpg', '66243', 'adminuser/avatar', 'image/jpeg', '1597386063', '1', '1', '1597386063', 'jpg');
 INSERT INTO `jrk_attachment` VALUES ('8', '929662552e9dbbf4926d7be6853ea00a.jpg', '/uploads/attachment/images/20200817/929662552e9dbbf4926d7be6853ea00a.jpg', '/uploads/attachment/images/20200817/929662552e9dbbf4926d7be6853ea00a.jpg', '168009', 'attachment/images', 'image/jpeg', '1597633346', '1', '1', '1597633346', 'jpg');
 INSERT INTO `jrk_attachment` VALUES ('9', 'ff08af9f69367ac0f041b17968ff5efb.jpeg', '/uploads/article/images/20200817/ff08af9f69367ac0f041b17968ff5efb.jpeg', '/uploads/article/images/20200817/ff08af9f69367ac0f041b17968ff5efb.jpeg', '1687469', 'article/images', 'image/jpeg', '1597633355', '1', '1', '1597633355', 'jpeg');
+INSERT INTO `jrk_attachment` VALUES ('10', 'c6a42c6da171515a2385965503f72c1d.txt', '/uploads/attachment/files/20201026/c6a42c6da171515a2385965503f72c1d.txt', '', '17', 'attachment/files', 'text/plain', '1603715063', '1', '1', '1603715063', 'txt');
+INSERT INTO `jrk_attachment` VALUES ('11', '226064c96335b956e9772638ca6a9bd0.txt', '/uploads/attachment/files/20201026/226064c96335b956e9772638ca6a9bd0.txt', '', '17', 'attachment/files', 'text/plain', '1603715155', '1', '1', '1603715155', 'txt');
+INSERT INTO `jrk_attachment` VALUES ('12', 'e59c56d844bb93c87588ef2534a9df44.txt', '/uploads/attachment/files/20201026/e59c56d844bb93c87588ef2534a9df44.txt', '', '17', 'attachment/files', 'text/plain', '1603715239', '1', '1', '1603715239', 'txt');
+INSERT INTO `jrk_attachment` VALUES ('13', '6efd5cdd633c8925d38ffae5aab6e055.txt', '/uploads/attachment/files/20201026/6efd5cdd633c8925d38ffae5aab6e055.txt', '', '17', 'attachment/files', 'text/plain', '1603715291', '1', '1', '1603715291', 'txt');
+INSERT INTO `jrk_attachment` VALUES ('14', '7afacb819fb8a41a54d3d41f7c75b78c.txt', '/uploads/attachment/files/20201026/7afacb819fb8a41a54d3d41f7c75b78c.txt', '', '17', 'attachment/files', 'text/plain', '1603716388', '1', '1', '1603716388', 'txt');
+INSERT INTO `jrk_attachment` VALUES ('15', '8aea3d1a1cf4529600c47b0378d17e68.txt', '/uploads/attachment/files/20201026/8aea3d1a1cf4529600c47b0378d17e68.txt', '', '17', 'attachment/files', 'text/plain', '1603716570', '1', '1', '1603716570', 'txt');
+INSERT INTO `jrk_attachment` VALUES ('16', 'd42ea01b59c8b0144b9b335941ffed70.txt', '/uploads/attachment/files/20201026/d42ea01b59c8b0144b9b335941ffed70.txt', '', '17', 'attachment/files', 'text/plain', '1603716612', '1', '1', '1603716612', 'txt');
+INSERT INTO `jrk_attachment` VALUES ('17', 'c38869c36842c2b686f7913ba394e86c.png', '/uploads/adminuser/avatar/20210313/c38869c36842c2b686f7913ba394e86c.png', '/uploads/adminuser/avatar/20210313/c38869c36842c2b686f7913ba394e86c.png', '202953', 'adminuser/avatar', 'image/png', '1615648940', '1', '1', '1615648940', 'png');
 
 -- -----------------------------
 -- Table structure for `jrk_auth_group`
@@ -245,7 +253,7 @@ CREATE TABLE `jrk_auth_group` (
 -- Records of `jrk_auth_group`
 -- -----------------------------
 INSERT INTO `jrk_auth_group` VALUES ('1', '1593248783', '0', '1', '超级管理', 'all', '0');
-INSERT INTO `jrk_auth_group` VALUES ('2', '1593444916', '1597930173', '1', '人事权限', '2,6,13,15,1,3,33,9,34,35,36,26,27,32,28,37,38,39,40,41,45,68,69,51,65,66,67', '0');
+INSERT INTO `jrk_auth_group` VALUES ('2', '1593444916', '1615645583', '1', '人事权限', '2,6,12,13,14,70,1,3,5,4,25,33,9,10,11,34,35,36,26,27,30,31,32,28,29,42,43,44,37,38,39,40,41,45,68,69,51,65,66,67,46,47,61,62,63,64,48,60,49,57,58,59,50,54,55,56,52,53', '0');
 
 -- -----------------------------
 -- Table structure for `jrk_auth_group_access`
@@ -261,13 +269,14 @@ CREATE TABLE `jrk_auth_group_access` (
   UNIQUE KEY `uid_group_id` (`uid`,`group_id`) USING BTREE,
   KEY `uid` (`uid`) USING BTREE,
   KEY `group_id` (`group_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='权限关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='权限关系表';
 
 -- -----------------------------
 -- Records of `jrk_auth_group_access`
 -- -----------------------------
 INSERT INTO `jrk_auth_group_access` VALUES ('1', '2', '2', '1593248783', '0');
 INSERT INTO `jrk_auth_group_access` VALUES ('2', '4', '2', '1597930242', '0');
+INSERT INTO `jrk_auth_group_access` VALUES ('3', '3', '2', '1615645565', '0');
 
 -- -----------------------------
 -- Table structure for `jrk_auth_rule`
@@ -406,7 +415,7 @@ CREATE TABLE `jrk_friendlinks` (
 -- -----------------------------
 -- Records of `jrk_friendlinks`
 -- -----------------------------
-INSERT INTO `jrk_friendlinks` VALUES ('2', '测试', 'http://ht.1230t.com/', '1', '1', '1', '1597396368', '1597396368');
+INSERT INTO `jrk_friendlinks` VALUES ('2', '测试', 'http://www.lovegyl.cn', '1', '1', '1', '1597396368', '1615646047');
 
 -- -----------------------------
 -- Table structure for `jrk_member`

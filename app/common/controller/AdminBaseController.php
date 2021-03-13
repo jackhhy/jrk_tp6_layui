@@ -1,38 +1,63 @@
 <?php
+// +----------------------------------------------------------------------
+// | Created by PHPstorm: [ JRK丶Admin ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2019~2022 [LuckyHHY] All rights reserved.
+// +----------------------------------------------------------------------
+// | SiteUrl: http://www.luckyhhy.cn
+// +----------------------------------------------------------------------
+// | Author: LuckyHhy <jackhhy520@qq.com>
+// +----------------------------------------------------------------------
+// | Date: 2021/3/13 0013
+// +----------------------------------------------------------------------
+// | Description:
+// +----------------------------------------------------------------------
 
 
 namespace app\common\controller;
 
-
 use app\admin\model\AuthRule;
-use app\BaseController;
+use Jrk\Auth;
 use Jrk\Tree;
+use think\facade\Config;
+use think\facade\Db;
 use think\facade\Lang;
 use think\facade\View;
-use think\Request;
-use app\common\traits\JumpReturn;
-use liliuwei\think\Jump;
+use think\facade\Request;
 use think\App;
-use think\exception\ValidateException;
-use think\Validate;
 use think\Exception;
 
 
 class AdminBaseController extends BaseController
 {
 
-    //请求参数
+    /**
+     * @var
+     * 请求参数
+     */
     protected $param;
 
-    //当前域名
+    /**
+     * @var
+     * 当前域名
+     */
     protected $domain;
-    // 模型
+    /**
+     * @var
+     * 模型
+     */
     protected $model;
 
-    //service 层
+    /**
+     * @var
+     * service 层
+     */
     protected $service;
 
-    //登录信息
+    /**
+     * @var
+     * 登录信息
+     */
     static $admin_info;
 
     /**
@@ -49,21 +74,18 @@ class AdminBaseController extends BaseController
      */
     protected $noNeedRight = [];
 
-
     /**
+     * @return \think\response\Json|\think\response\Redirect|void
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: LuckyHhy <jackhhy520@qq.com>
-     * @name: initialize
+     * @author: [ Lucky888888 ]
      * @describe:
      */
     protected function initialize()
     {
-        //用户登录信息
-        self::$admin_info=session(ADMIN_LOGIN_INFO);
 
-        $modulename = app()->http->getName();
+       // $modulename = app()->http->getName();
         $controller = preg_replace_callback('/\.[A-Z]/', function ($d) {
             return strtolower($d[0]);
         }, $this->request->controller(), 1);
@@ -73,16 +95,118 @@ class AdminBaseController extends BaseController
 
         $path = str_replace('.', '/', $controllername).'/'.$actionname;
 
+        /**
+         * 检测是否需要登录
+         */
+        if (! $this->match($this->noNeedLogin)) {
+            //检测是否登录
+            if (empty(session(ADMIN_LOGIN_INFO))){
+                //异步提交数据的话
+                if ( Request::isAjax() ||  Request::isPost()){
+                    return self::JsonReturn(__("Your login information has expired. Please login first"),0,url('Login/index'));
+                }else{
+                    return redirect((string)url('Login/index'));
+                }
+            }
+
+            // 定义方法白名单
+            $allow = [
+                'Index/index',      // 首页
+                'Common/changeStatus',     //
+                'Common/UpImg',     //
+                'Common/upWebupload',     //
+                'Common/UpFile',     //
+                'Index/clearCache',      // 清除缓存
+                'Index/weather',    // 天气
+                'Index/home',
+                'Temp/icon'
+            ];
+            // 判断是否需要验证权限
+            if (! $this->match($this->noNeedRight)) {
+                // 查询所有不验证的方法并放入白名单
+                $authOpen=Db::name("auth_rule")->field("name,id")->where("auth_open","=",2)->where("status","=",1)->select();
+                $authRule=Db::name("auth_rule")->where("status","=",1)->select();
+                $authOpens = [];
+                if (!empty($authOpen)){
+                    foreach ($authOpen as $k => $v) {
+                        // 转换方法名为小写
+                        $ruleName = @explode('/', $v['name']);
+                        if (isset($ruleName[1])) {
+                            $ruleName[1] = strtolower($ruleName[1]);
+                        }
+                        // 转换控制器首字母大写
+                        $ruleName = trim(@implode('/', $ruleName));
+                        $authOpens[] = @ucfirst($ruleName);
+                        // 查询所有下级权限
+
+                        $ids = getChildsRule($authRule, $v['id']);
+                        if (!empty($ids)){
+                            foreach ($ids as $kk => $vv) {
+                                // 转换方法名为小写
+                                $ruleName = explode('/', $vv['name']);
+                                if (isset($ruleName[1])) {
+                                    $ruleName[1] = strtolower($ruleName[1]);
+                                }
+                                // 转换控制器首字母大写
+                                $ruleName = trim(@implode('/', $ruleName));
+                                $authOpens[] = @ucfirst($ruleName);
+                            }
+                        }
+                    }
+                    $allow = array_merge($allow, $authOpens);
+                }else{
+                    $allow=$authOpens;
+                }
+
+                $this->noNeedRight=array_merge($this->noNeedRight,$allow);
+                //当前用户登录的ID
+                $admin_id=session(ADMIN_LOGIN_INFO)['id'];
+                // 权限认证
+                if (!in_array($path, $this->noNeedRight)) {
+                    if ($admin_id != 1) {
+                        //开始认证
+                        $auth = new Auth();
+                        $result = $auth->check($path, $admin_id);
+
+                        if (!$result) {
+                            if (Request::isAjax() || Request::isPost()){
+                                return self::JsonReturn(__('You have no permission'),0);
+                            }else{
+                                $this->error(__('You have no permission'));
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
 
 
+        //用户登录信息
+        self::$admin_info=session(ADMIN_LOGIN_INFO);
 
-        $this->initAssign();
+        //加载当前控制器语言包
+        $this->loadlang($this->request->controller());
+
+        $this->domain = $this->request->domain();
+
+        $this->assign("domain", $this->domain);
+
+        //系统名称和版本号和站点地址
+        $this->assign('_version', VERSION);
+        $this->assign('_name', _NAME);
+        $this->assign("_site",SITE_URL);
+        //用户登录信息
+        $this->assign("_info",self::$admin_info);
+
+        $this->assign("config", Config::get());
 
         $this->initConfig();
 
         $this->initRequestConfig();
         //左侧菜单
         $this->menuList();
+
     }
 
 
@@ -117,14 +241,13 @@ class AdminBaseController extends BaseController
 
 
     /**
-     * @param Request $request
      * @return \think\response\Json
      * @author: Hhy <jackhhy520@qq.com>
      * @describe:编辑添加
      */
-    public function upAndAdd(Request $request){
+    public function upAndAdd(){
         if (IS_AJAX) {
-            $data = $request->post();
+            $data = $this->request->post();
             try {
                 $data['admin_id'] = self::$admin_info['id'];
                 return $this->model->doAll($data);
@@ -160,13 +283,11 @@ class AdminBaseController extends BaseController
     }
 
 
-
     /**
-     * 检测当前控制器和方法是否匹配传递的数组.
-     *
-     * @param array $arr 需要验证权限的数组
-     *
+     * @param array $arr
      * @return bool
+     * @author: [ Lucky888888 ]
+     * @describe:检测当前控制器和方法是否匹配传递的数组.
      */
     public function match($arr = [])
     {
@@ -181,7 +302,6 @@ class AdminBaseController extends BaseController
         if (in_array(strtolower($request->action()), $arr) || in_array('*', $arr)) {
             return true;
         }
-
         // 没找到匹配
         return false;
     }
@@ -275,31 +395,6 @@ class AdminBaseController extends BaseController
         View::assign("menulist",  empty($data) ? []:Tree::DeepTree($data));
     }
 
-    /**
-     * @author: LuckyHhy <jackhhy520@qq.com>
-     * @name: initAssign
-     * @describe:
-     */
-    public function initAssign()
-    {
-        if(empty(self::$admin_info) || self::$admin_info==null){
-            if ($this->request->isAjax() || $this->request->isPost()){
-                header('Content-Type:application/json; charset=utf-8');
-                exit(json_encode(['code'=>0,'msg'=>'您的登录信息已过期请先登录',"time"=>time()], 0));
-            }else{
-                return redirect((string)url('Login/index'));
-            }
-        }
-        //获取当前配置的网站地址
-        $this->domain = $this->request->domain();
-        $this->assign("domain", $this->domain);
-        //系统名称和版本号和站点地址
-        $this->assign('_version', VERSION);
-        $this->assign('_name', _NAME);
-        $this->assign("_site",SITE_URL);
-        //用户登录信息
-        $this->assign("_info",self::$admin_info);
-    }
 
 
     /**

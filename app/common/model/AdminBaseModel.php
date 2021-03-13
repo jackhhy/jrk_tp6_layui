@@ -15,7 +15,6 @@
 
 namespace app\common\model;
 
-
 use app\common\traits\JumpReturn;
 use think\Model;
 

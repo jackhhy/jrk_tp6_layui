@@ -1,9 +1,9 @@
-<h1 align="center"> JrkAdmin（TP6.0.3版本） —— 你值得信赖的后端开发框架</h1> 
+<h1 align="center"> JrkAdmin（TP6.0.6版本） —— 你值得信赖的后端开发框架</h1> 
 <p align="center">
 <img src="https://gitee.com/luckygyl/jrk_tp6_layui/badge/star.svg?theme=dark"  /> 
 <img src="https://gitee.com/luckygyl/jrk_tp6_layui/badge/fork.svg?theme=dark"  /> 
 <a href="http://www.php.net/" target="_blank">
-<img src="https://img.shields.io/badge/php-%3E%3D5.6-8892BF.svg"  /> 
+<img src="https://img.shields.io/badge/php-%3E%3D7.1-8892BF.svg"  /> 
 </a>
 
 </p>
@@ -17,7 +17,9 @@ JrkAdmin_Tp6_Layui（完整版）是ThinkPHP6.0和layui的快速开发的后台�
 后台采用RABC权限验证，不懂的同学可以查看相关文档<br>
 实现管理员管理，权限管理，角色管理，菜单管理，附件管理，日志管理
 phpquerylist数据采集，phpword导出word文档，API接口管理，
-OSS,COS等云端图片上传，jpush极光推送，queue队列定时任务
+OSS,COS等云端图片上传，jpush极光推送，queue队列定时任务,
+批量邮件发送，多语言化，优化权限认证新增不需验证和不需登录验证，
+后台灵活开启谷歌验证码验证。
 
 ## CURD命令
 
@@ -40,12 +42,12 @@ php think make:jrkadmin_curd Hello Hello Hello --app admin [ # 普通CURD增删�
 
 
 
-### :tw-1f427: QQ交流群
+### QQ交流群
  JrkAdminQQ交流群: 498186248 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=9ad90a1a2a7cd611cc3343b9b8f59a8ab2a8bbffa2bed243344c41824ebc7f35"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="JrkAdmin" title="JrkAdmin"></a>
-<br>加群请备注来源：如gitee、github、官网等。
 
 
-###   :tw-1f50a: 开源版使用须知
+
+### 开源版使用须知
 1.允许用于个人学习、毕业设计、教学案例、公益事业;
 
 2.如果商用必须保留版权信息，请自觉遵守。
