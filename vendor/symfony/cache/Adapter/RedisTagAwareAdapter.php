@@ -13,6 +13,7 @@ namespace Symfony\Component\Cache\Adapter;
 
 use Predis\Connection\Aggregate\ClusterInterface;
 use Predis\Connection\Aggregate\PredisCluster;
+use Predis\Connection\Aggregate\ReplicationInterface;
 use Predis\Response\Status;
 use Symfony\Component\Cache\Exception\InvalidArgumentException;
 use Symfony\Component\Cache\Exception\LogicException;
@@ -149,7 +150,11 @@ class RedisTagAwareAdapter extends AbstractTagAwareAdapter
     {
         $lua = <<<'EOLUA'
             local v = redis.call('GET', KEYS[1])
-            redis.call('DEL', KEYS[1])
+            local e = redis.pcall('UNLINK', KEYS[1])
+
+            if type(e) ~= 'number' then
+                redis.call('DEL', KEYS[1])
+            end
 
             if not v or v:len() <= 13 or v:byte(1) ~= 0x9D or v:byte(6) ~= 0 or v:byte(10) ~= 0x5F then
                 return ''
@@ -278,9 +283,16 @@ EOLUA;
             return $this->redisEvictionPolicy;
         }
 
-        foreach ($this->getHosts() as $host) {
+        $hosts = $this->getHosts();
+        $host = reset($hosts);
+        if ($host instanceof \Predis\Client && $host->getConnection() instanceof ReplicationInterface) {
+            // Predis supports info command only on the master in replication environments
+            $hosts = [$host->getClientFor('master')];
+        }
+
+        foreach ($hosts as $host) {
             $info = $host->info('Memory');
-            $info = isset($info['Memory']) ? $info['Memory'] : $info;
+            $info = $info['Memory'] ?? $info;
 
             return $this->redisEvictionPolicy = $info['maxmemory_policy'];
         }

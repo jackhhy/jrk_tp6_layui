@@ -25,7 +25,7 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
  */
 class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterface, PruneableInterface, ResettableInterface
 {
-    const TAGS_PREFIX = "\0tags\0";
+    public const TAGS_PREFIX = "\0tags\0";
 
     use ContractsTrait;
     use ProxyTrait;
@@ -83,6 +83,7 @@ class TagAwareAdapter implements TagAwareAdapterInterface, TagAwareCacheInterfac
                 $tagsByKey = [];
                 foreach ($deferred as $key => $item) {
                     $tagsByKey[$key] = $item->newMetadata[CacheItem::METADATA_TAGS] ?? [];
+                    $item->metadata = $item->newMetadata;
                 }
 
                 return $tagsByKey;

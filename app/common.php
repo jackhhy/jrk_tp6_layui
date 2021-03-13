@@ -31,6 +31,63 @@ if (!function_exists('__')) {
 
 }
 
+if (! function_exists('upload_file')) {
+    /**
+     * 上传文件.
+     *
+     * @param  string  $file  上传的文件
+     * @param  string  $name  上传的位置
+     * @param  string  $path  上传的文件夹
+     * @param  string  $validate  规则验证
+     * @param  string  $url  前缀
+     *
+     * @return string|bool
+     * @author niu
+     */
+    function upload_file($file = null, $name = 'local', $path = '', $validate = '', $url = '/')
+    {
+        //文件
+        if (! $file) {
+            return false;
+        }
+        //上传配置
+        $config_name = 'filesystem.disks.'.$name;
+        $filesystem = config($config_name);
+        if (! $filesystem) {
+            return false;
+        }
+        //上传文件
+        if ($validate) {
+            validate(['file' => $validate])->check(['file' => $file]);
+        }
+        $savename = \think\facade\Filesystem::disk($name)->putFile($path, $file, function ($file) {
+            //重命名
+            return date('Ymd').'/'.md5((string) microtime(true));
+        });
+        if(empty($url)){
+            $url = '/';
+        }
+        $savename = $url.$savename;
+
+        return $savename;
+    }
+}
+
+
+if (! function_exists('parseName')) {
+    function parseName($name, $type = 0, $ucfirst = true)
+    {
+        if ($type) {
+            $name = preg_replace_callback('/_([a-zA-Z])/', function ($match) {
+                return strtoupper($match[1]);
+            }, $name);
+
+            return $ucfirst ? ucfirst($name) : lcfirst($name);
+        }
+        return strtolower(trim(preg_replace('/[A-Z]/', '_\\0', $name), '_'));
+    }
+}
+
 if (!function_exists('create_min_code')) {
     /**
      * @param $param

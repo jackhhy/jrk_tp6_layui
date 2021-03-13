@@ -79,84 +79,102 @@ use Throwable;
  * @method static CarbonInterval millisecond($milliseconds = 1) Alias for milliseconds()
  * @method static CarbonInterval microseconds($microseconds = 1) Create instance specifying a number of microseconds or modify the number of microseconds if called on an instance.
  * @method static CarbonInterval microsecond($microseconds = 1) Alias for microseconds()
- * @method $this roundYear(float $precision = 1, string $function = "round") Round the current instance year with given precision using the given function.
- * @method $this roundYears(float $precision = 1, string $function = "round") Round the current instance year with given precision using the given function.
- * @method $this floorYear(float $precision = 1) Truncate the current instance year with given precision.
- * @method $this floorYears(float $precision = 1) Truncate the current instance year with given precision.
- * @method $this ceilYear(float $precision = 1) Ceil the current instance year with given precision.
- * @method $this ceilYears(float $precision = 1) Ceil the current instance year with given precision.
- * @method $this roundMonth(float $precision = 1, string $function = "round") Round the current instance month with given precision using the given function.
- * @method $this roundMonths(float $precision = 1, string $function = "round") Round the current instance month with given precision using the given function.
- * @method $this floorMonth(float $precision = 1) Truncate the current instance month with given precision.
- * @method $this floorMonths(float $precision = 1) Truncate the current instance month with given precision.
- * @method $this ceilMonth(float $precision = 1) Ceil the current instance month with given precision.
- * @method $this ceilMonths(float $precision = 1) Ceil the current instance month with given precision.
- * @method $this roundWeek(float $precision = 1, string $function = "round") Round the current instance day with given precision using the given function.
- * @method $this roundWeeks(float $precision = 1, string $function = "round") Round the current instance day with given precision using the given function.
- * @method $this floorWeek(float $precision = 1) Truncate the current instance day with given precision.
- * @method $this floorWeeks(float $precision = 1) Truncate the current instance day with given precision.
- * @method $this ceilWeek(float $precision = 1) Ceil the current instance day with given precision.
- * @method $this ceilWeeks(float $precision = 1) Ceil the current instance day with given precision.
- * @method $this roundDay(float $precision = 1, string $function = "round") Round the current instance day with given precision using the given function.
- * @method $this roundDays(float $precision = 1, string $function = "round") Round the current instance day with given precision using the given function.
- * @method $this floorDay(float $precision = 1) Truncate the current instance day with given precision.
- * @method $this floorDays(float $precision = 1) Truncate the current instance day with given precision.
- * @method $this ceilDay(float $precision = 1) Ceil the current instance day with given precision.
- * @method $this ceilDays(float $precision = 1) Ceil the current instance day with given precision.
- * @method $this roundHour(float $precision = 1, string $function = "round") Round the current instance hour with given precision using the given function.
- * @method $this roundHours(float $precision = 1, string $function = "round") Round the current instance hour with given precision using the given function.
- * @method $this floorHour(float $precision = 1) Truncate the current instance hour with given precision.
- * @method $this floorHours(float $precision = 1) Truncate the current instance hour with given precision.
- * @method $this ceilHour(float $precision = 1) Ceil the current instance hour with given precision.
- * @method $this ceilHours(float $precision = 1) Ceil the current instance hour with given precision.
- * @method $this roundMinute(float $precision = 1, string $function = "round") Round the current instance minute with given precision using the given function.
- * @method $this roundMinutes(float $precision = 1, string $function = "round") Round the current instance minute with given precision using the given function.
- * @method $this floorMinute(float $precision = 1) Truncate the current instance minute with given precision.
- * @method $this floorMinutes(float $precision = 1) Truncate the current instance minute with given precision.
- * @method $this ceilMinute(float $precision = 1) Ceil the current instance minute with given precision.
- * @method $this ceilMinutes(float $precision = 1) Ceil the current instance minute with given precision.
- * @method $this roundSecond(float $precision = 1, string $function = "round") Round the current instance second with given precision using the given function.
- * @method $this roundSeconds(float $precision = 1, string $function = "round") Round the current instance second with given precision using the given function.
- * @method $this floorSecond(float $precision = 1) Truncate the current instance second with given precision.
- * @method $this floorSeconds(float $precision = 1) Truncate the current instance second with given precision.
- * @method $this ceilSecond(float $precision = 1) Ceil the current instance second with given precision.
- * @method $this ceilSeconds(float $precision = 1) Ceil the current instance second with given precision.
- * @method $this roundMillennium(float $precision = 1, string $function = "round") Round the current instance millennium with given precision using the given function.
- * @method $this roundMillennia(float $precision = 1, string $function = "round") Round the current instance millennium with given precision using the given function.
- * @method $this floorMillennium(float $precision = 1) Truncate the current instance millennium with given precision.
- * @method $this floorMillennia(float $precision = 1) Truncate the current instance millennium with given precision.
- * @method $this ceilMillennium(float $precision = 1) Ceil the current instance millennium with given precision.
- * @method $this ceilMillennia(float $precision = 1) Ceil the current instance millennium with given precision.
- * @method $this roundCentury(float $precision = 1, string $function = "round") Round the current instance century with given precision using the given function.
- * @method $this roundCenturies(float $precision = 1, string $function = "round") Round the current instance century with given precision using the given function.
- * @method $this floorCentury(float $precision = 1) Truncate the current instance century with given precision.
- * @method $this floorCenturies(float $precision = 1) Truncate the current instance century with given precision.
- * @method $this ceilCentury(float $precision = 1) Ceil the current instance century with given precision.
- * @method $this ceilCenturies(float $precision = 1) Ceil the current instance century with given precision.
- * @method $this roundDecade(float $precision = 1, string $function = "round") Round the current instance decade with given precision using the given function.
- * @method $this roundDecades(float $precision = 1, string $function = "round") Round the current instance decade with given precision using the given function.
- * @method $this floorDecade(float $precision = 1) Truncate the current instance decade with given precision.
- * @method $this floorDecades(float $precision = 1) Truncate the current instance decade with given precision.
- * @method $this ceilDecade(float $precision = 1) Ceil the current instance decade with given precision.
- * @method $this ceilDecades(float $precision = 1) Ceil the current instance decade with given precision.
- * @method $this roundQuarter(float $precision = 1, string $function = "round") Round the current instance quarter with given precision using the given function.
- * @method $this roundQuarters(float $precision = 1, string $function = "round") Round the current instance quarter with given precision using the given function.
- * @method $this floorQuarter(float $precision = 1) Truncate the current instance quarter with given precision.
- * @method $this floorQuarters(float $precision = 1) Truncate the current instance quarter with given precision.
- * @method $this ceilQuarter(float $precision = 1) Ceil the current instance quarter with given precision.
- * @method $this ceilQuarters(float $precision = 1) Ceil the current instance quarter with given precision.
- * @method $this roundMillisecond(float $precision = 1, string $function = "round") Round the current instance millisecond with given precision using the given function.
- * @method $this roundMilliseconds(float $precision = 1, string $function = "round") Round the current instance millisecond with given precision using the given function.
- * @method $this floorMillisecond(float $precision = 1) Truncate the current instance millisecond with given precision.
- * @method $this floorMilliseconds(float $precision = 1) Truncate the current instance millisecond with given precision.
- * @method $this ceilMillisecond(float $precision = 1) Ceil the current instance millisecond with given precision.
- * @method $this ceilMilliseconds(float $precision = 1) Ceil the current instance millisecond with given precision.
- * @method $this roundMicrosecond(float $precision = 1, string $function = "round") Round the current instance microsecond with given precision using the given function.
- * @method $this roundMicroseconds(float $precision = 1, string $function = "round") Round the current instance microsecond with given precision using the given function.
- * @method $this floorMicrosecond(float $precision = 1) Truncate the current instance microsecond with given precision.
- * @method $this floorMicroseconds(float $precision = 1) Truncate the current instance microsecond with given precision.
- * @method $this ceilMicrosecond(float $precision = 1) Ceil the current instance microsecond with given precision.
- * @method $this ceilMicroseconds(float $precision = 1) Ceil the current instance microsecond with given precision.
+ * @method $this addYears(int $years) Add given number of years to the current interval
+ * @method $this subYears(int $years) Subtract given number of years to the current interval
+ * @method $this addMonths(int $months) Add given number of months to the current interval
+ * @method $this subMonths(int $months) Subtract given number of months to the current interval
+ * @method $this addWeeks(int|float $weeks) Add given number of weeks to the current interval
+ * @method $this subWeeks(int|float $weeks) Subtract given number of weeks to the current interval
+ * @method $this addDays(int|float $days) Add given number of days to the current interval
+ * @method $this subDays(int|float $days) Subtract given number of days to the current interval
+ * @method $this addHours(int|float $hours) Add given number of hours to the current interval
+ * @method $this subHours(int|float $hours) Subtract given number of hours to the current interval
+ * @method $this addMinutes(int|float $minutes) Add given number of minutes to the current interval
+ * @method $this subMinutes(int|float $minutes) Subtract given number of minutes to the current interval
+ * @method $this addSeconds(int|float $seconds) Add given number of seconds to the current interval
+ * @method $this subSeconds(int|float $seconds) Subtract given number of seconds to the current interval
+ * @method $this addMilliseconds(int|float $milliseconds) Add given number of milliseconds to the current interval
+ * @method $this subMilliseconds(int|float $milliseconds) Subtract given number of milliseconds to the current interval
+ * @method $this addMicroseconds(int|float $microseconds) Add given number of microseconds to the current interval
+ * @method $this subMicroseconds(int|float $microseconds) Subtract given number of microseconds to the current interval
+ * @method $this roundYear(int|float $precision = 1, string $function = "round") Round the current instance year with given precision using the given function.
+ * @method $this roundYears(int|float $precision = 1, string $function = "round") Round the current instance year with given precision using the given function.
+ * @method $this floorYear(int|float $precision = 1) Truncate the current instance year with given precision.
+ * @method $this floorYears(int|float $precision = 1) Truncate the current instance year with given precision.
+ * @method $this ceilYear(int|float $precision = 1) Ceil the current instance year with given precision.
+ * @method $this ceilYears(int|float $precision = 1) Ceil the current instance year with given precision.
+ * @method $this roundMonth(int|float $precision = 1, string $function = "round") Round the current instance month with given precision using the given function.
+ * @method $this roundMonths(int|float $precision = 1, string $function = "round") Round the current instance month with given precision using the given function.
+ * @method $this floorMonth(int|float $precision = 1) Truncate the current instance month with given precision.
+ * @method $this floorMonths(int|float $precision = 1) Truncate the current instance month with given precision.
+ * @method $this ceilMonth(int|float $precision = 1) Ceil the current instance month with given precision.
+ * @method $this ceilMonths(int|float $precision = 1) Ceil the current instance month with given precision.
+ * @method $this roundWeek(int|float $precision = 1, string $function = "round") Round the current instance day with given precision using the given function.
+ * @method $this roundWeeks(int|float $precision = 1, string $function = "round") Round the current instance day with given precision using the given function.
+ * @method $this floorWeek(int|float $precision = 1) Truncate the current instance day with given precision.
+ * @method $this floorWeeks(int|float $precision = 1) Truncate the current instance day with given precision.
+ * @method $this ceilWeek(int|float $precision = 1) Ceil the current instance day with given precision.
+ * @method $this ceilWeeks(int|float $precision = 1) Ceil the current instance day with given precision.
+ * @method $this roundDay(int|float $precision = 1, string $function = "round") Round the current instance day with given precision using the given function.
+ * @method $this roundDays(int|float $precision = 1, string $function = "round") Round the current instance day with given precision using the given function.
+ * @method $this floorDay(int|float $precision = 1) Truncate the current instance day with given precision.
+ * @method $this floorDays(int|float $precision = 1) Truncate the current instance day with given precision.
+ * @method $this ceilDay(int|float $precision = 1) Ceil the current instance day with given precision.
+ * @method $this ceilDays(int|float $precision = 1) Ceil the current instance day with given precision.
+ * @method $this roundHour(int|float $precision = 1, string $function = "round") Round the current instance hour with given precision using the given function.
+ * @method $this roundHours(int|float $precision = 1, string $function = "round") Round the current instance hour with given precision using the given function.
+ * @method $this floorHour(int|float $precision = 1) Truncate the current instance hour with given precision.
+ * @method $this floorHours(int|float $precision = 1) Truncate the current instance hour with given precision.
+ * @method $this ceilHour(int|float $precision = 1) Ceil the current instance hour with given precision.
+ * @method $this ceilHours(int|float $precision = 1) Ceil the current instance hour with given precision.
+ * @method $this roundMinute(int|float $precision = 1, string $function = "round") Round the current instance minute with given precision using the given function.
+ * @method $this roundMinutes(int|float $precision = 1, string $function = "round") Round the current instance minute with given precision using the given function.
+ * @method $this floorMinute(int|float $precision = 1) Truncate the current instance minute with given precision.
+ * @method $this floorMinutes(int|float $precision = 1) Truncate the current instance minute with given precision.
+ * @method $this ceilMinute(int|float $precision = 1) Ceil the current instance minute with given precision.
+ * @method $this ceilMinutes(int|float $precision = 1) Ceil the current instance minute with given precision.
+ * @method $this roundSecond(int|float $precision = 1, string $function = "round") Round the current instance second with given precision using the given function.
+ * @method $this roundSeconds(int|float $precision = 1, string $function = "round") Round the current instance second with given precision using the given function.
+ * @method $this floorSecond(int|float $precision = 1) Truncate the current instance second with given precision.
+ * @method $this floorSeconds(int|float $precision = 1) Truncate the current instance second with given precision.
+ * @method $this ceilSecond(int|float $precision = 1) Ceil the current instance second with given precision.
+ * @method $this ceilSeconds(int|float $precision = 1) Ceil the current instance second with given precision.
+ * @method $this roundMillennium(int|float $precision = 1, string $function = "round") Round the current instance millennium with given precision using the given function.
+ * @method $this roundMillennia(int|float $precision = 1, string $function = "round") Round the current instance millennium with given precision using the given function.
+ * @method $this floorMillennium(int|float $precision = 1) Truncate the current instance millennium with given precision.
+ * @method $this floorMillennia(int|float $precision = 1) Truncate the current instance millennium with given precision.
+ * @method $this ceilMillennium(int|float $precision = 1) Ceil the current instance millennium with given precision.
+ * @method $this ceilMillennia(int|float $precision = 1) Ceil the current instance millennium with given precision.
+ * @method $this roundCentury(int|float $precision = 1, string $function = "round") Round the current instance century with given precision using the given function.
+ * @method $this roundCenturies(int|float $precision = 1, string $function = "round") Round the current instance century with given precision using the given function.
+ * @method $this floorCentury(int|float $precision = 1) Truncate the current instance century with given precision.
+ * @method $this floorCenturies(int|float $precision = 1) Truncate the current instance century with given precision.
+ * @method $this ceilCentury(int|float $precision = 1) Ceil the current instance century with given precision.
+ * @method $this ceilCenturies(int|float $precision = 1) Ceil the current instance century with given precision.
+ * @method $this roundDecade(int|float $precision = 1, string $function = "round") Round the current instance decade with given precision using the given function.
+ * @method $this roundDecades(int|float $precision = 1, string $function = "round") Round the current instance decade with given precision using the given function.
+ * @method $this floorDecade(int|float $precision = 1) Truncate the current instance decade with given precision.
+ * @method $this floorDecades(int|float $precision = 1) Truncate the current instance decade with given precision.
+ * @method $this ceilDecade(int|float $precision = 1) Ceil the current instance decade with given precision.
+ * @method $this ceilDecades(int|float $precision = 1) Ceil the current instance decade with given precision.
+ * @method $this roundQuarter(int|float $precision = 1, string $function = "round") Round the current instance quarter with given precision using the given function.
+ * @method $this roundQuarters(int|float $precision = 1, string $function = "round") Round the current instance quarter with given precision using the given function.
+ * @method $this floorQuarter(int|float $precision = 1) Truncate the current instance quarter with given precision.
+ * @method $this floorQuarters(int|float $precision = 1) Truncate the current instance quarter with given precision.
+ * @method $this ceilQuarter(int|float $precision = 1) Ceil the current instance quarter with given precision.
+ * @method $this ceilQuarters(int|float $precision = 1) Ceil the current instance quarter with given precision.
+ * @method $this roundMillisecond(int|float $precision = 1, string $function = "round") Round the current instance millisecond with given precision using the given function.
+ * @method $this roundMilliseconds(int|float $precision = 1, string $function = "round") Round the current instance millisecond with given precision using the given function.
+ * @method $this floorMillisecond(int|float $precision = 1) Truncate the current instance millisecond with given precision.
+ * @method $this floorMilliseconds(int|float $precision = 1) Truncate the current instance millisecond with given precision.
+ * @method $this ceilMillisecond(int|float $precision = 1) Ceil the current instance millisecond with given precision.
+ * @method $this ceilMilliseconds(int|float $precision = 1) Ceil the current instance millisecond with given precision.
+ * @method $this roundMicrosecond(int|float $precision = 1, string $function = "round") Round the current instance microsecond with given precision using the given function.
+ * @method $this roundMicroseconds(int|float $precision = 1, string $function = "round") Round the current instance microsecond with given precision using the given function.
+ * @method $this floorMicrosecond(int|float $precision = 1) Truncate the current instance microsecond with given precision.
+ * @method $this floorMicroseconds(int|float $precision = 1) Truncate the current instance microsecond with given precision.
+ * @method $this ceilMicrosecond(int|float $precision = 1) Ceil the current instance microsecond with given precision.
+ * @method $this ceilMicroseconds(int|float $precision = 1) Ceil the current instance microsecond with given precision.
  */
 class CarbonInterval extends DateInterval implements CarbonConverterInterface
 {
@@ -334,7 +352,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
 
         $spec = $years;
 
-        if (!is_string($spec) || floatval($years) || preg_match('/^[0-9.]/', $years)) {
+        if (!\is_string($spec) || \floatval($years) || preg_match('/^[0-9.]/', $years)) {
             $spec = static::PERIOD_PREFIX;
 
             $spec .= $years > 0 ? $years.static::PERIOD_YEARS : '';
@@ -361,7 +379,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
 
         parent::__construct($spec);
 
-        if (!is_null($microseconds)) {
+        if (!\is_null($microseconds)) {
             $this->f = $microseconds / Carbon::MICROSECONDS_PER_SECOND;
         }
     }
@@ -499,7 +517,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
 
         if (preg_match('/s([,.])([uv])$/', $format, $match)) {
             $interval = explode($match[1], $interval);
-            $index = count($interval) - 1;
+            $index = \count($interval) - 1;
             $interval[$index] = str_pad($interval[$index], $match[2] === 'v' ? 3 : 6, '0');
             $interval = implode($match[1], $interval);
         }
@@ -515,7 +533,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
                 }
 
                 $interval = mb_substr($interval, mb_strlen($match[0]));
-                $instance->$unit += intval($match[0]);
+                $instance->$unit += \intval($match[0]);
 
                 continue;
             }
@@ -583,7 +601,13 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
             $interval = new static(0);
             $localStrictModeEnabled = $interval->localStrictModeEnabled;
             $interval->localStrictModeEnabled = true;
-            $result = $interval->$method(...$parameters);
+
+            $result = static::hasMacro($method)
+                ? static::bindMacroContext(null, function () use (&$method, &$parameters, &$interval) {
+                    return $interval->callMacro($method, $parameters);
+                })
+                : $interval->$method(...$parameters);
+
             $interval->localStrictModeEnabled = $localStrictModeEnabled;
 
             return $result;
@@ -594,6 +618,16 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
 
             return null;
         }
+    }
+
+    /**
+     * Return the current context from inside a macro callee or a new one if static.
+     *
+     * @return static
+     */
+    protected static function this()
+    {
+        return end(static::$macroContextStack) ?: new static(0);
     }
 
     /**
@@ -642,8 +676,8 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
         preg_match_all($pattern, $intervalDefinition, $parts, PREG_SET_ORDER);
 
         while ([$part, $value, $unit] = array_shift($parts)) {
-            $intValue = intval($value);
-            $fraction = floatval($value) - $intValue;
+            $intValue = \intval($value);
+            $fraction = \floatval($value) - $intValue;
 
             // Fix calculation precision
             switch (round($fraction, 6)) {
@@ -811,7 +845,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
         }
 
         if ($interval instanceof self && is_a($className, self::class, true)) {
-            $instance->setStep($interval->getStep());
+            static::copyStep($interval, $instance);
         }
 
         static::copyNegativeUnits($interval, $instance);
@@ -819,7 +853,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
         return $instance;
     }
 
-    private static function copyNegativeUnits(DateInterval $from, DateInterval $to)
+    private static function copyNegativeUnits(DateInterval $from, DateInterval $to): void
     {
         $to->invert = $from->invert;
 
@@ -828,6 +862,11 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
                 $to->$unit *= -1;
             }
         }
+    }
+
+    private static function copyStep(self $from, self $to): void
+    {
+        $to->setStep($from->getStep());
     }
 
     /**
@@ -881,7 +920,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
             return new static($interval);
         }
 
-        if (!is_string($interval)) {
+        if (!\is_string($interval)) {
             return null;
         }
 
@@ -890,7 +929,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
 
     protected static function makeFromString(string $interval)
     {
-        $interval = trim($interval);
+        $interval = preg_replace('/\s+/', ' ', trim($interval));
 
         if (preg_match('/^P[T0-9]/', $interval)) {
             return new static($interval);
@@ -1028,7 +1067,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
      */
     public function set($name, $value = null)
     {
-        $properties = is_array($name) ? $name : [$name => $value];
+        $properties = \is_array($name) ? $name : [$name => $value];
 
         foreach ($properties as $key => $value) {
             switch (Carbon::singularUnit(rtrim($key, 'z'))) {
@@ -1228,10 +1267,10 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
         if ($macro instanceof Closure) {
             $boundMacro = @$macro->bindTo($this, static::class) ?: @$macro->bindTo(null, static::class);
 
-            return call_user_func_array($boundMacro ?: $macro, $parameters);
+            return ($boundMacro ?: $macro)(...$parameters);
         }
 
-        return call_user_func_array($macro, $parameters);
+        return $macro(...$parameters);
     }
 
     /**
@@ -1261,8 +1300,12 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
             return $roundedValue;
         }
 
+        if (preg_match('/^(?<method>add|sub)(?<unit>[A-Z].*)$/', $method, $match)) {
+            return $this->{$match['method']}($parameters[0], $match['unit']);
+        }
+
         try {
-            $this->set($method, count($parameters) === 0 ? 1 : $parameters[0]);
+            $this->set($method, \count($parameters) === 0 ? 1 : $parameters[0]);
         } catch (UnknownSetterException $exception) {
             if ($this->localStrictModeEnabled ?? Carbon::isStrictModeEnabled()) {
                 throw new BadFluentSetterException($method, 0, $exception);
@@ -1274,18 +1317,18 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
 
     protected function getForHumansInitialVariables($syntax, $short)
     {
-        if (is_array($syntax)) {
+        if (\is_array($syntax)) {
             return $syntax;
         }
 
-        if (is_int($short)) {
+        if (\is_int($short)) {
             return [
                 'parts' => $short,
                 'short' => false,
             ];
         }
 
-        if (is_bool($syntax)) {
+        if (\is_bool($syntax)) {
             return [
                 'short' => $syntax,
                 'syntax' => CarbonInterface::DIFF_ABSOLUTE,
@@ -1313,7 +1356,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
         $minimumUnit = 's';
         extract($this->getForHumansInitialVariables($syntax, $short));
 
-        if (is_null($syntax)) {
+        if (\is_null($syntax)) {
             $syntax = CarbonInterface::DIFF_ABSOLUTE;
         }
 
@@ -1321,7 +1364,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
             $parts = INF;
         }
 
-        if (is_null($options)) {
+        if (\is_null($options)) {
             $options = static::getHumanDiffOptions();
         }
 
@@ -1337,11 +1380,11 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
         if ($altNumbers) {
             if ($altNumbers !== true) {
                 $language = new Language($this->locale);
-                $altNumbers = in_array($language->getCode(), (array) $altNumbers);
+                $altNumbers = \in_array($language->getCode(), (array) $altNumbers);
             }
         }
 
-        if (is_array($join)) {
+        if (\is_array($join)) {
             [$default, $last] = $join;
 
             if ($default !== ' ') {
@@ -1349,7 +1392,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
             }
 
             $join = function ($list) use ($default, $last) {
-                if (count($list) < 2) {
+                if (\count($list) < 2) {
                     return implode('', $list);
                 }
 
@@ -1359,7 +1402,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
             };
         }
 
-        if (is_string($join)) {
+        if (\is_string($join)) {
             if ($join !== ' ') {
                 $optionalSpace = '';
             }
@@ -1439,7 +1482,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
 
         $keys = array_keys($nonZeroValues);
         $firstKey = $keys[0];
-        $lastKey = $keys[count($keys) - 1];
+        $lastKey = $keys[\count($keys) - 1];
         $values = [];
         $record = false;
 
@@ -1543,11 +1586,18 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
         $method = static::getRoundingMethodFromOptions($options);
 
         if ($method) {
+            $previousCount = INF;
+
             while (
-                count($intervalValues->getNonZeroValues()) > $parts &&
-                ($count = count($keys = array_keys($intervalValues->getValuesSequence()))) > 1
+                \count($intervalValues->getNonZeroValues()) > $parts &&
+                ($count = \count($keys = array_keys($intervalValues->getValuesSequence()))) > 1
             ) {
-                $intervalValues = $this->copy()->roundUnit($keys[$count - 2], 1, $method);
+                $intervalValues = $this->copy()->roundUnit(
+                    $keys[min($count, $previousCount - 1) - 2],
+                    1,
+                    $method
+                );
+                $previousCount = $count;
             }
         }
 
@@ -1593,24 +1643,24 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
                 $unit = $short ? $diffIntervalData['unitShort'] : $diffIntervalData['unit'];
                 $count = $diffIntervalData['value'];
                 $interval[] = $transChoice($short, $diffIntervalData);
-            } elseif ($options & CarbonInterface::SEQUENTIAL_PARTS_ONLY && count($interval) > 0) {
+            } elseif ($options & CarbonInterface::SEQUENTIAL_PARTS_ONLY && \count($interval) > 0) {
                 break;
             }
 
             // break the loop after we get the required number of parts in array
-            if (count($interval) >= $parts) {
+            if (\count($interval) >= $parts) {
                 break;
             }
 
             // break the loop after we have reached the minimum unit
-            if (in_array($minimumUnit, [$diffIntervalData['unit'], $diffIntervalData['unitShort']])) {
+            if (\in_array($minimumUnit, [$diffIntervalData['unit'], $diffIntervalData['unitShort']])) {
                 $fallbackUnit = [$diffIntervalData['unit'], $diffIntervalData['unitShort']];
 
                 break;
             }
         }
 
-        if (count($interval) === 0) {
+        if (\count($interval) === 0) {
             if ($relativeToNow && $options & CarbonInterface::JUST_NOW) {
                 $key = 'diff_now';
                 $translation = $this->translate($key, $interpolations, null, $translator);
@@ -1728,7 +1778,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
      */
     public function invert($inverted = null)
     {
-        $this->invert = (func_num_args() === 0 ? !$this->invert : $inverted) ? 1 : 0;
+        $this->invert = (\func_num_args() === 0 ? !$this->invert : $inverted) ? 1 : 0;
 
         return $this;
     }
@@ -1753,9 +1803,9 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
      * Add the passed interval to the current instance.
      *
      * @param string|DateInterval $unit
-     * @param int                 $value
+     * @param int|float           $value
      *
-     * @return static
+     * @return $this
      */
     public function add($unit, $value = 1)
     {
@@ -1763,7 +1813,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
             [$value, $unit] = [$unit, $value];
         }
 
-        if (is_string($unit) && !preg_match('/^\s*\d/', $unit)) {
+        if (\is_string($unit) && !preg_match('/^\s*\d/', $unit)) {
             $unit = "$value $unit";
             $value = 1;
         }
@@ -1796,9 +1846,9 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
      * Subtract the passed interval to the current instance.
      *
      * @param string|DateInterval $unit
-     * @param int                 $value
+     * @param int|float           $value
      *
-     * @return static
+     * @return $this
      */
     public function sub($unit, $value = 1)
     {
@@ -1806,20 +1856,80 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
             [$value, $unit] = [$unit, $value];
         }
 
-        return $this->add($unit, -floatval($value));
+        return $this->add($unit, -\floatval($value));
     }
 
     /**
      * Subtract the passed interval to the current instance.
      *
      * @param string|DateInterval $unit
-     * @param int                 $value
+     * @param int|float           $value
      *
-     * @return static
+     * @return $this
      */
     public function subtract($unit, $value = 1)
     {
         return $this->sub($unit, $value);
+    }
+
+    /**
+     * Add given parameters to the current interval.
+     *
+     * @param int $years
+     * @param int $months
+     * @param int|float $weeks
+     * @param int|float $days
+     * @param int|float $hours
+     * @param int|float $minutes
+     * @param int|float $seconds
+     * @param int|float $microseconds
+     *
+     * @return $this
+     */
+    public function plus(
+        $years = 0,
+        $months = 0,
+        $weeks = 0,
+        $days = 0,
+        $hours = 0,
+        $minutes = 0,
+        $seconds = 0,
+        $microseconds = 0
+    ): self {
+        return $this->add("
+            $years years $months months $weeks weeks $days days
+            $hours hours $minutes minutes $seconds seconds $microseconds microseconds
+        ");
+    }
+
+    /**
+     * Add given parameters to the current interval.
+     *
+     * @param int $years
+     * @param int $months
+     * @param int|float $weeks
+     * @param int|float $days
+     * @param int|float $hours
+     * @param int|float $minutes
+     * @param int|float $seconds
+     * @param int|float $microseconds
+     *
+     * @return $this
+     */
+    public function minus(
+        $years = 0,
+        $months = 0,
+        $weeks = 0,
+        $days = 0,
+        $hours = 0,
+        $minutes = 0,
+        $seconds = 0,
+        $microseconds = 0
+    ): self {
+        return $this->sub("
+            $years years $months months $weeks weeks $days days
+            $hours hours $minutes minutes $seconds seconds $microseconds microseconds
+        ");
     }
 
     /**
@@ -1959,7 +2069,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
             $specString .= $value.$key;
         }
 
-        if (count($time) > 0) {
+        if (\count($time) > 0) {
             $specString .= static::PERIOD_TIME_PREFIX;
             foreach ($time as $key => $value) {
                 $specString .= $value.$key;
@@ -2112,9 +2222,9 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
     {
         $realUnit = $unit = strtolower($unit);
 
-        if (in_array($unit, ['days', 'weeks'])) {
+        if (\in_array($unit, ['days', 'weeks'])) {
             $realUnit = 'dayz';
-        } elseif (!in_array($unit, ['microseconds', 'milliseconds', 'seconds', 'minutes', 'hours', 'dayz', 'months', 'years'])) {
+        } elseif (!\in_array($unit, ['microseconds', 'milliseconds', 'seconds', 'minutes', 'hours', 'dayz', 'months', 'years'])) {
             throw new UnknownUnitException($unit);
         }
 

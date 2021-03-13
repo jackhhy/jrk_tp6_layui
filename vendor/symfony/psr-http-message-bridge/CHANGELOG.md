@@ -1,6 +1,17 @@
 CHANGELOG
 =========
 
+# 2.1.0 (2021-02-17)
+
+  * Added a `PsrResponseListener` to automatically convert PSR-7 responses returned by controllers
+  * Added a `PsrServerRequestResolver` that allows injecting PSR-7 request objects into controllers
+
+# 2.0.2 (2020-09-29)
+
+  * Fix populating server params from URI in HttpFoundationFactory
+  * Create cookies as raw in HttpFoundationFactory
+  * Fix BinaryFileResponse with Content-Range PsrHttpFactory
+
 # 2.0.1 (2020-06-25)
 
   * Don't normalize query string in PsrHttpFactory

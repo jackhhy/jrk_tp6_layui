@@ -1,54 +1,25 @@
 <?php
 
+
 namespace app\common\controller;
 
+
 use app\admin\model\AuthRule;
-use app\common\traits\JumpReturn;
+use app\BaseController;
 use Jrk\Tree;
-use liliuwei\think\Jump;
+use think\facade\Lang;
 use think\facade\View;
+use think\Request;
+use app\common\traits\JumpReturn;
+use liliuwei\think\Jump;
 use think\App;
 use think\exception\ValidateException;
 use think\Validate;
 use think\Exception;
-use think\Request;
-/**
- * Class AdminBaseController
- * @package app\common\controller
- * 后台继承的控制器
- */
-abstract class AdminBaseController
+
+
+class AdminBaseController extends BaseController
 {
-
-    //自定义 数据返回
-    use JumpReturn;
-
-    //不是ajax 提交返回
-    use Jump;
-
-    /**
-     * Request实例
-     * @var \think\Request
-     */
-    protected $request;
-
-    /**
-     * 应用实例
-     * @var \think\App
-     */
-    protected $app;
-
-    /**
-     * 是否批量验证
-     * @var bool
-     */
-    protected $batchValidate = false;
-
-    /**
-     * 检测是否登录
-     * @var array
-     */
-    protected $middleware = ['app\admin\middleware\CheckAdminLogin'];
 
     //请求参数
     protected $param;
@@ -65,24 +36,18 @@ abstract class AdminBaseController
     static $admin_info;
 
     /**
-     * AdminBaseController constructor.
-     * @param App $app
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * 无需登录的方法,同时也就不需要鉴权了.
+     *
+     * @var array
      */
-    public function __construct(App $app)
-    {
-        $this->app = $app;
-        $this->request = $this->app->request;
+    protected $noNeedLogin = [];
 
-        // 控制器初始化
-        $this->initialize();
-
-
-    }
-
-
+    /**
+     * 无需鉴权的方法,但需要登录.
+     *
+     * @var array
+     */
+    protected $noNeedRight = [];
 
 
     /**
@@ -97,13 +62,26 @@ abstract class AdminBaseController
     {
         //用户登录信息
         self::$admin_info=session(ADMIN_LOGIN_INFO);
-        
+
+        $modulename = app()->http->getName();
+        $controller = preg_replace_callback('/\.[A-Z]/', function ($d) {
+            return strtolower($d[0]);
+        }, $this->request->controller(), 1);
+
+        $controllername = parseName($controller);
+        $actionname = strtolower($this->request->action());
+
+        $path = str_replace('.', '/', $controllername).'/'.$actionname;
+
+
+
+
         $this->initAssign();
 
         $this->initConfig();
 
         $this->initRequestConfig();
-       //左侧菜单
+        //左侧菜单
         $this->menuList();
     }
 
@@ -184,6 +162,52 @@ abstract class AdminBaseController
 
 
     /**
+     * 检测当前控制器和方法是否匹配传递的数组.
+     *
+     * @param array $arr 需要验证权限的数组
+     *
+     * @return bool
+     */
+    public function match($arr = [])
+    {
+        $request = Request::instance();
+        $arr = is_array($arr) ? $arr : explode(',', $arr);
+        if (! $arr) {
+            return false;
+        }
+
+        $arr = array_map('strtolower', $arr);
+        // 是否存在
+        if (in_array(strtolower($request->action()), $arr) || in_array('*', $arr)) {
+            return true;
+        }
+
+        // 没找到匹配
+        return false;
+    }
+
+    /**
+     * 加载语言文件.
+     *
+     * @param  string  $name
+     */
+    protected function loadlang($name)
+    {
+        if (strpos($name, '.')) {
+            $_arr = explode('.', $name);
+            if (count($_arr) == 2) {
+                $path = $_arr[0].'/'.parseName($_arr[1]);
+            } else {
+                $path = strtolower($name);
+            }
+        } else {
+            $path = parseName($name);
+        }
+        Lang::load(app()->getAppPath().'/lang/'.Lang::getLangset().'/'.$path.'.php');
+    }
+
+
+    /**
      * 初始化配置
      * @return void
      * @author Jackhhy
@@ -258,10 +282,10 @@ abstract class AdminBaseController
      */
     public function initAssign()
     {
-       if(empty(self::$admin_info) || self::$admin_info==null){
+        if(empty(self::$admin_info) || self::$admin_info==null){
             if ($this->request->isAjax() || $this->request->isPost()){
                 header('Content-Type:application/json; charset=utf-8');
-				exit(json_encode(['code'=>0,'msg'=>'您的登录信息已过期请先登录',"time"=>time()], 0));
+                exit(json_encode(['code'=>0,'msg'=>'您的登录信息已过期请先登录',"time"=>time()], 0));
             }else{
                 return redirect((string)url('Login/index'));
             }
@@ -352,52 +376,6 @@ abstract class AdminBaseController
         } else {
             $this->assign(compact('msg', 'url'));
             exit($this->fetch('public/success'));
-        }
-    }
-
-    /**
-     * 验证数据
-     * @access protected
-     * @param array $data 数据
-     * @param string|array $validate 验证器名或者验证规则数组
-     * @param array $message 提示信息
-     * @param bool $batch 是否批量验证
-     * @return array|string|true
-     * @throws ValidateException
-     */
-    protected function validate(array $data, $validate, array $message = [], bool $batch = false)
-    {
-        try {
-            if (is_array($validate)) {
-                $v = new Validate();
-                $v->rule($validate);
-            } else {
-                if (strpos($validate, '.')) {
-                    // 支持场景
-                    list($validate, $scene) = explode('.', $validate);
-                }
-                $class = false !== strpos($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
-                $v = new $class();
-                if (!empty($scene)) {
-                    $v->scene($scene);
-                }
-            }
-
-            $v->message($message);
-
-            //是否批量验证
-            if ($batch || $this->batchValidate) {
-                $v->batch(true);
-            }
-
-            $result = $v->failException(false)->check($data);
-            if (true !== $result) {
-                return $v->getError();
-            } else {
-                return $result;
-            }
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
         }
     }
 

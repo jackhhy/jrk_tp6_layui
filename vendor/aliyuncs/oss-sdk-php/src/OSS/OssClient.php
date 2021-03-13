@@ -1132,7 +1132,8 @@ class OssClient
         $options[self::OSS_OBJECT] = '/';
         $options[self::OSS_SUB_RESOURCE] = 'policy';
         $response = $this->auth($options);
-        return $response->body;
+        $result = new BodyResult($response);
+        return $result->getData();
     }
 
     /**
@@ -3502,8 +3503,8 @@ class OssClient
     );
     // OssClient version information
     const OSS_NAME = "aliyun-sdk-php";
-    const OSS_VERSION = "2.4.0";
-    const OSS_BUILD = "20200831";
+    const OSS_VERSION = "2.4.1";
+    const OSS_BUILD = "20200929";
     const OSS_AUTHOR = "";
     const OSS_OPTIONS_ORIGIN = 'Origin';
     const OSS_OPTIONS_REQUEST_METHOD = 'Access-Control-Request-Method';

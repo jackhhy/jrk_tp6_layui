@@ -26,6 +26,7 @@ return [
     'display_cache' => false,
 
     'taglib_pre_load'  => 'app\common\taglib\Jrks', //
+
     // 字符替换
     'tpl_replace_string' => [
         '__STATIC__' =>'/static',
