@@ -65,6 +65,7 @@ abstract class BaseController
     // 初始化
     protected function initialize()
     {
+        //
     }
 
 
@@ -95,7 +96,6 @@ abstract class BaseController
                     $v->scene($scene);
                 }
             }
-
             $v->message($message);
 
             //是否批量验证

@@ -94,7 +94,7 @@
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
                                     <button class="layui-btn" lay-submit="" lay-filter="demo1" >立即发送</button>
-                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">{:__('Reset')}</button>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
         });
 
 
-        //监听提交
+        //监听{:__('Submit')}
         form.on('submit(demo1)', function(data) {
             loading = layer.load(2, {
                 shade: [0.2, '#000'] //0.2透明度的白色背景

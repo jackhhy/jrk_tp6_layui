@@ -27,7 +27,7 @@
                         <button class="layui-btn icon-btn layui-btn-sm" data-id="table_id" lay-filter="search" lay-submit="">
                             <i class="layui-icon"></i>搜索
                         </button>
-                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm"><i class="layui-icon layui-icon-refresh"></i>重置</button>
+                        <button type="reset" class="layui-btn icon-btn layui-btn-normal layui-btn-sm"><i class="layui-icon layui-icon-refresh"></i>{:__('Reset')}</button>
                     </div>
                 </div>
             </form>
@@ -56,7 +56,7 @@
         <button type="button" lay-event="tableTreeEdit" id="btn6" class="layui-btn  layui-btn-sm">关闭所有</button>
         <button type="button" lay-event="tableTreeEdit" id="btn7" class="layui-btn  layui-btn-sm">展开所有</button>
         <button type="button" lay-event="tableTreeEdit" id="btn9" class="layui-btn  layui-btn-sm  layui-btn-primary">刷新表格</button>
-        <button type="button" lay-event="tableTreeEdit" id="btn11" class="layui-btn  layui-btn-sm layui-btn-normal">重置搜索</button>
+        <button type="button" lay-event="tableTreeEdit" id="btn11" class="layui-btn  layui-btn-sm layui-btn-normal">{:__('Reset')}搜索</button>
     </div>
 </script>
 
@@ -260,9 +260,9 @@
             }else if(id === 'btn9'){
                 treeTable.reload(); //表格树进行reload
             }else if(id === 'btn11') {
-                treeTable.clearSearch(); //重置搜索
+                treeTable.clearSearch(); //{:__('Reset')}搜索
                 $("#title").val("");
-                layer.msg("重置搜索成功",{icon:1,time:1000,shade:0.3});
+                layer.msg("{:__('Reset')}搜索成功",{icon:1,time:1000,shade:0.3});
             }
         });
 

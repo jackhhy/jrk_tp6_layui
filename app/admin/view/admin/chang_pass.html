@@ -69,7 +69,7 @@
         form.render();
 
         /**
-         * 表格提交
+         * 表格{:__('Submit')}
          */
         form.on('submit(setmypass)', function (data) {
             lucky.FormSubmit("{:url('Admin/changPass')}", data.field);
