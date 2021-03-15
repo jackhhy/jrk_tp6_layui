@@ -121,8 +121,6 @@ class AdminBaseController extends BaseController
                 'Index/home',
                 'Temp/icon'
             ];
-            // 判断是否需要验证权限
-            if (! $this->match($this->noNeedRight)) {
                 // 查询所有不验证的方法并放入白名单
                 $authOpen=Db::name("auth_rule")->field("name,id")->where("auth_open","=",2)->where("status","=",1)->select();
                 $authRule=Db::name("auth_rule")->where("status","=",1)->select();
@@ -159,10 +157,11 @@ class AdminBaseController extends BaseController
                 }
 
                 $this->noNeedRight=array_merge($this->noNeedRight,$allow);
-                //当前用户登录的ID
-                $admin_id=session(ADMIN_LOGIN_INFO)['id'];
-                // 权限认证
-                if (!in_array($path, $this->noNeedRight)) {
+
+                if (!$this->match($this->noNeedRight)) {
+                    //当前用户登录的ID
+                    $admin_id=session(ADMIN_LOGIN_INFO)['id'];
+
                     if ($admin_id != 1) {
                         //开始认证
                         $auth = new Auth();
@@ -177,8 +176,6 @@ class AdminBaseController extends BaseController
                         }
                     }
                 }
-            }
-
         }
 
 
