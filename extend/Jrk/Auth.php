@@ -101,6 +101,61 @@ class Auth
 
 
     /**
+     * @param array $arr
+     * @return bool
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @describe:
+     */
+    public function match_action($arr = [])
+    {
+        $request = Request::instance();
+        $arr = is_array($arr) ? $arr : explode(',', $arr);
+        if (! $arr) {
+            return false;
+        }
+        $arr = array_map('strtolower', $arr);
+
+        // 是否存在
+        if (in_array(strtolower($request->action()), $arr) || in_array('*', $arr)) {
+            return true;
+        }
+        // 没找到匹配
+        return false;
+    }
+
+
+    /**
+     * @param array $arr
+     * @return bool
+     * @author: LuckyHhy <jackhhy520@qq.com>
+     * @describe:检测当前控制器和方法是否匹配传递的数组.
+     */
+    public function match($arr = [])
+    {
+        $request = Request::instance();
+        $arr = is_array($arr) ? $arr : explode(',', $arr);
+        if (! $arr) {
+            return false;
+        }
+
+        $arr = array_map('strtolower', $arr);
+
+        $controller = preg_replace_callback('/\.[A-Z]/', function ($d) {
+            return strtolower($d[0]);
+        }, $request->controller(), 1);
+        $controllername = parseName($controller);
+        $actionname = strtolower($request->action());
+        $path = str_replace('.', '/', $controllername).'/'.$actionname;
+        // 是否存在
+        if (in_array($path, $arr)) {
+            return true;
+        }
+        // 没找到匹配
+        return false;
+    }
+
+
+    /**
      * @param $name //需要验证的规则列表，支持逗号分隔的权限规则或索引数组
      * @param $uid //认证用户ID
      * @param string $relation //如果为 'or' 表示满足任一条规则即通过验证;如果为 'and' 则表示需满足所有规则才能通过验证
@@ -116,10 +171,13 @@ class Auth
      */
     public function check($name, $uid, $relation = 'or', $mode = 'url', $type = 1)
     {
+
         if (!$this->_config['auth_on']) {
             return true;
         }
         $authList = $this->getAuthList($uid, $type);
+
+      //  dump($authList);
 
         if (is_string($name)) {
             $name = strtolower($name);

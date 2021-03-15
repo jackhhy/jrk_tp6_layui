@@ -27,7 +27,6 @@ use think\facade\Request;
 use think\App;
 use think\Exception;
 
-
 class AdminBaseController extends BaseController
 {
 
@@ -95,10 +94,11 @@ class AdminBaseController extends BaseController
 
         $path = str_replace('.', '/', $controllername).'/'.$actionname;
 
+        $auth = new Auth();
         /**
          * 检测是否需要登录
          */
-        if (! $this->match($this->noNeedLogin)) {
+        if (! $auth->match_action($this->noNeedLogin)) {
             //检测是否登录
             if (empty(session(ADMIN_LOGIN_INFO))){
                 //异步提交数据的话
@@ -129,25 +129,26 @@ class AdminBaseController extends BaseController
                     foreach ($authOpen as $k => $v) {
                         // 转换方法名为小写
                         $ruleName = @explode('/', $v['name']);
-                        if (isset($ruleName[1])) {
-                            $ruleName[1] = strtolower($ruleName[1]);
+                        if (isset($ruleName[0])) {
+                            $ruleName[0] = parseName($ruleName[0]);
                         }
                         // 转换控制器首字母大写
                         $ruleName = trim(@implode('/', $ruleName));
-                        $authOpens[] = @ucfirst($ruleName);
+
+                        $authOpens[] = strtolower($ruleName);
                         // 查询所有下级权限
 
                         $ids = getChildsRule($authRule, $v['id']);
                         if (!empty($ids)){
                             foreach ($ids as $kk => $vv) {
                                 // 转换方法名为小写
-                                $ruleName = explode('/', $vv['name']);
-                                if (isset($ruleName[1])) {
-                                    $ruleName[1] = strtolower($ruleName[1]);
+                                $ruleNameTwo = explode('/', $vv['name']);
+                                if (isset($ruleNameTwo[0])) {
+                                    $ruleNameTwo[0] = parseName($ruleNameTwo[0]);
                                 }
                                 // 转换控制器首字母大写
-                                $ruleName = trim(@implode('/', $ruleName));
-                                $authOpens[] = @ucfirst($ruleName);
+                                $ruleNameTwo = trim(@implode('/', $ruleNameTwo));
+                                $authOpens[] = strtolower($ruleNameTwo);
                             }
                         }
                     }
@@ -156,22 +157,19 @@ class AdminBaseController extends BaseController
                     $allow=$authOpens;
                 }
 
-                $this->noNeedRight=array_merge($this->noNeedRight,$allow);
-
-                if (!$this->match($this->noNeedRight)) {
+                if (!$auth->match($allow)) {
                     //当前用户登录的ID
                     $admin_id=session(ADMIN_LOGIN_INFO)['id'];
-
                     if ($admin_id != 1) {
-                        //开始认证
-                        $auth = new Auth();
-                        $result = $auth->check($path, $admin_id);
-
-                        if (!$result) {
-                            if (Request::isAjax() || Request::isPost()){
-                                return self::JsonReturn(__('You have no permission'),0);
-                            }else{
-                                $this->error(__('You have no permission'));
+                        if (!$auth->match_action($this->noNeedRight)){
+                            //开始认证
+                            $result = $auth->check($path, $admin_id);
+                            if (!$result) {
+                                if (Request::isAjax() || Request::isPost()){
+                                    return self::JsonReturn(__('You have no permission'),0);
+                                }else{
+                                    $this->error(__('You have no permission'));
+                                }
                             }
                         }
                     }
@@ -280,28 +278,8 @@ class AdminBaseController extends BaseController
     }
 
 
-    /**
-     * @param array $arr
-     * @return bool
-     * @author: [ Lucky888888 ]
-     * @describe:检测当前控制器和方法是否匹配传递的数组.
-     */
-    public function match($arr = [])
-    {
-        $request = Request::instance();
-        $arr = is_array($arr) ? $arr : explode(',', $arr);
-        if (! $arr) {
-            return false;
-        }
 
-        $arr = array_map('strtolower', $arr);
-        // 是否存在
-        if (in_array(strtolower($request->action()), $arr) || in_array('*', $arr)) {
-            return true;
-        }
-        // 没找到匹配
-        return false;
-    }
+
 
     /**
      * 加载语言文件.
