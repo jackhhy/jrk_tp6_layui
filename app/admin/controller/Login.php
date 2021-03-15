@@ -104,7 +104,7 @@ class Login extends AdminBaseController
                     return json(["code" => 0, "msg" => "密码错误"]);
                 }
 
-                if ((int)$result['status'] == 0) {
+                if ((int)$result['status'] == 2) {
                     return json(["code" => 0, "msg" => "当前用户已被拉黑"]);
                 }
 
