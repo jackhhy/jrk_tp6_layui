@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => '219897cc8094d78c938023f282ca7bdc1869e6b9',
     'name' => 'topthink/think',
   ),
   'versions' => 
@@ -862,12 +862,12 @@
     ),
     'topthink/think' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '219897cc8094d78c938023f282ca7bdc1869e6b9',
     ),
     'topthink/think-captcha' => 
     array (
