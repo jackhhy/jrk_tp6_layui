@@ -69,6 +69,9 @@ git clone https://gitee.com/luckygyl/jrk_tp6_layui.git
 3、数据库导入 sql <br>
 4、超管账号密码： jrkadmintp6   123456
 
+##演示地址
+http://hzd.luckyhhy.cn/
+
 ### 环境
 推荐使用 Nginx + php7.3 + mysql 
 

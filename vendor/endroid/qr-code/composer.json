@@ -1,28 +1,32 @@
 {
-    "name": "endroid/qrcode",
+    "name": "endroid/qr-code",
     "description": "Endroid QR Code",
-    "keywords": ["endroid", "qrcode", "qr", "code", "bundle", "symfony"],
-    "homepage": "https://github.com/endroid/QrCode",
+    "keywords": ["endroid", "qrcode", "qr", "code", "php"],
+    "homepage": "https://github.com/endroid/qr-code",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "Jeroen van den Enden",
-            "email": "info@endroid.nl",
-            "homepage": "http://endroid.nl/"
+            "email": "info@endroid.nl"
         }
     ],
     "require": {
-        "php": ">=5.4",
-        "ext-gd": "*",
-        "symfony/options-resolver": "^2.3|^3.0"
+        "php": "^7.3||^8.0",
+        "bacon/bacon-qr-code": "^2.0"
     },
     "require-dev": {
-        "symfony/browser-kit": "^2.3|^3.0",
-        "symfony/framework-bundle": "^2.3|^3.0",
-        "symfony/http-kernel": "^2.3|^3.0",
-        "sensio/framework-extra-bundle": "^3.0",
-        "phpunit/phpunit": "^4.0|^5.0"
+        "ext-gd": "*",
+        "endroid/quality": "dev-master",
+        "khanamiryan/qrcode-detector-decoder": "^1.0.4",
+        "setasign/fpdf": "^1.8.2"
+    },
+    "suggest": {
+        "ext-gd": "Enables you to write PNG images",
+        "khanamiryan/qrcode-detector-decoder": "Enables you to use the image validator",
+        "roave/security-advisories": "Makes sure package versions with known security issues are not installed",
+        "setasign/fpdf": "Enables you to use the PDF writer.",
+        "symfony/security-checker": "Checks your composer.lock for vulnerabilities"
     },
     "autoload": {
         "psr-4": {
@@ -35,11 +39,11 @@
         }
     },
     "config": {
-        "bin-dir": "bin"
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.x-dev"
+            "dev-master": "4.x-dev"
         }
     }
 }

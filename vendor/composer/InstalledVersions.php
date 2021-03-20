@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '219897cc8094d78c938023f282ca7bdc1869e6b9',
+    'reference' => '460615274fee76e4a1a68c37b9381fef61376469',
     'name' => 'topthink/think',
   ),
   'versions' => 
@@ -43,6 +43,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '492866331b7bafaac09506cf42f351b7e9e63766',
+    ),
+    'bacon/bacon-qr-code' => 
+    array (
+      'pretty_version' => '2.0.3',
+      'version' => '2.0.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3e9d791b67d0a2912922b7b7c7312f4b37af41e4',
     ),
     'cache/adapter-common' => 
     array (
@@ -71,6 +80,15 @@ private static $installed = array (
       ),
       'reference' => '909a5df87e698f1665724a9e84851c11c45fbfb9',
     ),
+    'dasprid/enum' => 
+    array (
+      'pretty_version' => '1.0.3',
+      'version' => '1.0.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5abf82f213618696dda8e3bf6f64dd042d8542b2',
+    ),
     'easywechat-composer/easywechat-composer' => 
     array (
       'pretty_version' => '1.4.0',
@@ -82,12 +100,12 @@ private static $installed = array (
     ),
     'endroid/qr-code' => 
     array (
-      'pretty_version' => '1.9.3',
-      'version' => '1.9.3.0',
+      'pretty_version' => '4.0.2',
+      'version' => '4.0.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c9644bec2a9cc9318e98d1437de3c628dcd1ef93',
+      'reference' => '2e7f920df3a948a3c8162c2eadabcd6aab8fa087',
     ),
     'ezyang/htmlpurifier' => 
     array (
@@ -362,7 +380,7 @@ private static $installed = array (
     ),
     'liliuwei/thinkphp-jump' => 
     array (
-      'pretty_version' => '1.5',
+      'pretty_version' => 'v1.5',
       'version' => '1.5.0.0',
       'aliases' => 
       array (
@@ -742,15 +760,6 @@ private static $installed = array (
       ),
       'reference' => '54499baea7f7418bce7b5ec92770fd0799e8e9bf',
     ),
-    'symfony/options-resolver' => 
-    array (
-      'pretty_version' => 'v3.4.47',
-      'version' => '3.4.47.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'c7efc97a47b2ebaabc19d5b6c6b50f5c37c92744',
-    ),
     'symfony/polyfill-mbstring' => 
     array (
       'pretty_version' => 'v1.22.1',
@@ -891,7 +900,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '219897cc8094d78c938023f282ca7bdc1869e6b9',
+      'reference' => '460615274fee76e4a1a68c37b9381fef61376469',
     ),
     'topthink/think-captcha' => 
     array (

@@ -1,5 +1,4 @@
-/bin
+/composer
 /composer.lock
-/composer.phar
-/phpunit.xml
-/vendor
+/tests/coverage/
+/vendor/
