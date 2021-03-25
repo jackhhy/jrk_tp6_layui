@@ -67,7 +67,11 @@ git clone https://gitee.com/luckygyl/jrk_tp6_layui.git
 1、sql 文件在 backup 文件夹下面 <br>
 2、修改 .env 里面的数据库配置  <br>
 3、数据库导入 sql <br>
-4、超管账号密码： jrkadmintp6   123456
+4、超管账号密码： jrkadmintp6   123456 <br>
+5、在项目根目录下执行命令：
+~~~
+ composer update
+~~~
 
 ##演示地址
 http://hzd.luckyhhy.cn/
