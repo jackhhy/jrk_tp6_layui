@@ -45,6 +45,9 @@ php think make:jrkadmin_curd Hello Hello Hello --app admin [ # 普通CURD增删�
 ### QQ交流群
  JrkAdminQQ交流群: 498186248 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=9ad90a1a2a7cd611cc3343b9b8f59a8ab2a8bbffa2bed243344c41824ebc7f35"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="JrkAdmin" title="JrkAdmin"></a>
 
+### 微信交流群
+如果二维码失效，可以添加作者微信拉你进技术交流群：hhz_9898
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0515/103014_f81481a3_1513275.png "微信图片_20210515102730.png")
 
 
 ### 开源版使用须知
