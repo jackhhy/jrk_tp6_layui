@@ -47,7 +47,9 @@ php think make:jrkadmin_curd Hello Hello Hello --app admin [ # 普通CURD增删�
 
 ### 微信交流群
 如果二维码失效，可以添加作者微信拉你进技术交流群：hhz_9898
+<p align="center" >  
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0515/103014_f81481a3_1513275.png "微信图片_20210515102730.png")
+</p>
 
 
 ### 开源版使用须知
