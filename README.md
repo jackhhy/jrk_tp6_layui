@@ -62,7 +62,8 @@ php think make:jrkadmin_curd Hello Hello Hello --app admin [ # 普通CURD增删�
 
 
 
-## 安装
+## 安装教程
+
 使用git安装
 ~~~
 git clone https://gitee.com/luckygyl/jrk_tp6_layui.git
@@ -72,10 +73,15 @@ git clone https://gitee.com/luckygyl/jrk_tp6_layui.git
 2、修改 .env 里面的数据库配置  <br>
 3、数据库导入 sql <br>
 4、超管账号密码： jrkadmintp6   123456 <br>
-5、在项目根目录下执行命令：
+5、更新composer 到最新版本
 ~~~
- composer update
+composer self-update
 ~~~
+6、在项目根目录下执行命令：
+~~~
+ composer update 或者 composer install
+~~~
+
 
 ##演示地址
 http://hzd.luckyhhy.cn/
