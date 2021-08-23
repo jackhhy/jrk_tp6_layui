@@ -39,10 +39,10 @@ class SysLog
                 }
                 $info=\session(ADMIN_LOGIN_INFO);
                 $data = [
-                    'admin_id'    => isset($info['id']) ? $info['id'] :0,
+                    'admin_id'    => $info['id']??0,
                     'url'         => $url,
                     'method'      => $method,
-                    'title'       => isset($info['nickname']) ? $info['nickname'] :'',
+                    'title'       => $info['nickname']??'',
                     'ip'          => $ip,
                     'os'          => Tool::getOS(),
                     'brower'      => Tool::getBrowser(),

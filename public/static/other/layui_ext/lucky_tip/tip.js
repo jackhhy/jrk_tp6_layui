@@ -33,7 +33,6 @@ layui.define(['jquery','layer'], function(exports) {
             layer.close(show_id);
             show_id=0;
         }
-
     };
 
     /**

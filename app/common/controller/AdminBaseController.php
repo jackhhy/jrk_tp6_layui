@@ -123,6 +123,7 @@ class AdminBaseController extends BaseController
             ];
                 // 查询所有不验证的方法并放入白名单
                 $authOpen=Db::name("auth_rule")->field("name,id")->where("auth_open","=",2)->where("status","=",1)->select();
+
                 $authRule=Db::name("auth_rule")->where("status","=",1)->select();
                 $authOpens = [];
                 if (!empty($authOpen)){
@@ -137,8 +138,8 @@ class AdminBaseController extends BaseController
 
                         $authOpens[] = strtolower($ruleName);
                         // 查询所有下级权限
-
                         $ids = getChildsRule($authRule, $v['id']);
+
                         if (!empty($ids)){
                             foreach ($ids as $kk => $vv) {
                                 // 转换方法名为小写
@@ -152,6 +153,7 @@ class AdminBaseController extends BaseController
                             }
                         }
                     }
+
                     $allow = array_merge($allow, $authOpens);
                 }else{
                     $allow=$authOpens;
@@ -175,7 +177,6 @@ class AdminBaseController extends BaseController
                     }
                 }
         }
-
 
         //用户登录信息
         self::$admin_info=session(ADMIN_LOGIN_INFO);
@@ -302,6 +303,7 @@ class AdminBaseController extends BaseController
     }
 
 
+
     /**
      * 初始化配置
      * @return void
@@ -343,6 +345,8 @@ class AdminBaseController extends BaseController
         // 定义是否为手机访问
         defined('IS_MOBILE') or define('IS_MOBILE', $this->request->isMobile());
     }
+
+
 
 
     /**

@@ -1,6 +1,6 @@
 var ok_load_options = {
    time: 1000,
-   content: "jrk-admin-Tp6..."
+   content: "jrk-admin-Tp6 v3.0..."
 };
 !function (content, options) {
    function templateFun(options) {

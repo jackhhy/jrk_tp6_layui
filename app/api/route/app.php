@@ -2,19 +2,17 @@
 use think\facade\Route;
 
 //账号密码登录
-Route::post('login', 'v1.Member/login')->name('login');
+Route::post('login', 'v1.Member/login');
 //邮箱号注册
-Route::post('register', 'v1.Member/register')->name('register');
-
+Route::post('register', 'v1.Member/register');
 //个人信息
-Route::get('index', 'v1.Member/index')->name('index');
+Route::post('index', 'v1.Member/index');
 
-//更新密码
-Route::post('update_pwd', 'v1.Member/updatePwd')->name('update_pwd');
+//token  查验
+Route::post('token_check', 'v1.Token/check');
 
-Route::get('test', 'v1.Member/test')->name('test');
-
-
+//token  刷新
+Route::post('token_refresh', 'v1.Token/refresh');
 
 //miss 路由
 Route::miss(function() {

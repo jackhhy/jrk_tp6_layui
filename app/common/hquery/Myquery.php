@@ -14,8 +14,6 @@
 // +----------------------------------------------------------------------
 
 namespace app\common\hquery;
-
-
 use think\db\Query;
 
 class Myquery extends Query

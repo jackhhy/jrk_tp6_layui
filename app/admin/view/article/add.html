@@ -142,14 +142,15 @@
 
                     <div class="layui-tab-item">
 
-                     <textarea name="content" placeholder="" style="max-width: 90%" id="content"  lay-verify="required" lay-verType="tips" lay-reqText="内容不能为空"></textarea>
-                        {if isset($info.id)}
-                        {:build_ueditor(['name'=>'content','h'=>330,'content'=>$info['content']])}
-                        {else /}
-                         {:build_ueditor(['name'=>'content','h'=>330])}
-                        {/if}
+                                <textarea name="content" placeholder="" style="max-width: 90%" id="content"  lay-verify="require" lay-verType="tips" lay-reqText="内容不能为空"></textarea>
+                                {if isset($info.id)}
+                                {:build_ueditor(['name'=>'content','h'=>330,'content'=>$info['content']])}
+                                {else /}
+                                {:build_ueditor(['name'=>'content','h'=>330])}
+                                {/if}
 
                     </div>
+
                 </div>
 
             </div>

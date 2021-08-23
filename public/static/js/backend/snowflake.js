@@ -3,7 +3,6 @@
  * canvas版 无需依赖jquery
  */
 
-
 var configSnowflake = {};
 
 /**
@@ -12,7 +11,6 @@ var configSnowflake = {};
  * @param {[type]} elementName [description]
  */
 var Snowflake = function (elementName) {
-
    configInit();
    var snowElement = document.getElementById(elementName);
    var canvasContext = snowElement.getContext("2d");

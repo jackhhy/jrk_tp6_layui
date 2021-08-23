@@ -153,6 +153,7 @@
         Copyright ©2019-©2022 {$_name} {$_version} All Rights Reserved
         <button class="layui-btn layui-btn-danger layui-btn-xs donate">捐赠作者</button>
         <button class="layui-btn layui-btn-danger layui-btn-xs communication">QQ群交流</button>
+        <button class="layui-btn layui-btn-danger layui-btn-xs wechant">微信群交流</button>
     </div>
 </div>
 
@@ -262,6 +263,16 @@
             tab: [{
                 title: "QQ群",
                 content: "<img src='__IMG__/JrkAdmin.png' width='260' height='300' style='margin: 0 auto; display: block;'/>"
+            }]
+        });
+    });
+
+    $("body").on("click", ".layui-footer button.wechant", function () {
+        layer.tab({
+            area: ["auto", "auto"],
+            tab: [{
+                title: "添加作者微信拉你进群",
+                content: "<img src='__IMG__/wechat.jpg' width='260' height='300' style='margin: 0 auto; display: block;'/>"
             }]
         });
     });

@@ -271,7 +271,7 @@ layui.define(['jquery', 'layer'], function(exports) {
                     async: true,
                     dataType: "json",
                     data: data,
-                    error: function(error) {
+                    error: function() {
                         layer.msg("服务器错误或超时");
                         return false;
                     },
@@ -312,7 +312,7 @@ layui.define(['jquery', 'layer'], function(exports) {
                 async: true,
                 dataType: "json",
                 data: data,
-                error: function(error) {
+                error: function() {
                     layer.msg("服务器错误或超时");
                     return false;
                 },

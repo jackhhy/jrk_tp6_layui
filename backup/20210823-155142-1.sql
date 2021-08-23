@@ -6,7 +6,7 @@
 -- Database : jrk_admin_tp6
 -- 
 -- Part : #1
--- Date : 2021-03-14 00:00:13
+-- Date : 2021-08-23 15:51:42
 -- -----------------------------
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -41,8 +41,8 @@ CREATE TABLE `jrk_admin` (
 -- -----------------------------
 -- Records of `jrk_admin`
 -- -----------------------------
-INSERT INTO `jrk_admin` VALUES ('1', 'jrkadmintp6', '超级管理员', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '1', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1615648897', '127.0.0.1', '', '1593179425', '1615648897', '13141962690', 'jackhhy520@qq.com', '1995-06-05', '20', '2NEDPBG2YIM5642L', 'https://api.qrserver.com/v1/create-qr-code/?data=otpauth%3A%2F%2Ftotp%2Fjrkadmintp6%3Fsecret%3D2NEDPBG2YIM5642L&size=200x200&ecc=M');
-INSERT INTO `jrk_admin` VALUES ('5', 'test', 'test', '/uploads/adminuser/avatar/20210313/c38869c36842c2b686f7913ba394e86c.png', '0', '$2y$10$LNwbAqBCfgjCw9n4e6ND8eqT8jZ0uty2Ih1nN0DxpB1Lx2OofyAte', '1', '0', '', '', '1615648969', '1615648969', '13141962698', '', '2021-03-17', '0', 'SRKIVUCGTFDXBHO2', 'https://api.qrserver.com/v1/create-qr-code/?data=otpauth%3A%2F%2Ftotp%2Ftest%3Fsecret%3DSRKIVUCGTFDXBHO2&size=200x200&ecc=M');
+INSERT INTO `jrk_admin` VALUES ('1', 'jrkadmintp6', '超级管理员', '/uploads/adminuser/avatar/20200702/5e19638241c47d668ad937cd5fde4847.jpg', '1', '$2y$10$XxyKGjfAtyo5I9.9HBY21O1frCziHTOzuWhhdiDypvUldM24xXVzW', '1', '1629703073', '127.0.0.1', '', '1593179425', '1629703073', '13141962690', 'jackhhy520@qq.com', '1995-06-05', '22', '2NEDPBG2YIM5642L', 'https://api.qrserver.com/v1/create-qr-code/?data=otpauth%3A%2F%2Ftotp%2Fjrkadmintp6%3Fsecret%3D2NEDPBG2YIM5642L&size=200x200&ecc=M');
+INSERT INTO `jrk_admin` VALUES ('5', 'test', 'test', '/uploads/adminuser/avatar/20210313/c38869c36842c2b686f7913ba394e86c.png', '0', '$2y$10$LNwbAqBCfgjCw9n4e6ND8eqT8jZ0uty2Ih1nN0DxpB1Lx2OofyAte', '1', '1629688387', '127.0.0.1', '', '1615648969', '1629688387', '13141962698', '', '2021-03-17', '1', 'SRKIVUCGTFDXBHO2', 'https://api.qrserver.com/v1/create-qr-code/?data=otpauth%3A%2F%2Ftotp%2Ftest%3Fsecret%3DSRKIVUCGTFDXBHO2&size=200x200&ecc=M');
 
 -- -----------------------------
 -- Table structure for `jrk_articles`
@@ -211,7 +211,7 @@ CREATE TABLE `jrk_attachment` (
   `update_time` int(11) unsigned DEFAULT '0',
   `ext` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='附件管理表';
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='附件管理表';
 
 -- -----------------------------
 -- Records of `jrk_attachment`
@@ -233,6 +233,8 @@ INSERT INTO `jrk_attachment` VALUES ('14', '7afacb819fb8a41a54d3d41f7c75b78c.txt
 INSERT INTO `jrk_attachment` VALUES ('15', '8aea3d1a1cf4529600c47b0378d17e68.txt', '/uploads/attachment/files/20201026/8aea3d1a1cf4529600c47b0378d17e68.txt', '', '17', 'attachment/files', 'text/plain', '1603716570', '1', '1', '1603716570', 'txt');
 INSERT INTO `jrk_attachment` VALUES ('16', 'd42ea01b59c8b0144b9b335941ffed70.txt', '/uploads/attachment/files/20201026/d42ea01b59c8b0144b9b335941ffed70.txt', '', '17', 'attachment/files', 'text/plain', '1603716612', '1', '1', '1603716612', 'txt');
 INSERT INTO `jrk_attachment` VALUES ('17', 'c38869c36842c2b686f7913ba394e86c.png', '/uploads/adminuser/avatar/20210313/c38869c36842c2b686f7913ba394e86c.png', '/uploads/adminuser/avatar/20210313/c38869c36842c2b686f7913ba394e86c.png', '202953', 'adminuser/avatar', 'image/png', '1615648940', '1', '1', '1615648940', 'png');
+INSERT INTO `jrk_attachment` VALUES ('18', '81fea32fb9c7fb0a1c81d3cd8450f4a4.png', '/uploads/attachment/images/20210823/81fea32fb9c7fb0a1c81d3cd8450f4a4.png', '/uploads/attachment/images/20210823/81fea32fb9c7fb0a1c81d3cd8450f4a4.png', '258545', 'attachment/images', 'image/png', '1629703372', '1', '1', '1629703372', 'png');
+INSERT INTO `jrk_attachment` VALUES ('19', '49f396058080bb4d48c7d84f54004113.jpg', '/uploads/attachment/images/20210823/49f396058080bb4d48c7d84f54004113.jpg', '/uploads/attachment/images/20210823/49f396058080bb4d48c7d84f54004113.jpg', '6449', 'attachment/images', 'image/jpeg', '1629703372', '1', '1', '1629703372', 'jpg');
 
 -- -----------------------------
 -- Table structure for `jrk_auth_group`
@@ -247,13 +249,13 @@ CREATE TABLE `jrk_auth_group` (
   `rules` text COMMENT '权限',
   `pid` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='角色组管理';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='角色组管理';
 
 -- -----------------------------
 -- Records of `jrk_auth_group`
 -- -----------------------------
 INSERT INTO `jrk_auth_group` VALUES ('1', '1593248783', '0', '1', '超级管理', 'all', '0');
-INSERT INTO `jrk_auth_group` VALUES ('2', '1593444916', '1615645583', '1', '人事权限', '2,6,12,13,14,70,1,3,5,4,25,33,9,10,11,34,35,36,26,27,30,31,32,28,29,42,43,44,37,38,39,40,41,45,68,69,51,65,66,67,46,47,61,62,63,64,48,60,49,57,58,59,50,54,55,56,52,53', '0');
+INSERT INTO `jrk_auth_group` VALUES ('3', '1629688335', '1629688335', '1', '文章', '2,34,35,36,46,47,61,62,63,64,48,60,49,57,58,59,50,54,55,56,52,53', '1');
 
 -- -----------------------------
 -- Table structure for `jrk_auth_group_access`
@@ -269,7 +271,7 @@ CREATE TABLE `jrk_auth_group_access` (
   UNIQUE KEY `uid_group_id` (`uid`,`group_id`) USING BTREE,
   KEY `uid` (`uid`) USING BTREE,
   KEY `group_id` (`group_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='权限关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='权限关系表';
 
 -- -----------------------------
 -- Records of `jrk_auth_group_access`
@@ -277,6 +279,7 @@ CREATE TABLE `jrk_auth_group_access` (
 INSERT INTO `jrk_auth_group_access` VALUES ('1', '2', '2', '1593248783', '0');
 INSERT INTO `jrk_auth_group_access` VALUES ('2', '4', '2', '1597930242', '0');
 INSERT INTO `jrk_auth_group_access` VALUES ('3', '3', '2', '1615645565', '0');
+INSERT INTO `jrk_auth_group_access` VALUES ('4', '5', '3', '1629688361', '0');
 
 -- -----------------------------
 -- Table structure for `jrk_auth_rule`
@@ -386,15 +389,6 @@ CREATE TABLE `jrk_commands` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='在线命令管理';
 
--- -----------------------------
--- Records of `jrk_commands`
--- -----------------------------
-INSERT INTO `jrk_commands` VALUES ('3', '1', '生成菜单', 'admin', 'php think make:jrkadmin_curd Article Articles Article --app admin', 'Article', 'Articles', 'Article', '[\"Article\",\"Articles\",\"Article\",\"--app\",\"admin\"]', '2020-08-14 16:24:03', '1', '1597393443', '1597393443');
-INSERT INTO `jrk_commands` VALUES ('4', '1', '生成菜单', 'admin', 'php think make:jrkadmin_curd ArticleCate ArticleCates ArticleCate --app admin', 'ArticleCate', 'ArticleCates', 'ArticleCate', '[\"ArticleCate\",\"ArticleCates\",\"ArticleCate\",\"--app\",\"admin\"]', '2020-08-14 16:27:12', '1', '1597393632', '1597393632');
-INSERT INTO `jrk_commands` VALUES ('5', '1', '生成菜单', 'admin', 'php think make:jrkadmin_curd ArticleComment ArticleComments ArticleComment --app admin', 'ArticleComment', 'ArticleComments', 'ArticleComment', '[\"ArticleComment\",\"ArticleComments\",\"ArticleComment\",\"--app\",\"admin\"]', '2020-08-14 16:31:07', '1', '1597393867', '1597393867');
-INSERT INTO `jrk_commands` VALUES ('6', '1', '生成菜单', 'admin', 'php think make:jrkadmin_curd ArticleModel ArticleModels ArticleModel --app admin', 'ArticleModel', 'ArticleModels', 'ArticleModel', '[\"ArticleModel\",\"ArticleModels\",\"ArticleModel\",\"--app\",\"admin\"]', '2020-08-14 16:32:05', '1', '1597393925', '1597393925');
-INSERT INTO `jrk_commands` VALUES ('7', '1', '生成菜单', 'admin', 'php think make:jrkadmin_curd Friendlink Friendlinks Friendlink --app admin', 'Friendlink', 'Friendlinks', 'Friendlink', '[\"Friendlink\",\"Friendlinks\",\"Friendlink\",\"--app\",\"admin\"]', '2020-08-14 16:48:41', '1', '1597394921', '1597394921');
-INSERT INTO `jrk_commands` VALUES ('8', '1', '生成菜单', 'admin', 'php think make:jrkadmin_curd ArticleUser ArticleUsers ArticleUser --app admin', 'ArticleUser', 'ArticleUsers', 'ArticleUser', '[\"ArticleUser\",\"ArticleUsers\",\"ArticleUser\",\"--app\",\"admin\"]', '2020-08-17 15:22:18', '1', '1597648938', '1597648938');
 
 -- -----------------------------
 -- Table structure for `jrk_friendlinks`
@@ -434,12 +428,14 @@ CREATE TABLE `jrk_member` (
   `type_id` tinyint(1) NOT NULL DEFAULT '1',
   `sex` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='api 模块测试-会员表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='api 模块测试-会员表';
 
 -- -----------------------------
 -- Records of `jrk_member`
 -- -----------------------------
-INSERT INTO `jrk_member` VALUES ('1', 'hhy@qq.com', 'hhy@qq.com', '$2y$10$nL/lLXYe1qSC/sqLzQ9xpeYmG3vfupCRzGTGcqMEx1lt0YtPG18B2', '1603675607', '1603675572', '127.0.0.1', '127.0.0.1', '1', '1', '0');
+INSERT INTO `jrk_member` VALUES ('1', 'hhy@qq.com', 'hhy@qq.com', '$2y$10$nL/lLXYe1qSC/sqLzQ9xpeYmG3vfupCRzGTGcqMEx1lt0YtPG18B2', '1629701341', '1603675572', '127.0.0.1', '127.0.0.1', '1', '1', '0');
+INSERT INTO `jrk_member` VALUES ('2', '123@qq.com', '123@qq.com', '$2y$10$e66TXb2CLC.5ruhyTO3qHeGkgHO6hfGu1FJAFjWp0lJfJpwGoJ3J6', '1629702209', '1629702209', '127.0.0.1', '127.0.0.1', '1', '1', '0');
+INSERT INTO `jrk_member` VALUES ('3', '12ss3@qq.com', '12ss3@qq.com', '$2y$10$pj1/FXfkGDTmWAdDY9bXfO2pl0Al9kJSNf.5k43YLvMDLbX/Bwyl6', '1629702294', '1629702294', '127.0.0.1', '127.0.0.1', '1', '1', '0');
 
 -- -----------------------------
 -- Table structure for `jrk_sys_config`
@@ -528,3 +524,48 @@ CREATE TABLE `jrk_sys_queue` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='定时任务表';
 
+
+-- -----------------------------
+-- Table structure for `jrk_system_log_202108`
+-- -----------------------------
+DROP TABLE IF EXISTS `jrk_system_log_202108`;
+CREATE TABLE `jrk_system_log_202108` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `admin_id` int(10) unsigned DEFAULT '0' COMMENT '管理员ID',
+  `url` varchar(1500) NOT NULL DEFAULT '' COMMENT '操作页面',
+  `method` varchar(50) NOT NULL COMMENT '请求方法',
+  `title` varchar(100) DEFAULT '' COMMENT '日志标题',
+  `content` text NOT NULL COMMENT '内容',
+  `ip` varchar(50) NOT NULL DEFAULT '' COMMENT 'IP',
+  `useragent` varchar(255) DEFAULT '' COMMENT 'User-Agent',
+  `os` varchar(100) DEFAULT '' COMMENT 'os',
+  `brower` varchar(100) DEFAULT '' COMMENT 'brower',
+  `create_time` int(10) DEFAULT NULL COMMENT '操作时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='后台操作日志表 - 202108';
+
+-- -----------------------------
+-- Records of `jrk_system_log_202108`
+-- -----------------------------
+INSERT INTO `jrk_system_log_202108` VALUES ('10', '1', '/admin/SystemLog/del.html', 'post', '超级管理员', 'a:2:{s:2:\"id\";a:9:{i:0;s:1:\"9\";i:1;s:1:\"8\";i:2;s:1:\"7\";i:3;s:1:\"6\";i:4;s:1:\"5\";i:5;s:1:\"4\";i:6;s:1:\"3\";i:7;s:1:\"2\";i:8;s:1:\"1\";}s:5:\"times\";s:0:\"\";}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'windows', 'Chrome/86.0.4240.198', '1629703391');
+INSERT INTO `jrk_system_log_202108` VALUES ('11', '1', '/admin/Command/del.html', 'post', '超级管理员', 'a:1:{s:3:\"ids\";s:11:\"3,4,5,6,7,8\";}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'windows', 'Chrome/86.0.4240.198', '1629703406');
+INSERT INTO `jrk_system_log_202108` VALUES ('12', '1', '/admin/DataBackup/export.html', 'post', '超级管理员', 'a:1:{s:6:\"tables\";a:18:{i:0;s:9:\"jrk_admin\";i:1;s:12:\"jrk_articles\";i:2;s:17:\"jrk_articles_cate\";i:3;s:20:\"jrk_articles_comment\";i:4;s:19:\"jrk_articles_models\";i:5;s:17:\"jrk_articles_user\";i:6;s:14:\"jrk_attachment\";i:7;s:14:\"jrk_auth_group\";i:8;s:21:\"jrk_auth_group_access\";i:9;s:13:\"jrk_auth_rule\";i:10;s:12:\"jrk_commands\";i:11;s:15:\"jrk_friendlinks\";i:12;s:10:\"jrk_member\";i:13;s:14:\"jrk_sys_config\";i:14;s:18:\"jrk_sys_config_tab\";i:15;s:13:\"jrk_sys_queue\";i:16;s:21:\"jrk_system_log_202108\";i:17;s:14:\"jrk_user_token\";}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'windows', 'Chrome/86.0.4240.198', '1629705102');
+
+-- -----------------------------
+-- Table structure for `jrk_user_token`
+-- -----------------------------
+DROP TABLE IF EXISTS `jrk_user_token`;
+CREATE TABLE `jrk_user_token` (
+  `token` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Token',
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '会员ID',
+  `createtime` int(10) DEFAULT NULL COMMENT '创建时间',
+  `expiretime` int(10) DEFAULT NULL COMMENT '过期时间',
+  PRIMARY KEY (`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='会员Token表';
+
+-- -----------------------------
+-- Records of `jrk_user_token`
+-- -----------------------------
+INSERT INTO `jrk_user_token` VALUES ('25e29a992a80a2096dda3b139d5ddb1947f723e0', '3', '1629702294', '1632294294');
+INSERT INTO `jrk_user_token` VALUES ('888522a6c35c8fc41a7d2297a2db6251dbf0497f', '1', '1629701341', '1632293341');
+INSERT INTO `jrk_user_token` VALUES ('f4d9b6032869bcdfa7b3bff4270442ae9024ab41', '2', '1629702209', '1632294209');

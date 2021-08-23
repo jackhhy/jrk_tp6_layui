@@ -16,7 +16,8 @@
 JrkAdmin_Tp6_Layui（完整版）是ThinkPHP6.0和layui的快速开发的后台管理系统。<br>
 后台采用RABC权限验证，不懂的同学可以查看相关文档<br>
 实现管理员管理，权限管理，角色管理，菜单管理，附件管理，日志管理
-phpquerylist数据采集，phpword导出word文档，API接口管理，
+phpquerylist数据采集，phpword导出word文档，
+实用好用的API接口，
 OSS,COS等云端图片上传，jpush极光推送，queue队列定时任务,
 批量邮件发送，多语言化，优化权限认证新增不需验证和不需登录验证，
 后台灵活开启谷歌验证码验证。
@@ -82,7 +83,14 @@ composer self-update
  composer update 或者 composer install
 ~~~
 
-
+## 伪静态配置
+~~~~
+location / {
+   if (!-e $request_filename){
+      rewrite  ^(.*)$  /index.php?s=$1  last;   break;
+   }
+}
+~~~~
 
 ## 演示地址
 http://hzd.luckyhhy.cn/

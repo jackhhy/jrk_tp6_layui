@@ -20,7 +20,7 @@ layui.use(["element", "form", "layer", "okUtils", "okTab", "okLayer", "okContext
    });
    var config = okUtils.local("jrkConfig") || jrkConfig || {};
    objOkTab = okTab;
-   okLoading && okLoading.close();
+  /* okLoading && okLoading.close();*/
    /**关闭加载动画*/
 
    $(".layui-layout-admin").removeClass("orange_theme blue_theme");
@@ -378,7 +378,7 @@ layui.use(["element", "form", "layer", "okUtils", "okTab", "okLayer", "okContext
 
    console.log(
        "框架：Jrk丶Admin\n" +
-      "版本：v2.0\n" +
+      "版本：v3.0\n" +
       "作者：LuckyHhy\n" +
       "邮箱：jackhhy520@qq.com\n" +
       "描述：一个基于TP6编写的优秀，易扩展的，响应式布局的后台管理系统，旨为后端程序员减压！");

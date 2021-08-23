@@ -146,6 +146,7 @@ class Auth
         $controllername = parseName($controller);
         $actionname = strtolower($request->action());
         $path = str_replace('.', '/', $controllername).'/'.$actionname;
+
         // 是否存在
         if (in_array($path, $arr)) {
             return true;
@@ -176,8 +177,6 @@ class Auth
             return true;
         }
         $authList = $this->getAuthList($uid, $type);
-
-      //  dump($authList);
 
         if (is_string($name)) {
             $name = strtolower($name);
@@ -291,16 +290,16 @@ class Auth
         $authList = [];
         foreach ($rules as $rule) {
             if (!empty($rule['condition'])) { // 根据condition进行验证
-                $user = $this->getUserInfo($uid); // 获取用户信息,一维数组
+                //$user = $this->getUserInfo($uid); // 获取用户信息,一维数组
                 $command = preg_replace('/\{(\w*?)\}/', '$user[\'\\1\']', $rule['condition']);
                 // dump($command); // debug
                 @(eval('$condition=(' . $command . ');'));
                 if ($condition) {
-                    $authList[] = strtolower($rule['name']);
+                    $authList[] = strtolower(parseName($rule['name']));
                 }
             } else {
                 // 只要存在就记录
-                $authList[] = strtolower($rule['name']);
+                $authList[] = strtolower(parseName($rule['name']));
             }
         }
         $_authList[$uid . $t] = $authList;
