@@ -124,8 +124,8 @@ class JrkadminCurd extends Command
             @mkdir($modelPath, 0777, true);
         }
         $date=date("Y-m-d H:i:s",time());
-        $modelKpl = str_replace(['$name','$model', '$app','$date'], [ucfirst($modelName),ucfirst($modelName).'Model', strtolower($appName),$date], file_get_contents($modelKpl));
-        return @file_put_contents($modelPath . DIRECTORY_SEPARATOR . $modelName . '.php', $modelKpl);
+        $modelKpl = str_replace(['$name_','$model', '$app','$date'], [ucfirst($modelName),ucfirst($modelName).'Model', strtolower($appName),$date], file_get_contents($modelKpl));
+        return @file_put_contents($modelPath . DIRECTORY_SEPARATOR . $modelName .'Model'. '.php', $modelKpl);
     }
 
     /**

@@ -25,7 +25,7 @@ use Jrk\Tree;
 class $model extends AdminBaseModel implements Comm
 {
     //表名
-    protected $name = "$name";
+    protected $name = "$name_";
 
 
     public function getAdminPageData($param = [], $order = 'id asc')
