@@ -654,15 +654,11 @@ if (!function_exists('writeLog')){
      */
      function writeLog($param,$file=''){
          $filename=date("Y_m_d",time());
-         if (empty($root)) {
-             $myfile =$filename.".txt";
-         }else{
-             $f=app()->getRootPath().'Logs/'.$file."/";
-             if (!is_dir($f)){
-                 @mkdir($f,0777,true);
-             }
-             $myfile=app()->getRootPath().'Logs/'.$file."/".$filename.".txt";
+         $f=app()->getRootPath().'Logs/'.$file."/";
+         if (!is_dir($f)){
+             @mkdir($f,0777,true);
          }
+         $myfile=app()->getRootPath().'Logs/'.$file."/".$filename.".txt";
          if (is_array($param)){
              $param=json_encode($param,302);
          }
