@@ -144,9 +144,8 @@ class Auth
             return strtolower($d[0]);
         }, $request->controller(), 1);
         $controllername = parseName($controller);
-        $actionname = strtolower($request->action());
+        $actionname = strtolower(parseName($request->action()));
         $path = str_replace('.', '/', $controllername).'/'.$actionname;
-
         // 是否存在
         if (in_array($path, $arr)) {
             return true;

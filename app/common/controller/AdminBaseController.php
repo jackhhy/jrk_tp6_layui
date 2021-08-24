@@ -57,7 +57,7 @@ class AdminBaseController extends BaseController
      * @var
      * 登录信息
      */
-    static $admin_info;
+    static $admin_info=[];
 
     /**
      * 无需登录的方法,同时也就不需要鉴权了.
@@ -73,18 +73,10 @@ class AdminBaseController extends BaseController
      */
     protected $noNeedRight = [];
 
-    /**
-     * @return \think\response\Json|\think\response\Redirect|void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @author: [ Lucky888888 ]
-     * @describe:
-     */
+
     protected function initialize()
     {
-
-       // $modulename = app()->http->getName();
+        $modulename = app()->http->getName();
         $controller = preg_replace_callback('/\.[A-Z]/', function ($d) {
             return strtolower($d[0]);
         }, $this->request->controller(), 1);
@@ -93,6 +85,11 @@ class AdminBaseController extends BaseController
         $actionname = strtolower($this->request->action());
 
         $path = str_replace('.', '/', $controllername).'/'.$actionname;
+
+        // 定义是否AJAX请求
+        ! defined('IS_AJAX') && define('IS_AJAX', $this->request->isAjax());
+        // 定义是否POST请求
+        ! defined('IS_POST') && define('IS_POST', $this->request->isPost());
 
         $auth = new Auth();
         /**
@@ -111,15 +108,16 @@ class AdminBaseController extends BaseController
 
             // 定义方法白名单
             $allow = [
-                'Index/index',      // 首页
-                'Common/changeStatus',     //
-                'Common/UpImg',     //
-                'Common/upWebupload',     //
-                'Common/UpFile',     //
-                'Index/clearCache',      // 清除缓存
-                'Index/weather',    // 天气
-                'Index/home',
-                'Temp/icon'
+                'index/index',      // 首页
+                'common/change_status',     //
+                'common/up_img',     //
+                'common/up_webupload',     //
+                'common/up_file',     //
+                'index/clear_cache',      // 清除缓存
+                'index/weather',    // 天气
+                'index/home',
+                'temp/icon',
+                'attach_ments/get_images'//附件选择
             ];
                 // 查询所有不验证的方法并放入白名单
                 $authOpen=Db::name("auth_rule")->field("name,id")->where("auth_open","=",2)->where("status","=",1)->select();
@@ -153,7 +151,6 @@ class AdminBaseController extends BaseController
                             }
                         }
                     }
-
                     $allow = array_merge($allow, $authOpens);
                 }else{
                     $allow=$authOpens;
@@ -193,13 +190,12 @@ class AdminBaseController extends BaseController
         $this->assign('_name', _NAME);
         $this->assign("_site",SITE_URL);
         //用户登录信息
-        $this->assign("_info",self::$admin_info);
+        $this->assign("_info", self::$admin_info);
 
         $this->assign("config", Config::get());
 
         $this->initConfig();
 
-        $this->initRequestConfig();
         //左侧菜单
         $this->menuList();
 
@@ -230,7 +226,6 @@ class AdminBaseController extends BaseController
     {
         if (IS_AJAX) {
             $ids = $this->request->post("ids");
-
             return $this->model->delById($ids);
         }
     }
@@ -245,7 +240,6 @@ class AdminBaseController extends BaseController
         if (IS_AJAX) {
             $data = $this->request->post();
             try {
-                $data['admin_id'] = self::$admin_info['id'];
                 return $this->model->doAll($data);
             } catch (Exception $exception) {
                 return self::JsonReturn($exception->getMessage(), 0);
@@ -277,9 +271,6 @@ class AdminBaseController extends BaseController
     {
         return View::fetch($template);
     }
-
-
-
 
 
     /**
@@ -317,37 +308,6 @@ class AdminBaseController extends BaseController
         defined('LIMIT') or define('LIMIT', isset($this->param['limit']) ? $this->param['limit'] : 20);
         defined('PAGE') or define('PAGE', isset($this->param['page']) ? $this->param['page'] : 1);
     }
-
-
-    /**
-     * @author: LuckyHhy <jackhhy520@qq.com>
-     * @name: initRequestConfig
-     * @describe:初始化请求配置
-     */
-    public function initRequestConfig()
-    {
-        // 定义是否GET请求
-        defined('IS_GET') or define('IS_GET', $this->request->isGet());
-        // 定义是否POST请求
-        defined('IS_POST') or define('IS_POST', $this->request->isPost());
-        // 定义是否AJAX请求
-        defined('IS_AJAX') or define('IS_AJAX', $this->request->isAjax());
-        // 定义是否PAJAX请求
-        defined('IS_PJAX') or define('IS_PJAX', $this->request->isPjax());
-        // 定义是否PUT请求
-        defined('IS_PUT') or define('IS_PUT', $this->request->isPut());
-        // 定义是否DELETE请求
-        defined('IS_DELETE') or define('IS_DELETE', $this->request->isDelete());
-        // 定义是否HEAD请求
-        defined('IS_HEAD') or define('IS_HEAD', $this->request->isHead());
-        // 定义是否PATCH请求
-        defined('IS_PATCH') or define('IS_PATCH', $this->request->isPatch());
-        // 定义是否为手机访问
-        defined('IS_MOBILE') or define('IS_MOBILE', $this->request->isMobile());
-    }
-
-
-
 
     /**
      * @throws \think\db\exception\DataNotFoundException

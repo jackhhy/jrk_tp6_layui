@@ -46,6 +46,9 @@ abstract class BaseController
      */
     protected $middleware = [];
 
+
+    protected $view;
+
     /**
      * AdminBaseController constructor.
      * @param App $app
@@ -58,6 +61,7 @@ abstract class BaseController
         $this->app = $app;
         app()->http->setBind(true);
         $this->request = $this->app->request;
+        $this->view = $this->app->view;
         // 控制器初始化
         $this->initialize();
     }
@@ -65,9 +69,8 @@ abstract class BaseController
     // 初始化
     protected function initialize()
     {
-        //
-    }
 
+    }
 
     /**
      * 验证数据
@@ -113,6 +116,5 @@ abstract class BaseController
             $this->error($e->getMessage());
         }
     }
-
 
 }

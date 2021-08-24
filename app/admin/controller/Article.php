@@ -27,7 +27,6 @@ use app\admin\service\ExcelService;
 
 class Article extends AdminBaseController
 {
-
     protected $cate;
     protected $model = null;
 
@@ -65,7 +64,6 @@ class Article extends AdminBaseController
      */
     public function edit($id)
     {
-
         $info = $this->model->where("id", $id)->find()->toArray();
         if (!$info) {
             return parent::failed("未查询到数据");

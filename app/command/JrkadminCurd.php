@@ -99,7 +99,7 @@ class JrkadminCurd extends Command
         $controllerKpl = $this->appPath . 'command' . DIRECTORY_SEPARATOR . 'temp' .DIRECTORY_SEPARATOR. 'Controller.kpl';
         $date=date("Y-m-d H:i:s",time());
 
-        $controllerKpl = str_replace(['$controller', '$app','$modelName','$date'], [ucfirst($controllerName), strtolower($appName),ucfirst($modelName),$date], file_get_contents($controllerKpl));
+        $controllerKpl = str_replace(['$controller', '$app','$modelName','$date'], [ucfirst($controllerName), strtolower($appName),ucfirst($modelName).'Model',$date], file_get_contents($controllerKpl));
 
         /* if (stripos($controllerName,"."))*/
         $controllerPath = $this->appPath . $appName . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR;
@@ -124,7 +124,7 @@ class JrkadminCurd extends Command
             @mkdir($modelPath, 0777, true);
         }
         $date=date("Y-m-d H:i:s",time());
-        $modelKpl = str_replace(['$model', '$app','$date'], [ucfirst($modelName), strtolower($appName),$date], file_get_contents($modelKpl));
+        $modelKpl = str_replace(['$name','$model', '$app','$date'], [ucfirst($modelName),ucfirst($modelName).'Model', strtolower($appName),$date], file_get_contents($modelKpl));
         return @file_put_contents($modelPath . DIRECTORY_SEPARATOR . $modelName . '.php', $modelKpl);
     }
 

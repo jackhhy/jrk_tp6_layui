@@ -30,6 +30,7 @@ class DataBackup extends AdminBaseController
 
 
     protected $db;
+    protected $noNeedLogin=['del','down'];
 
     protected function initialize()
     {
