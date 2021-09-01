@@ -115,5 +115,5 @@ http://hzd.luckyhhy.cn/
 ### 往期项目
 
 1. [图标选择器](https://gitee.com/luckygyl/iconFonts)
-2. [JrkAdmin_Tp5.1](https://gitee.com/luckygyl/JrkAdmin)
+2. [jrk_blog](https://gitee.com/luckygyl/jrk_blog)
 2. [jrkadmin_tp6_bootstrap项目](https://gitee.com/luckygyl/jrk_tp6_hhy)
