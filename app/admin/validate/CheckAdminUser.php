@@ -11,7 +11,7 @@ class CheckAdminUser extends Validate
 
     protected $rule = [
         'nickname'  =>  'chsDash|max:12|token',
-        'username' =>  'require|alphaNum|max:12',
+        'username' =>  'require|alphaNum|max:12|unique:admin',
         'phone'    =>'mobile',
         'email'   =>'email',
         'password' =>  'min:6|max:16|alphaDash',
