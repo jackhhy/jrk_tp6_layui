@@ -55,6 +55,11 @@ class Admin extends AdminBaseController
                         unset($data['password']);
                     }
                     unset($data['repassword']);
+                    $res = AdminUser::where(['username' => "" . $data['username'] . ""])->where('id','<>',$data['id'])->find();
+                    if ($res) {
+                        return parent::JsonReturn($data['username'] . "该用户名已存在", 0);
+                    }
+
                     $username=AdminUser::where(['id' => $data['id']])->value("username");
 
                     if ($username!=$data['username']){
