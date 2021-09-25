@@ -102,7 +102,8 @@ class AdminBaseController extends BaseController
                 if ( Request::isAjax() ||  Request::isPost()){
                     return self::JsonReturn(__("Your login information has expired. Please login first"),0,url('Login/index'));
                 }else{
-                    return redirect((string)url('Login/index'));
+                    //return redirect((string)url('Login/index'));
+                    throw new HttpResponseExpection(Response::create(url('Login/index'),'redirect','302'));
                 }
             }
 
