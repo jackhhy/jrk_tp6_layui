@@ -318,7 +318,7 @@ class AdminBaseController extends BaseController
      */
     public function menuList(){
 
-        if (self::$admin_info['id'] !=1){
+        if (!empty(self::$admin_info['id']) && self::$admin_info['id'] !=1){
             $data=AuthRule::where("id","in",session("admin_rules"))->where("type","1")->where("status",1)->select()->toArray();
             if (!empty($data)){
                 foreach ($data as $k => $v) {
