@@ -29,7 +29,7 @@ class UploadFileService
      * 文件校验
      * @var bool
      */
-    protected $autoValidate = false;
+    protected $autoValidate = true;
 
     /**
      * 上传路径
