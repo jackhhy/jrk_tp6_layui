@@ -181,6 +181,7 @@ class Common extends AdminBaseController
     }
 
 
+  
     /**
      * @param $path  //保存的路径
      * @param int $is_save  是否保存到数据库
@@ -192,7 +193,9 @@ class Common extends AdminBaseController
      */
     protected static function UpImages($path,$is_save=1,$fileName="file"){
         if (empty($path)) $path="common/images";
-        $res= UploadFileService::instance()->setUploadPath($path)->image($fileName);
+        $res= UploadFileService::instance()
+            ->setImageValidateArray(['fileExt'=>['jpg', 'jpeg', 'png', 'gif'],'fileMime' => ['image/jpeg', 'image/gif', 'image/png']])
+            ->setUploadPath($path)->image($fileName);
         if (is_array($res)){
              if ($is_save==1){
                  AttachMent::attachmentAdd($res['name'],$res['size'],$res['type'],$res['dir'],$res['thumb_path'],$res['image_type'],$path,$res['ext']);
@@ -200,6 +203,7 @@ class Common extends AdminBaseController
         }
          return $res;
     }
+
 
 
     /**
