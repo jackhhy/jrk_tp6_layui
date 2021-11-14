@@ -90,7 +90,7 @@ class ArticleCates extends AdminBaseModel implements Comm
             $data['url']=$data['urls'];
             unset($data['urls']);
 
-            if (isset($param['id'])) {
+            if (isset($data['id'])) {
                 $res = self::update($data);
                 $id = $data['id'];
             } else {
