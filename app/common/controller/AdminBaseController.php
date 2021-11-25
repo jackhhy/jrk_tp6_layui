@@ -27,6 +27,7 @@ use think\facade\Request;
 use think\App;
 use think\Exception;
 use think\exception\HttpResponseException;
+use think\Response;
 
 class AdminBaseController extends BaseController
 {
