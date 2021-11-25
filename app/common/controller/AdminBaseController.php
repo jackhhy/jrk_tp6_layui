@@ -105,7 +105,7 @@ class AdminBaseController extends BaseController
                     return self::JsonReturn(__("Your login information has expired. Please login first"),0,url('Login/index'));
                 }else{
                     //return redirect((string)url('Login/index'));
-                    throw new HttpResponseExpection(Response::create(url('Login/index'),'redirect','302'));
+                    throw new HttpResponseException(Response::create(url('Login/index'),'redirect','302'));
                 }
             }
 
